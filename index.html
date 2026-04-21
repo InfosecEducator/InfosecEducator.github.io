@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="glitch.css">
+</head>
+    <body style="background-color:#181717;">
+        <a style="text-decoration:none" data-text="GreyHat Guy" href="../main.php">GreyHat Guy</a>
+    </body>
+<script>
+    /*Fuck your watermark 000webhost*/
+    document.addEventListener("DOMContentLoaded", function() {
+      removeImagesWithAlt("www.000webhost.com");
+    });
+    
+    function removeImagesWithAlt(targetAlt) {
+      const images = document.querySelectorAll('img[alt="' + targetAlt + '"]');
+      images.forEach(image => {
+        image.remove();
+      });
+    }
+</script>
+</html>
