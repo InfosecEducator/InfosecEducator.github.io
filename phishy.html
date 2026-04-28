@@ -27,6 +27,8 @@
       --green-500: #2bfea0;
       --green-900: #0b2e1e;
       --yellow-500: #fed33f;
+      --text-secondary: #b09090;
+      --text-muted:     #907878;
       --font-display: "VT323", monospace;
       --font-ui: "Rajdhani", sans-serif;
       --font-mono: "Share Tech Mono", monospace;
@@ -115,7 +117,7 @@
     }
     .mission-text {
       font-family: var(--font-mono); font-size: 0.68rem;
-      letter-spacing: 0.06em; color: var(--red-800);
+      letter-spacing: 0.06em; color: var(--text-secondary);
     }
     .mission-text em { color: var(--red-600); font-style: normal; }
 
@@ -137,7 +139,7 @@
     }
     .question-icon {
       font-family: var(--font-mono); font-size: 1.5rem;
-      color: var(--red-700); flex-shrink: 0;
+      color: var(--text-secondary); flex-shrink: 0;
     }
     .question-text {
       font-family: var(--font-display); font-size: 2rem;
@@ -147,7 +149,7 @@
     }
     .question-sub {
       font-family: var(--font-mono); font-size: 0.65rem;
-      letter-spacing: 0.12em; color: var(--red-800);
+      letter-spacing: 0.12em; color: var(--text-secondary);
       text-transform: uppercase; margin-left: auto;
       text-align: right; flex-shrink: 0;
     }
@@ -194,14 +196,14 @@
     .chrome-label {
       font-family: var(--font-display); font-size: 1.1rem;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--red-700); flex: 1; text-align: center;
+      color: var(--text-secondary); flex: 1; text-align: center;
     }
     .chrome-icons {
       display: flex; gap: 0.5rem;
     }
     .chrome-icon {
       font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--red-900);
+      color: var(--text-muted);
     }
 
     /* Email address bar */
@@ -342,7 +344,7 @@
       margin-bottom: 0.5rem;
     }
     .correct-box .result-eyebrow { color: var(--green-500); }
-    .incorrect-box .result-eyebrow { color: var(--red-700); }
+    .incorrect-box .result-eyebrow { color: var(--text-secondary); }
 
     .result-verdict {
       font-family: var(--font-display); font-size: 4.5rem;
@@ -433,20 +435,20 @@
     }
     .score-correct  .score-num { color: var(--green-500); text-shadow: var(--glow-green); }
     .score-incorrect.score-num { color: var(--red-500);   text-shadow: var(--glow-red); }
-    .score-label { color: var(--red-800); }
-    .score-sep { color: var(--red-900); font-family: var(--font-mono); }
+    .score-label { color: var(--text-secondary); }
+    .score-sep { color: var(--text-muted); font-family: var(--font-mono); }
     .score-pct {
       font-family: var(--font-display); font-size: 1.2rem;
       color: var(--yellow-500); letter-spacing: 0.04em;
     }
-    .score-pct-label { color: var(--red-900); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .score-pct-label { color: var(--text-muted); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
     /* ===== FOOTER ===== */
     .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 2rem; }
     .footer-bottom {
       max-width: 1300px; margin: 0 auto; padding: 0.85rem 1.5rem;
       display: flex; align-items: center; justify-content: space-between;
-      font-family: var(--font-mono); font-size: 0.65rem; color: var(--red-900);
+      font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted);
     }
 
     /* ===== RESPONSIVE ===== */

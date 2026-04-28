@@ -31,6 +31,8 @@
       --yellow-500: #fed33f;
       --yellow-900: #2e2408;
       --orange-500: #ff9a28;
+      --text-secondary: #b09090;
+      --text-muted:     #907878;
       --blue-500: #4fa3e0;
       --blue-900: #0d1e30;
       --purple-500: #c084fc;
@@ -101,7 +103,7 @@
       0%, 100% { border-color: var(--red-800); } 50% { border-color: var(--red-700); }
     }
     @keyframes pulse-blue {
-      0%, 100% { border-color: var(--blue-900); } 50% { border-color: #1a3a54; }
+      0%, 100% { border-color: var(--blue-900); } 50% { border-color: #4a8eae; }
     }
     @keyframes blink {
       0%, 100% { opacity: 1; } 50% { opacity: 0; }
@@ -172,11 +174,11 @@
       font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.2em;
       text-transform: uppercase; margin-bottom: 0.4rem; display: block;
     }
-    .label-red    { color: var(--red-700); }
-    .label-cyan   { color: var(--cyan-900); }
-    .label-green  { color: var(--green-900); }
-    .label-yellow { color: var(--yellow-900); }
-    .label-blue   { color: #1a3a54; }
+    .label-red    { color: var(--text-secondary); }
+    .label-cyan   { color: #2a9aa0; }
+    .label-green  { color: #2a9060; }
+    .label-yellow { color: #b89430; }
+    .label-blue   { color: #4a8eae; }
 
     .section-title {
       font-family: var(--font-display); letter-spacing: 0.05em;
@@ -231,7 +233,7 @@
       letter-spacing: 0.04em; color: var(--red-300); display: block;
     }
     .resp-list li .r-desc {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-800); line-height: 1.5;
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary); line-height: 1.5;
     }
     .resp-r { border-color: var(--red-800) !important; }
     .resp-c { border-color: var(--cyan-900) !important; }
@@ -246,7 +248,7 @@
     /* ===== STAT BARS ===== */
     .stat-block { margin-bottom: 0.85rem; }
     .stat-block__label {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-700);
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary);
       letter-spacing: 0.06em; display: flex; justify-content: space-between;
       margin-bottom: 0.25rem;
     }
@@ -278,7 +280,7 @@
     }
     .kpi__label {
       font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--red-800);
+      text-transform: uppercase; color: var(--text-secondary);
     }
     .kpi-r { border-color: var(--red-900); }
     .kpi-r .kpi__num { color: var(--red-500); text-shadow: var(--glow-red); }
@@ -308,7 +310,7 @@
     .atk-item--green::before  { background: var(--green-500);  border-color: var(--green-500);  box-shadow: var(--glow-green); }
     .atk-item--cyan::before   { background: var(--cyan-500);   border-color: var(--cyan-500);   box-shadow: var(--glow-cyan); }
     .atk-timestamp {
-      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-800);
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--text-secondary);
       white-space: nowrap; padding-top: 0.05rem; width: 4.5rem; flex-shrink: 0;
       letter-spacing: 0.04em;
     }
@@ -322,7 +324,7 @@
     .atk-item--green .atk-content__label   { color: var(--green-400); }
     .atk-item--cyan .atk-content__label    { color: var(--cyan-400); }
     .atk-content__detail {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-800);
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary);
       line-height: 1.55; margin-top: 0.15rem;
     }
 
@@ -342,14 +344,14 @@
       letter-spacing: 0.03em; display: block; line-height: 1.2;
     }
     .impact-chip__detail {
-      font-family: var(--font-mono); font-size: 0.62rem; color: var(--red-800); line-height: 1.4;
+      font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-secondary); line-height: 1.4;
       margin-top: 0.2rem;
     }
     .chip-hit  { border-color: var(--red-900); }
-    .chip-hit  .impact-chip__status { color: var(--red-700); }
+    .chip-hit  .impact-chip__status { color: var(--text-secondary); }
     .chip-hit  .impact-chip__label  { color: var(--red-400); }
     .chip-safe { border-color: var(--green-900); }
-    .chip-safe .impact-chip__status { color: var(--green-900); }
+    .chip-safe .impact-chip__status { color: #2a9060; }
     .chip-safe .impact-chip__label  { color: var(--green-500); }
 
     /* ===== TERMINAL ===== */
@@ -366,13 +368,13 @@
     .terminal__dot--r { background: var(--red-800); }
     .terminal__dot--y { background: #5e4a10; }
     .terminal__dot--g { background: #1a4a30; }
-    .terminal__title { font-family: var(--font-mono); font-size: 0.62rem; color: var(--red-900); margin-left: auto; letter-spacing: 0.08em; }
+    .terminal__title { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); margin-left: auto; letter-spacing: 0.08em; }
     .terminal__body { padding: 0.75rem 0.9rem; }
     .terminal__line {
       font-family: var(--font-mono); font-size: 0.73rem; line-height: 1.75;
       display: flex; gap: 0.5rem; align-items: baseline;
     }
-    .t-prompt { color: var(--red-900); flex-shrink: 0; }
+    .t-prompt { color: var(--text-muted); flex-shrink: 0; }
     .t-cmd    { color: var(--red-500); }
     .t-out    { color: #4a2020; }
     .t-warn   { color: var(--yellow-500); }
@@ -396,7 +398,7 @@
       display: block; margin-bottom: 0.3rem; line-height: 1.1;
     }
     .ctx-card__body {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-800); line-height: 1.55;
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary); line-height: 1.55;
     }
     .ctx-r { border-color: var(--red-900); }   .ctx-r .ctx-card__title { color: var(--red-400); }
     .ctx-c { border-color: var(--cyan-900); }  .ctx-c .ctx-card__title { color: var(--cyan-500); }
@@ -434,7 +436,7 @@
     .bottom-meta { font-family: var(--font-mono); font-size: 0.64rem; color: var(--blue-900); letter-spacing: 0.06em; text-align: right; }
     .btn-home {
       display: inline-flex; align-items: center; gap: 0.45rem;
-      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      background: transparent; border: 1px solid var(--red-800); color: var(--text-secondary);
       font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 1rem;
       cursor: pointer; border-radius: 2px;

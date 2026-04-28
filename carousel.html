@@ -30,6 +30,8 @@
       --yellow-500: #fed33f;
       --yellow-900: #2e2408;
       --orange-500: #ff9a28;
+      --text-secondary: #b09090;
+      --text-muted:     #907878;
       --font-display: "VT323", monospace;
       --font-ui: "Rajdhani", sans-serif;
       --font-mono: "Share Tech Mono", monospace;
@@ -178,7 +180,7 @@
     .c-card--active:hover .c-card__title { color: var(--cyan-400); }
 
     .c-card__desc {
-      font-size: 0.88rem; line-height: 1.65; color: var(--red-700); margin: 0 0 1rem;
+      font-size: 0.88rem; line-height: 1.65; color: var(--text-secondary); margin: 0 0 1rem;
     }
 
     .c-card__enter {
@@ -197,7 +199,7 @@
     }
 
     .c-arrow {
-      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      background: transparent; border: 1px solid var(--red-800); color: var(--text-secondary);
       font-family: var(--font-mono); font-size: 1.4rem; line-height: 1;
       padding: 0.5rem 0.9rem; cursor: pointer; border-radius: 2px;
       transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
@@ -216,7 +218,7 @@
     }
 
     .carousel-hint {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-900);
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted);
       letter-spacing: 0.06em; text-align: center; margin: 0;
     }
 
@@ -236,7 +238,7 @@
 
     .btn-home {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      background: transparent; border: 1px solid var(--red-800); color: var(--text-secondary);
       font-family: var(--font-ui); font-size: 0.82rem; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 1.2rem;
       cursor: pointer; border-radius: 2px;

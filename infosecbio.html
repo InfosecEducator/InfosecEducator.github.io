@@ -31,6 +31,8 @@
       --yellow-500: #fed33f;
       --yellow-900: #2e2408;
       --orange-500: #ff9a28;
+      --text-secondary: #b09090;
+      --text-muted:     #907878;
       --purple-500: #c084fc;
       --purple-900: #2d1b4e;
       --font-display: "VT323", monospace;
@@ -139,7 +141,7 @@
     .hero__slash { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
     .hero__subtitle {
       font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2rem);
-      letter-spacing: 0.08em; color: var(--red-700); margin: 0 0 1.4rem;
+      letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 1.4rem;
     }
     .hero__definition {
       max-width: 720px; margin: 0 auto 1.5rem;
@@ -165,7 +167,7 @@
     /* corner deco on hero */
     .hero__corner {
       position: absolute; font-family: var(--font-mono); font-size: 0.6rem;
-      color: var(--red-900); letter-spacing: 0.08em;
+      color: var(--text-muted); letter-spacing: 0.08em;
     }
     .hero__corner--tl { top: 0.5rem; left: 0.5rem; }
     .hero__corner--tr { top: 0.5rem; right: 0.5rem; text-align: right; }
@@ -177,10 +179,10 @@
       font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.2em;
       text-transform: uppercase; margin-bottom: 0.4rem; display: block;
     }
-    .label-red    { color: var(--red-700); }
-    .label-cyan   { color: var(--cyan-900); }
-    .label-green  { color: var(--green-900); }
-    .label-yellow { color: var(--yellow-900); }
+    .label-red    { color: var(--text-secondary); }
+    .label-cyan   { color: #2a9aa0; }
+    .label-green  { color: #2a9060; }
+    .label-yellow { color: #b89430; }
 
     .section-title {
       font-family: var(--font-display); letter-spacing: 0.05em;
@@ -248,7 +250,7 @@
       text-transform: uppercase; display: block; margin-bottom: 0.4rem;
     }
     .cia-item__desc {
-      font-family: var(--font-ui); font-size: 0.75rem; color: var(--red-700);
+      font-family: var(--font-ui); font-size: 0.75rem; color: var(--text-secondary);
       line-height: 1.4;
     }
     .cia-c .cia-item__letter { color: var(--red-500); text-shadow: var(--glow-red); }
@@ -263,7 +265,7 @@
       display: flex; flex-direction: column; gap: 0.45rem;
     }
     .threat-list li {
-      font-family: var(--font-mono); font-size: 0.74rem; color: var(--red-700);
+      font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-secondary);
       padding: 0.3rem 0.55rem; border-left: 2px solid var(--red-900);
       background: rgba(0,0,0,0.15); letter-spacing: 0.02em;
       display: flex; align-items: baseline; gap: 0.5rem;
@@ -287,7 +289,7 @@
       display: block; margin-bottom: 0.15rem; line-height: 1.1;
     }
     .domain-item__desc {
-      font-family: var(--font-ui); font-size: 0.74rem; color: var(--red-700);
+      font-family: var(--font-ui); font-size: 0.74rem; color: var(--text-secondary);
       line-height: 1.4;
     }
     .d-red    { border-color: var(--red-900); }
@@ -323,7 +325,7 @@
     .timeline-item--green::before  { background: var(--green-500); border-color: var(--green-500); box-shadow: var(--glow-green); }
     .timeline-item--yellow::before { background: var(--yellow-500); border-color: var(--yellow-500); box-shadow: var(--glow-yellow); }
     .timeline-time {
-      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-800);
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--text-secondary);
       white-space: nowrap; padding-top: 0.08rem; width: 3.5rem; flex-shrink: 0;
       letter-spacing: 0.04em;
     }
@@ -333,7 +335,7 @@
       letter-spacing: 0.04em; color: var(--red-300); line-height: 1.2;
     }
     .timeline-content__detail {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-800);
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary);
       line-height: 1.5; margin-top: 0.15rem;
     }
 
@@ -368,10 +370,10 @@
     .roadmap-step__items {
       list-style: none; margin: 0; padding: 0;
       font-family: var(--font-mono); font-size: 0.64rem;
-      color: var(--red-800); line-height: 1.65; letter-spacing: 0.01em;
+      color: var(--text-secondary); line-height: 1.65; letter-spacing: 0.01em;
       text-align: left; width: 100%;
     }
-    .roadmap-step__items li::before { content: "▸ "; color: var(--red-900); }
+    .roadmap-step__items li::before { content: "▸ "; color: var(--text-muted); }
 
     .rs-1 .roadmap-step__num { color: var(--red-500);    border-color: var(--red-700);    box-shadow: var(--glow-red); }
     .rs-1 .roadmap-step__title { color: var(--red-400); }
@@ -398,13 +400,13 @@
     .terminal__dot--r { background: var(--red-800); }
     .terminal__dot--y { background: #5e4a10; }
     .terminal__dot--g { background: #1a4a30; }
-    .terminal__title { font-family: var(--font-mono); font-size: 0.62rem; color: var(--cyan-900); margin-left: auto; letter-spacing: 0.08em; }
+    .terminal__title { font-family: var(--font-mono); font-size: 0.62rem; color: #2a9aa0; margin-left: auto; letter-spacing: 0.08em; }
     .terminal__body { padding: 0.75rem 0.9rem; }
     .terminal__line {
       font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.7;
       display: flex; gap: 0.5rem;
     }
-    .terminal__prompt { color: var(--cyan-900); flex-shrink: 0; }
+    .terminal__prompt { color: #2a9aa0; flex-shrink: 0; }
     .terminal__cmd { color: var(--cyan-500); }
     .terminal__out { color: #2a5a5e; }
     .terminal__val { color: var(--green-500); }
@@ -438,7 +440,7 @@
       color: var(--red-300); letter-spacing: 0.04em; display: block; margin-bottom: 0.15rem;
     }
     .term__def {
-      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-800);
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--text-secondary);
       line-height: 1.5;
     }
     .term-c { border-color: var(--cyan-900); }
@@ -461,12 +463,12 @@
     }
     .bottom-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
     .bottom-meta {
-      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-900);
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--text-muted);
       letter-spacing: 0.06em; text-align: right;
     }
     .btn-home {
       display: inline-flex; align-items: center; gap: 0.45rem;
-      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      background: transparent; border: 1px solid var(--red-800); color: var(--text-secondary);
       font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 1rem;
       cursor: pointer; border-radius: 2px;
@@ -482,7 +484,7 @@
     }
     .divider-label {
       font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.16em;
-      color: var(--red-900); text-transform: uppercase;
+      color: var(--text-muted); text-transform: uppercase;
       text-align: center; margin: -0.05rem 0 1.4rem;
       position: relative;
     }
