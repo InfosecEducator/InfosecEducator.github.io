@@ -3,1630 +3,1655 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INFOSEC//EDUCATOR</title>
+  <title>INFOSEC//EDUCATOR — Cybersecurity Education & Research</title>
   <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
-/* ============================================================
-   DESIGN SYSTEM — faithfully ported from the CodePen source
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; position: relative; }
+    *, *::before, *::after { box-sizing: border-box; }
 
-html, body {
-  --colors-bg--300: #1e181e;
-  --colors-bg--500: #191a1e;
-  --colors-primary--200: #f4908b;
-  --colors-primary--300: #ea6f69;
-  --colors-primary--500: #e8615a;
-  --colors-primary--600: #9c3230;
-  --colors-primary--700: #5e2122;
-  --colors-primary--800: #451717;
-  --colors-primary--900: #3c181a;
-  --colors-secondary--500: #2be4ea;
-  --colors-secondary--900: #295459;
-  --colors-tertiary--500: #fed33f;
-  --colors-on_bg--500: var(--colors-primary--500);
-  --colors-on_primary--500: var(--colors-primary--200);
-  --colors-active--500: #2bfea0;
-  --fonts-primary: "Rajdhani", sans-serif;
-  --fonts-secondary: "VT323", monospace;
-  --ui-glow: 0 0 5px var(--colors-primary--500);
-  --ui-glow-borders--500: 0 0 3px var(--colors-primary--500);
-  --ui-glow-text: -9px -6px 40px var(--colors-primary--500);
-  --ui-glow-text--dimmed: -9px -6px 40px var(--colors-primary--500);
-  --ui-elevation--1: 2px 2px 0 rgba(0,0,0,0.8);
-  --ui-notch-amount: 1rem;
-  --ui-notch-hypotenuse: 22.627416px;
-  --ui-notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--ui-notch-amount) + 2px), calc(100% - var(--ui-notch-amount) + 2px) 100%, 0 100%);
-  background-color: var(--colors-bg--500);
-  background-image: radial-gradient(ellipse at 33% 10%, #461616 0%, transparent 75%);
-  background-repeat: no-repeat;
-  color: var(--colors-on_bg--500);
-  font-family: var(--fonts-primary);
-  font-size: 100%;
-  line-height: 1.4;
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-}
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red: 0 0 8px var(--red-500), 0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan: 0 0 8px var(--cyan-500), 0 0 20px rgba(43,228,234,0.3);
+      --glow-green: 0 0 8px var(--green-500), 0 0 20px rgba(43,254,160,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
 
-a { color: inherit; text-decoration: none; }
+    html { scroll-behavior: smooth; }
 
-/* ============================================================
-   LAYOUT
-   ============================================================ */
-.app-skeleton {
-  padding: 0 1rem;
-  height: 100vh;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-}
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(60,24,26,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(13,51,54,0.4) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
 
-.app-header {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0 0.5rem 0;
-  flex-shrink: 0;
-}
+    a { color: inherit; text-decoration: none; }
 
-.app-header::after {
-  background-color: var(--colors-primary--500);
-  box-shadow: var(--ui-glow);
-  bottom: 0; content: ""; height: 2px;
-  position: absolute; left: 0; width: 100%;
-}
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
 
-.app-header__anchor__text {
-  font-family: var(--fonts-secondary);
-  font-size: 1.5rem;
-  letter-spacing: 0.05rem;
-  text-shadow: var(--ui-glow-text);
-  text-transform: uppercase;
-  color: var(--colors-primary--500);
-}
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
 
-.app-container {
-  display: grid;
-  grid-gap: 0.75rem;
-  grid-template-columns: 230px 1fr 260px;
-  grid-template-areas: "a main side";
-  flex: 1;
-  min-height: 0;
-  padding-top: 0.5rem;
-  padding-bottom: 28px; /* ticker height */
-}
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 2rem;
+    }
 
-.app-a { grid-area: a; overflow-y: auto; }
-.app-a::-webkit-scrollbar { width: 3px; }
-.app-a::-webkit-scrollbar-thumb { background: var(--colors-primary--700); }
+    .site-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
 
-.app-main { grid-area: main; overflow: hidden; display: flex; flex-direction: column; }
-.app-side { grid-area: side; display: flex; flex-direction: column; overflow: hidden; }
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
 
-/* ============================================================
-   NAV COMPONENTS (from original)
-   ============================================================ */
-.nav { list-style: none; margin: 0; padding: 0; }
+    .main-nav { display: flex; align-items: center; gap: 0; }
 
-.app-header .nav { align-items: flex-end; display: flex; gap: 0; }
-.app-header .nav__item + .nav__item { margin-left: 1.75rem; }
-.app-header .nav__link {
-  align-items: baseline; display: flex;
-  text-shadow: var(--ui-glow-text); text-transform: uppercase;
-  transition: transform 0.25s; font-size: 1rem; letter-spacing: 0.03em;
-}
-.app-header .nav__link:hover { color: var(--colors-primary--200); }
-.app-header .nav__link--active { color: var(--colors-secondary--500); font-size: 1.1rem; }
+    .main-nav a {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red-300);
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
 
-.nav-section { padding-bottom: 0.25rem; margin-bottom: 0.25rem; }
-.nav-section__header {
-  background-color: var(--colors-bg--300);
-  border: 1px solid #5d2322; border-radius: 3px;
-  margin-bottom: 0.35rem; padding: 0.35rem 0.75rem;
-}
-.nav-section__body { padding-left: 0.5rem; }
-.nav-section__title { color: var(--colors-secondary--500); font-size: 0.9rem; margin: 0; }
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .main-nav a.active { color: var(--cyan-500); }
 
-.nav-section .nav__link {
-  border: 1px solid transparent; border-radius: 3px;
-  color: var(--colors-secondary--500); display: block;
-  font-family: var(--fonts-primary); padding: 0.35rem 0.6rem;
-  transition: background-color 0.2s; font-size: 0.92rem;
-}
-.nav-section .nav__link:hover {
-  background-color: var(--colors-bg--300); border: 1px solid #5d2322;
-}
-.nav-section .nav__link--active,
-.nav-section .nav__link--active:hover {
-  background-color: #391419; border-color: #9c3230;
-}
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
-.badge {
-  border: 1.5px solid var(--colors-tertiary--500);
-  border-radius: 3px; color: var(--colors-tertiary--500);
-  display: inline-block; font-size: 0.8rem; font-weight: normal;
-  line-height: 1; padding: 0.1em 0.3em; vertical-align: middle;
-}
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      border-radius: 2px;
+      padding: 0.3rem 0.6rem;
+      gap: 0.4rem;
+    }
 
-/* ============================================================
-   SEGMENT TOPBAR (from original)
-   ============================================================ */
-.segment-topbar {
-  display: flex; justify-content: space-between;
-  margin-bottom: 0.75rem; min-height: 3rem; flex-shrink: 0;
-}
-.segment-topbar::after {
-  background-color: var(--colors-primary--500); box-shadow: var(--ui-glow);
-  bottom: 0; content: ""; height: 1px; position: absolute; left: 0; width: 100%;
-}
-.segment-topbar__header { padding: 0.25rem 0.5rem 0; }
-.segment-topbar__overline { font-family: var(--fonts-secondary); font-size: 0.85rem; color: var(--colors-primary--300); }
-.segment-topbar__title {
-  letter-spacing: 0.04em; text-shadow: var(--ui-glow-text--dimmed);
-  text-transform: uppercase; font-size: 1.2rem; font-weight: 700; margin: 0;
-}
-.segment-topbar__aside { align-self: flex-start; box-shadow: -6px -4px 24px rgba(156,50,48,0.4); }
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--red-300);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      width: 140px;
+    }
 
-/* ============================================================
-   PAD COMPONENT (from original — notched card)
-   ============================================================ */
-.pad {
-  background-color: var(--colors-bg--300);
-  border: 2px solid var(--colors-primary--600);
-  clip-path: var(--ui-notch-path);
-  margin-bottom: 0.75rem;
-}
-.pad::before {
-  background-color: var(--colors-primary--600);
-  bottom: 5px; content: ""; display: block;
-  height: 3px; position: absolute; right: -6px;
-  top: auto; transform: rotate(-45deg);
-  width: var(--ui-notch-hypotenuse); z-index: 100;
-}
-.pad__body { padding: 0.75rem; padding-bottom: var(--ui-notch-amount); }
-.pad__title { font-size: 1rem; margin: 0 0 0.4rem; color: var(--colors-secondary--500); text-transform: uppercase; letter-spacing: 0.06em; }
-.pad__text { font-size: 0.9rem; color: var(--colors-primary--200); line-height: 1.55; }
+    .search-box input::placeholder { color: var(--red-800); }
 
-/* ============================================================
-   BUTTON COMPONENTS (from original)
-   ============================================================ */
-.button {
-  background-color: transparent;
-  border: 1px solid var(--colors-primary--500); border-radius: 2px;
-  cursor: pointer; color: var(--colors-primary--500);
-  display: inline-block; font-family: var(--fonts-primary);
-  letter-spacing: 0.045em; padding: 0.4rem 0.5rem;
-  text-align: center; text-transform: uppercase; font-size: 0.9rem;
-}
-.button:hover { background-color: var(--colors-primary--800); color: var(--colors-on_primary--500); }
-.button--primary { color: var(--colors-secondary--500); border-color: var(--colors-secondary--500); }
-.button--primary:hover { background-color: var(--colors-secondary--900); color: var(--colors-secondary--500); }
-.button--size-lg {
-  border-width: 2px; clip-path: var(--ui-notch-path);
-  padding: 0.45rem 0.7rem 0.7rem 0.45rem;
-}
-.button--size-lg::before {
-  background-color: currentcolor; bottom: 5px; content: ""; display: block;
-  height: 3px; position: absolute; right: -6px; top: auto;
-  transform: rotate(-45deg); width: var(--ui-notch-hypotenuse); z-index: 100;
-}
-.button-toolbar { display: flex; gap: 2px; }
+    .search-icon { color: var(--red-700); font-size: 0.9rem; }
 
-/* ============================================================
-   FORM COMPONENTS (from original)
-   ============================================================ */
-.form-label {
-  background-color: var(--colors-primary--600); color: var(--colors-on_primary--500);
-  font-family: var(--fonts-secondary); font-size: 0.9rem; display: inline-block;
-  padding: 0.1em 0.75em 0.1em 0.4em; letter-spacing: 0.065em; line-height: 1;
-  text-transform: uppercase; vertical-align: bottom;
-  clip-path: polygon(0.25em 0, calc(100% - 1em) 0, 100% 100%, 0.33em 100%, 0 100%, 0 0.25em);
-}
-.form-control {
-  background-color: var(--colors-bg--300);
-  border: 1px solid var(--colors-primary--600);
-  clip-path: var(--ui-notch-path);
-}
-.form-control::before {
-  background-color: var(--colors-primary--600); bottom: 5px; content: "";
-  display: block; height: 3px; position: absolute; right: -6px; top: auto;
-  transform: rotate(-45deg); width: var(--ui-notch-hypotenuse); z-index: 100;
-}
-.form-control input, .form-control textarea {
-  background-color: transparent; border: 0; box-shadow: none;
-  color: var(--colors-primary--500); font-family: var(--fonts-primary);
-  font-size: 0.95rem; letter-spacing: 0.045em; outline: none;
-  padding: 0.4rem 0.5rem; resize: none; width: 100%;
-}
+    .btn-subscribe {
+      background: transparent;
+      border: 1px solid var(--cyan-500);
+      color: var(--cyan-500);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
 
-/* ============================================================
-   MAIN CONTENT AREA
-   ============================================================ */
-.main-scroll {
-  flex: 1; overflow-y: auto; min-height: 0;
-  padding-right: 4px;
-}
-.main-scroll::-webkit-scrollbar { width: 3px; }
-.main-scroll::-webkit-scrollbar-thumb { background: var(--colors-primary--700); }
+    .btn-subscribe:hover {
+      background: rgba(43,228,234,0.1);
+      box-shadow: var(--glow-cyan);
+    }
 
-/* Content panels */
-.content-panel { display: none; }
-.content-panel.active { display: block; animation: panelIn 0.2s ease; }
-@keyframes panelIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--red-900);
+      border-bottom: 1px solid var(--red-800);
+      overflow: hidden;
+      height: 28px;
+      display: flex;
+      align-items: center;
+    }
 
-/* ============================================================
-   SECTION COMPONENTS
-   ============================================================ */
-.section-block {
-  background-color: var(--colors-bg--300);
-  border: 1px solid var(--colors-primary--700);
-  border-radius: 2px; margin-bottom: 0.75rem; overflow: hidden;
-}
-.section-block__header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.5rem 0.75rem; background-color: #1a1218;
-  border-bottom: 1px solid var(--colors-primary--700);
-  cursor: pointer; user-select: none;
-}
-.section-block__header:hover { background-color: #231920; }
-.section-block__title {
-  color: var(--colors-secondary--500); font-size: 0.95rem;
-  text-transform: uppercase; letter-spacing: 0.06em; margin: 0;
-  font-family: var(--fonts-secondary); font-size: 1.1rem;
-}
-.section-block__chevron { color: var(--colors-primary--300); font-size: 0.8rem; transition: transform 0.2s; }
-.section-block.collapsed .section-block__chevron { transform: rotate(-90deg); }
-.section-block.collapsed .section-block__body { display: none; }
-.section-block__body { padding: 0.75rem; font-size: 0.92rem; line-height: 1.65; color: var(--colors-primary--200); }
-.section-block__body p { margin: 0 0 0.6rem; }
-.section-block__body p:last-child { margin-bottom: 0; }
-.section-block__body strong { color: var(--colors-secondary--500); font-weight: 700; }
-.section-block__body em { color: var(--colors-tertiary--500); font-style: normal; }
+    .ticker-label {
+      background: var(--red-500);
+      color: #0d0a0d;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0 0.75rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 1;
+    }
 
-/* ============================================================
-   CODE BLOCK
-   ============================================================ */
-.code-block {
-  background: #0d0a0d; border: 1px solid var(--colors-primary--700);
-  border-left: 3px solid var(--colors-primary--500);
-  padding: 0.6rem 0.75rem; margin: 0.5rem 0;
-  font-family: var(--fonts-secondary); font-size: 1rem;
-  color: var(--colors-primary--300); overflow-x: auto;
-  line-height: 1.5;
-}
-.code-block .c-prompt { color: var(--colors-primary--600); }
-.code-block .c-cmd { color: var(--colors-primary--500); }
-.code-block .c-out { color: var(--colors-primary--300); }
-.code-block .c-hi { color: var(--colors-tertiary--500); }
-.code-block .c-comment { color: #5a3535; }
-.code-block .c-good { color: var(--colors-active--500); }
-.code-block .c-label {
-  position: absolute; top: 4px; right: 8px;
-  font-size: 0.75rem; color: var(--colors-primary--600); letter-spacing: 1px;
-}
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--red-300);
+      gap: 3rem;
+      padding-left: 2rem;
+    }
 
-/* ============================================================
-   CALLOUT
-   ============================================================ */
-.callout {
-  display: flex; gap: 0.6rem; padding: 0.5rem 0.75rem;
-  margin: 0.5rem 0; font-size: 0.88rem; line-height: 1.55;
-  border-radius: 2px;
-}
-.callout.tip { background: rgba(43,228,234,0.05); border-left: 3px solid var(--colors-secondary--500); color: var(--colors-primary--200); }
-.callout.warn { background: rgba(254,211,63,0.07); border-left: 3px solid var(--colors-tertiary--500); color: var(--colors-primary--200); }
-.callout.danger { background: rgba(232,97,90,0.08); border-left: 3px solid var(--colors-primary--500); color: var(--colors-primary--200); }
-.callout__icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .ticker-track span::before { content: "▶ "; color: var(--red-500); }
 
-/* ============================================================
-   TIMELINE
-   ============================================================ */
-.timeline { padding-left: 1.5rem; margin: 0.5rem 0; }
-.timeline::before {
-  content: ''; position: absolute; left: 0.45rem; top: 0; bottom: 0;
-  width: 2px; background: linear-gradient(to bottom, var(--colors-primary--500), var(--colors-primary--800));
-}
-.timeline-item { padding: 0 0 1rem 0.75rem; }
-.timeline-item::before {
-  content: ''; position: absolute;
-  left: -1.25rem; top: 0.3rem;
-  width: 10px; height: 10px;
-  border: 2px solid var(--colors-primary--500);
-  background: var(--colors-bg--500); border-radius: 50%;
-  box-shadow: 0 0 6px var(--colors-primary--500);
-}
-.timeline-item:last-child { padding-bottom: 0; }
-.timeline-year {
-  font-family: var(--fonts-secondary); font-size: 1.3rem;
-  color: var(--colors-tertiary--500); line-height: 1;
-}
-.timeline-event {
-  color: var(--colors-secondary--500); font-size: 0.95rem;
-  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
-  margin-bottom: 0.2rem;
-}
-.timeline-desc { color: var(--colors-primary--200); font-size: 0.88rem; line-height: 1.55; }
-.timeline-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 0.3rem; }
-.timeline-tag {
-  font-family: var(--fonts-secondary); font-size: 0.85rem;
-  padding: 0 0.4em; border: 1px solid var(--colors-primary--700);
-  color: var(--colors-primary--300); border-radius: 2px;
-}
-.timeline-tag.nation { border-color: var(--colors-primary--500); color: var(--colors-primary--500); }
-.timeline-tag.criminal { border-color: var(--colors-tertiary--500); color: var(--colors-tertiary--500); }
-.timeline-tag.hacktivism { border-color: var(--colors-secondary--500); color: var(--colors-secondary--500); }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
 
-/* ============================================================
-   SKILL GRID
-   ============================================================ */
-.skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.5rem 0; }
-.skill-card {
-  background: #0d0a0d; border: 1px solid var(--colors-primary--700);
-  padding: 0.6rem 0.75rem; border-radius: 2px;
-  transition: border-color 0.2s, background 0.2s; cursor: default;
-}
-.skill-card:hover { border-color: var(--colors-secondary--500); background: rgba(43,228,234,0.04); }
-.skill-card__title { color: var(--colors-secondary--500); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
-.skill-card__body { color: var(--colors-primary--200); font-size: 0.85rem; line-height: 1.5; }
-.skill-card__level {
-  display: inline-block; margin-top: 0.3rem;
-  font-family: var(--fonts-secondary); font-size: 0.85rem;
-  padding: 0 0.4em; border-radius: 2px;
-}
-.skill-card__level.beginner { border: 1px solid var(--colors-active--500); color: var(--colors-active--500); }
-.skill-card__level.intermediate { border: 1px solid var(--colors-tertiary--500); color: var(--colors-tertiary--500); }
-.skill-card__level.advanced { border: 1px solid var(--colors-primary--500); color: var(--colors-primary--500); }
+    /* ===== PAGE WRAPPER ===== */
+    .page { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
-/* ============================================================
-   RESOURCES TABLE
-   ============================================================ */
-.res-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
-.res-table th {
-  background: #1a1218; color: var(--colors-secondary--500);
-  padding: 0.4rem 0.6rem; border: 1px solid var(--colors-primary--700);
-  text-align: left; font-weight: 700; letter-spacing: 0.05em;
-  font-family: var(--fonts-secondary); font-size: 0.95rem;
-}
-.res-table td { padding: 0.4rem 0.6rem; border: 1px solid var(--colors-primary--800); color: var(--colors-primary--200); }
-.res-table tr:hover td { background: rgba(43,228,234,0.03); }
-.res-table a { color: var(--colors-tertiary--500); text-decoration: underline; }
-.res-table a:hover { color: var(--colors-secondary--500); }
-.res-cat { color: var(--colors-active--500); font-family: var(--fonts-secondary); font-size: 0.9rem; }
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.5rem 0 0.6rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 2px solid var(--red-500);
+      box-shadow: 0 2px 0 transparent, 0 3px 12px rgba(232,97,90,0.2);
+    }
 
-/* ============================================================
-   QUIZ COMPONENT
-   ============================================================ */
-.quiz-wrap {
-  background: #0d0a0d; border: 1px solid var(--colors-primary--600);
-  padding: 0.75rem; margin-bottom: 0.75rem;
-  clip-path: var(--ui-notch-path);
-}
-.quiz-wrap::before {
-  background-color: var(--colors-primary--600); bottom: 5px; content: "";
-  display: block; height: 3px; position: absolute; right: -6px;
-  top: auto; transform: rotate(-45deg); width: var(--ui-notch-hypotenuse); z-index: 100;
-}
-.quiz-meta {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 0.6rem;
-}
-.quiz-label { font-family: var(--fonts-secondary); font-size: 1rem; color: var(--colors-tertiary--500); letter-spacing: 0.08em; }
-.quiz-score { font-family: var(--fonts-secondary); font-size: 1rem; color: var(--colors-active--500); }
-.quiz-progress { margin-bottom: 0.75rem; }
-.quiz-prog-bar { height: 3px; background: var(--colors-primary--800); margin-top: 4px; }
-.quiz-prog-fill { height: 100%; background: var(--colors-tertiary--500); transition: width 0.4s; box-shadow: 0 0 6px var(--colors-tertiary--500); }
-.quiz-q-text { font-size: 0.95rem; color: var(--colors-primary--500); margin-bottom: 0.6rem; line-height: 1.5; font-weight: 700; }
-.quiz-opts { display: flex; flex-direction: column; gap: 0.35rem; }
-.quiz-opt {
-  display: flex; align-items: center; gap: 0.6rem;
-  padding: 0.45rem 0.6rem; border: 1px solid var(--colors-primary--700);
-  cursor: pointer; font-size: 0.9rem; color: var(--colors-primary--300);
-  transition: all 0.15s; border-radius: 2px;
-}
-.quiz-opt:hover { border-color: var(--colors-secondary--500); color: var(--colors-secondary--500); background: rgba(43,228,234,0.05); }
-.quiz-opt.correct { border-color: var(--colors-active--500); color: var(--colors-active--500); background: rgba(43,254,160,0.07); }
-.quiz-opt.wrong { border-color: var(--colors-primary--500); color: var(--colors-primary--500); background: rgba(232,97,90,0.08); }
-.quiz-opt .opt-key { font-family: var(--fonts-secondary); font-size: 0.95rem; opacity: 0.6; min-width: 18px; }
-.quiz-feedback {
-  display: none; margin-top: 0.5rem; padding: 0.4rem 0.6rem;
-  font-size: 0.88rem; border-radius: 2px;
-}
-.quiz-feedback.show { display: block; }
-.quiz-feedback.ok { color: var(--colors-active--500); border-left: 3px solid var(--colors-active--500); background: rgba(43,254,160,0.06); }
-.quiz-feedback.fail { color: var(--colors-primary--500); border-left: 3px solid var(--colors-primary--500); background: rgba(232,97,90,0.06); }
-.quiz-nav { display: flex; gap: 0.5rem; margin-top: 0.6rem; align-items: center; justify-content: space-between; }
-.quiz-counter { font-family: var(--fonts-secondary); font-size: 0.9rem; color: var(--colors-primary--600); }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      margin: 0;
+    }
 
-/* ============================================================
-   SIDEBAR — AUDIT LOG TERMINAL
-   ============================================================ */
-.terminal-wrap { display: flex; flex-direction: column; height: 100%; background: #0a080a; border: 1px solid var(--colors-primary--700); }
-.terminal-topbar {
-  display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.4rem 0.6rem; background: #1a1218;
-  border-bottom: 1px solid var(--colors-primary--800); flex-shrink: 0;
-}
-.tdot { width: 8px; height: 8px; border-radius: 50%; }
-.tdot.r { background: var(--colors-primary--500); opacity: 0.7; }
-.tdot.a { background: var(--colors-tertiary--500); opacity: 0.7; }
-.tdot.g { background: var(--colors-active--500); opacity: 0.7; }
-.terminal-title { font-family: var(--fonts-secondary); font-size: 0.9rem; color: var(--colors-primary--600); letter-spacing: 0.1em; margin-left: 4px; }
-.terminal-log { flex: 1; overflow-y: auto; padding: 0.5rem 0.6rem; font-family: var(--fonts-secondary); font-size: 1rem; line-height: 1.5; }
-.terminal-log::-webkit-scrollbar { width: 3px; }
-.terminal-log::-webkit-scrollbar-thumb { background: var(--colors-primary--800); }
-.log-line { margin-bottom: 1px; word-break: break-all; }
-.log-line.sys { color: var(--colors-primary--700); }
-.log-line.ok { color: var(--colors-active--500); }
-.log-line.warn { color: var(--colors-tertiary--500); }
-.log-line.err { color: var(--colors-primary--500); }
-.log-line.info { color: var(--colors-secondary--500); }
-.log-line.prompt { color: var(--colors-primary--500); }
-.terminal-input-row {
-  display: flex; align-items: center; gap: 0.4rem;
-  padding: 0.35rem 0.6rem; border-top: 1px solid var(--colors-primary--800);
-  background: #0a080a; flex-shrink: 0;
-}
-.term-prompt-sym { font-family: var(--fonts-secondary); color: var(--colors-primary--500); font-size: 1rem; }
-#terminal-input {
-  flex: 1; background: transparent; border: none; outline: none;
-  color: var(--colors-primary--500); font-family: var(--fonts-secondary); font-size: 1rem;
-  caret-color: var(--colors-primary--500);
-}
+    .section-title .overline {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--cyan-500);
+      text-shadow: none;
+      margin-bottom: -0.2rem;
+    }
 
-/* Pulse dot */
-.pulse-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--colors-active--500);
-  box-shadow: 0 0 6px var(--colors-active--500);
-  display: inline-block;
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .section-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
 
-/* ============================================================
-   TICKER TAPE (bottom)
-   ============================================================ */
-#ticker-wrap {
-  position: fixed; bottom: 0; left: 0; right: 0; height: 26px;
-  background: #1a1218; border-top: 1px solid var(--colors-primary--700);
-  overflow: hidden; z-index: 200; display: flex; align-items: center;
-}
-#ticker-track {
-  display: flex; gap: 80px; white-space: nowrap;
-  font-family: var(--fonts-secondary); font-size: 0.95rem;
-  color: var(--colors-primary--600);
-  animation: ticker 80s linear infinite;
-}
-@keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-#ticker-track .t-label { color: var(--colors-tertiary--500); margin-right: 0.3em; }
-#ticker-track .t-alert { color: var(--colors-primary--500); }
-#ticker-track .t-info { color: var(--colors-secondary--500); }
+    .section-link:hover { border-color: var(--cyan-500); }
 
-/* ============================================================
-   GLITCH TITLE EFFECT
-   ============================================================ */
-.glitch { display: inline-block; }
-.glitch::before, .glitch::after {
-  content: attr(data-text); position: absolute; top: 0; left: 0; opacity: 0.06;
-}
-.glitch::before { color: var(--colors-secondary--500); animation: g1 5s infinite; clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%); }
-.glitch::after { color: var(--colors-tertiary--500); animation: g2 5s infinite; clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%); }
-@keyframes g1 { 0%, 90%, 100% { transform: translateX(0); } 92% { transform: translateX(-2px); } 96% { transform: translateX(2px); } }
-@keyframes g2 { 0%, 90%, 100% { transform: translateX(0); } 93% { transform: translateX(2px); } 97% { transform: translateX(-2px); } }
+    /* ===== HERO ===== */
+    .hero { margin: 2rem 0; position: relative; }
 
-/* ============================================================
-   MISC UTILITIES
-   ============================================================ */
-.text-secondary { color: var(--colors-secondary--500); }
-.text-tertiary { color: var(--colors-tertiary--500); }
-.text-active { color: var(--colors-active--500); }
-.text-dim { color: var(--colors-primary--600); }
-.mt-sm { margin-top: 0.5rem; }
-.xp-bar-wrap { display: flex; align-items: center; gap: 0.5rem; font-family: var(--fonts-secondary); font-size: 0.9rem; }
-.xp-bar { width: 90px; height: 5px; background: var(--colors-primary--800); border: 1px solid var(--colors-primary--600); overflow: hidden; }
-.xp-fill { height: 100%; background: var(--colors-tertiary--500); box-shadow: 0 0 6px var(--colors-tertiary--500); transition: width 0.5s; }
-.rank-chip {
-  font-family: var(--fonts-secondary); font-size: 0.85rem;
-  color: var(--colors-primary--500); border: 1px solid var(--colors-primary--600);
-  padding: 0 0.4em; border-radius: 2px; letter-spacing: 0.05em;
-}
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+      border: 1px solid var(--red-700);
+      overflow: hidden;
+      clip-path: var(--notch-path);
+      background: var(--bg-600);
+    }
 
-/* Step list */
-.step-list { margin: 0.4rem 0; display: flex; flex-direction: column; gap: 0.3rem; }
-.step-item { display: flex; gap: 0.6rem; font-size: 0.88rem; color: var(--colors-primary--200); align-items: flex-start; padding: 0.3rem 0; border-bottom: 1px solid var(--colors-primary--800); line-height: 1.5; }
-.step-item:last-child { border-bottom: none; }
-.step-num { font-family: var(--fonts-secondary); font-size: 1rem; color: var(--colors-primary--500); min-width: 1.4rem; }
-.step-item strong { color: var(--colors-secondary--500); }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 3px;
+      background: var(--red-700);
+      transform: rotate(-45deg);
+      z-index: 10;
+    }
 
-/* Roadmap */
-.roadmap { padding-left: 1.2rem; }
-.roadmap::before { content: ''; position: absolute; left: 0.3rem; top: 4px; bottom: 4px; width: 1px; background: linear-gradient(to bottom, var(--colors-primary--500), transparent); }
-.rm-item { padding: 0.35rem 0 0.35rem 0.6rem; }
-.rm-item::before { content: ''; position: absolute; left: -1.1rem; top: 0.6rem; width: 8px; height: 8px; border: 1px solid var(--colors-primary--600); background: var(--colors-bg--500); border-radius: 50%; }
-.rm-item.done::before { background: var(--colors-active--500); border-color: var(--colors-active--500); box-shadow: 0 0 5px var(--colors-active--500); }
-.rm-item strong { color: var(--colors-secondary--500); display: block; font-size: 0.9rem; }
-.rm-item small { color: var(--colors-primary--600); font-size: 0.82rem; }
+    .hero-image {
+      background: var(--bg-900);
+      position: relative;
+      overflow: hidden;
+    }
 
-/* Scan line overlay */
-body::after {
-  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999;
-  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
-}
+    .hero-image svg { width: 100%; height: 100%; display: block; }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--bg-600));
+    }
+
+    .hero-content {
+      padding: 2.5rem 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      background: rgba(43,228,234,0.1);
+      border: 1px solid var(--cyan-900);
+      padding: 0.2em 0.6em;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    .hero-tag::before { content: "//"; opacity: 0.6; }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+      color: var(--red-300);
+      text-shadow: var(--glow-red);
+      margin: 0 0 1rem;
+    }
+
+    .hero-excerpt {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--red-400);
+      margin: 0 0 1.5rem;
+      max-width: 38ch;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--red-700);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta .author { color: var(--red-300); }
+
+    .btn-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 2px solid var(--red-500);
+      color: var(--red-500);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem 0.6rem 0.75rem;
+      cursor: pointer;
+      clip-path: var(--notch-path);
+      transition: background 0.2s, box-shadow 0.2s;
+      width: fit-content;
+      position: relative;
+    }
+
+    .btn-read::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-500);
+      transform: rotate(-45deg);
+    }
+
+    .btn-read:hover {
+      background: var(--red-900);
+      box-shadow: var(--glow-red);
+    }
+
+    /* ===== ARTICLE GRID ===== */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .article-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      clip-path: var(--notch-path);
+      position: relative;
+    }
+
+    .article-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+      transition: background 0.25s;
+    }
+
+    .article-card:hover {
+      border-color: var(--red-700);
+      box-shadow: 0 0 20px rgba(232,97,90,0.12);
+    }
+
+    .article-card:hover::after { background: var(--red-700); }
+
+    .article-thumb {
+      background: var(--bg-900);
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .article-thumb svg { width: 100%; height: 100%; display: block; }
+
+    .article-cat {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15em 0.5em;
+      z-index: 1;
+    }
+
+    .cat-offensive { background: rgba(232,97,90,0.85); color: #0d0a0d; }
+    .cat-blueteam  { background: rgba(43,228,234,0.85); color: #0d0a0d; }
+    .cat-osint     { background: rgba(254,211,63,0.85); color: #0d0a0d; }
+    .cat-malware   { background: rgba(43,254,160,0.85); color: #0d0a0d; }
+    .cat-ctf       { background: rgba(200,130,255,0.85); color: #0d0a0d; }
+    .cat-tools     { background: rgba(255,160,40,0.85); color: #0d0a0d; }
+
+    .article-body { padding: 0.9rem; flex: 1; display: flex; flex-direction: column; }
+
+    .article-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      color: var(--red-300);
+      margin: 0 0 0.5rem;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .article-card:hover .article-title { color: var(--cyan-400); }
+
+    .article-excerpt {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--red-400);
+      margin: 0 0 0.75rem;
+      flex: 1;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--red-700);
+      border-top: 1px solid var(--red-900);
+      padding-top: 0.5rem;
+      margin-top: auto;
+    }
+
+    .article-meta .author { color: var(--red-500); }
+
+    /* ===== FEATURED ROW (2-col) ===== */
+    .featured-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .featured-wide {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      clip-path: var(--notch-path);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-wide::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+    }
+
+    .featured-wide .article-thumb { aspect-ratio: auto; }
+    .featured-wide .article-body { padding: 1.25rem; justify-content: center; }
+    .featured-wide .article-title { font-size: 1.55rem; }
+
+    .sidebar-stack { display: flex; flex-direction: column; gap: 1rem; }
+
+    .mini-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow: hidden;
+      clip-path: var(--notch-path);
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .mini-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+      transition: background 0.2s;
+    }
+
+    .mini-card:hover { border-color: var(--red-700); }
+    .mini-card:hover::after { background: var(--red-700); }
+
+    .mini-card__thumb {
+      width: 90px;
+      flex-shrink: 0;
+      background: var(--bg-900);
+    }
+
+    .mini-card__thumb svg { width: 100%; height: 100%; display: block; }
+
+    .mini-card__body {
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .mini-card__cat {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin-bottom: 0.2rem;
+    }
+
+    .mini-card__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      line-height: 1.1;
+      color: var(--red-300);
+      margin: 0 0 0.3rem;
+    }
+
+    .mini-card:hover .mini-card__title { color: var(--cyan-400); }
+
+    .mini-card__date {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--red-700);
+    }
+
+    /* ===== WELCOME PANEL ===== */
+    .welcome-section {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      border-left: 3px solid var(--red-500);
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .welcome-section__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin: 0 0 0.5rem;
+    }
+
+    .welcome-section__title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--red-300);
+      text-shadow: var(--glow-red);
+      margin: 0 0 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    .welcome-section__body {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--red-400);
+      max-width: 55ch;
+    }
+
+    .welcome-section__body strong { color: var(--cyan-500); }
+
+    .welcome-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      padding: 0.75rem 1.25rem;
+      min-width: 110px;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red-700);
+    }
+
+    /* ===== PODCAST ===== */
+    .podcast-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pod-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+      clip-path: var(--notch-path);
+      position: relative;
+      transition: border-color 0.25s;
+    }
+
+    .pod-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+    }
+
+    .pod-card:hover { border-color: var(--cyan-500); box-shadow: 0 0 15px rgba(43,228,234,0.1); }
+
+    .pod-num {
+      background: var(--bg-900);
+      border-right: 1px solid var(--red-800);
+      padding: 1rem;
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--red-800);
+      min-width: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pod-card:hover .pod-num { color: var(--red-700); }
+
+    .pod-body { padding: 0.9rem 1rem; flex: 1; }
+
+    .pod-ep {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin-bottom: 0.3rem;
+    }
+
+    .pod-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1.1;
+      color: var(--red-300);
+      margin: 0 0 0.4rem;
+    }
+
+    .pod-card:hover .pod-title { color: var(--cyan-400); }
+
+    .pod-desc {
+      font-size: 0.8rem;
+      line-height: 1.55;
+      color: var(--red-400);
+      margin: 0 0 0.6rem;
+    }
+
+    .pod-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--red-700);
+    }
+
+    .pod-play {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--cyan-500);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      border: 1px solid var(--cyan-900);
+      padding: 0.15em 0.5em;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .pod-play:hover { background: rgba(43,228,234,0.08); }
+    .pod-play::before { content: "▶"; font-size: 0.55rem; }
+
+    /* ===== TOOLS ROW ===== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .tool-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-900);
+      border-top: 2px solid var(--red-700);
+      padding: 1rem;
+      transition: border-top-color 0.2s, box-shadow 0.2s;
+    }
+
+    .tool-card:hover {
+      border-top-color: var(--cyan-500);
+      box-shadow: 0 -2px 12px rgba(43,228,234,0.15);
+    }
+
+    .tool-icon {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      color: var(--red-700);
+      margin-bottom: 0.5rem;
+      display: block;
+      transition: color 0.2s;
+    }
+
+    .tool-card:hover .tool-icon { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+
+    .tool-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--red-300);
+      margin: 0 0 0.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .tool-desc {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--red-700);
+    }
+
+    .tool-tags {
+      margin-top: 0.6rem;
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--red-800);
+      color: var(--red-700);
+      padding: 0.1em 0.4em;
+    }
+
+    /* ===== NEWSLETTER ===== */
+    .newsletter {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      border-left: 3px solid var(--cyan-500);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .newsletter__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin: 0 0 0.4rem;
+    }
+
+    .newsletter__title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--red-300);
+      margin: 0 0 0.4rem;
+    }
+
+    .newsletter__desc {
+      font-size: 0.85rem;
+      color: var(--red-400);
+    }
+
+    .newsletter__form {
+      display: flex;
+      gap: 0.5rem;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    .newsletter__input {
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      border-radius: 2px;
+      color: var(--red-300);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      padding: 0.5rem 0.9rem;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter__input:focus { border-color: var(--cyan-500); }
+    .newsletter__input::placeholder { color: var(--red-800); }
+
+    .newsletter__btn {
+      background: var(--red-500);
+      border: none;
+      color: #0d0a0d;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter__btn:hover { background: var(--red-400); box-shadow: var(--glow-red); }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--bg-900);
+      border-top: 1px solid var(--red-900);
+      margin-top: 1rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand { }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-logo span { color: var(--cyan-500); }
+
+    .footer-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--red-700);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .social-btn {
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      color: var(--red-700);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.3em 0.6em;
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+
+    .footer-col__title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--red-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--red-900);
+    }
+
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+
+    .footer-links li { margin-bottom: 0.35rem; }
+
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--red-700);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red-400); }
+
+    .footer-links a::before { content: "// "; color: var(--red-900); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--red-900);
+      padding: 1rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--red-900);
+    }
+
+    .footer-bottom span { color: var(--red-800); }
+
+    /* ===== GLITCH ===== */
+    @keyframes glitch {
+      0%   { clip-path: inset(0 0 95% 0); transform: translateX(-2px); }
+      20%  { clip-path: inset(30% 0 50% 0); transform: translateX(2px); }
+      40%  { clip-path: inset(60% 0 20% 0); transform: translateX(-1px); }
+      60%  { clip-path: inset(80% 0 5% 0); transform: translateX(1px); }
+      80%  { clip-path: inset(10% 0 80% 0); transform: translateX(-2px); }
+      100% { clip-path: inset(0 0 95% 0); transform: translateX(0); }
+    }
+
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .glitch::before {
+      color: var(--cyan-500);
+      animation: glitch 4s step-start infinite;
+      animation-delay: 0.5s;
+    }
+
+    .glitch::after {
+      color: var(--red-500);
+      animation: glitch 4s step-start infinite;
+      animation-delay: 1s;
+    }
   </style>
 </head>
 <body>
-<div class="app-skeleton">
 
-  <!-- ============================================================ HEADER -->
-  <header class="app-header">
-    <div class="app-header__anchor">
-      <span class="app-header__anchor__text">INFOSEC//EDUCATOR</span>
-    </div>
-    <nav>
-      <ul class="nav">
-        <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('history',this)">History</a></li>
-        <li class="nav__item"><a class="nav__link nav__link--active" href="#" onclick="switchPanel('timeline',this)">Timeline</a></li>
-        <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('skills',this)">Skills</a></li>
-        <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('resources',this)">Resources</a></li>
-        <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('quiz',this)">Quizzes <span class="badge" id="quiz-badge">5</span></a></li>
-      </ul>
-    </nav>
-    <div style="display:flex;align-items:center;gap:0.75rem;">
-      <div class="xp-bar-wrap">
-        <span class="text-dim">XP</span>
-        <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:8%"></div></div>
-        <span id="xp-label" style="color:var(--colors-tertiary--500)">80/1000</span>
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="#" class="active">Home</a>
+        <a href="password.html">_PasswordAnalyzer</a>
+        <a href="#">Writeups</a>
+        <a href="phishy.html">_PhishTest</a>
+        <a href="#">Tools</a>
+        <a href="#">Community</a>
+        <a href="#">About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+        <button class="btn-subscribe">Subscribe</button>
       </div>
-      <span class="rank-chip" id="rank-chip">SCRIPT KIDDIE</span>
-      <span class="pulse-dot"></span>
     </div>
   </header>
 
-  <!-- ============================================================ MAIN GRID -->
-  <div class="app-container">
-
-    <!-- ============ LEFT NAV ============ -->
-    <div class="app-a">
-
-      <div class="segment-topbar" style="min-height:2.5rem">
-        <div class="segment-topbar__header">
-          <h3 class="segment-topbar__title">Modules</h3>
-        </div>
-        <div class="segment-topbar__aside">
-          <div class="button-toolbar">
-            <a class="button button--primary button--size-lg" style="padding:0.3rem 0.5rem 0.5rem" onclick="alert('Progress saved.')">
-              <svg style="width:14px;height:14px;fill:currentcolor;display:block;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section__header"><h2 class="nav-section__title">Learn</h2></div>
-        <div class="nav-section__body">
-          <ul class="nav">
-            <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('history',this)">◈ Brief History</a></li>
-            <li class="nav__item"><a class="nav__link nav__link--active" href="#" onclick="switchPanel('timeline',this)">◉ Major Events <span class="badge">★</span></a></li>
-            <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('skills',this)">◎ Skills & Topics</a></li>
-            <li class="nav__item"><a class="nav__link" href="#" onclick="switchPanel('resources',this)">◌ Resources</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section__header"><h2 class="nav-section__title">Quizzes</h2></div>
-        <div class="nav-section__body">
-          <ul class="nav">
-            <li class="nav__item"><a class="nav__link" href="#" onclick="loadQuiz(0);switchPanel('quiz',this)">▸ History Basics</a></li>
-            <li class="nav__item"><a class="nav__link" href="#" onclick="loadQuiz(1);switchPanel('quiz',this)">▸ Networking</a></li>
-            <li class="nav__item"><a class="nav__link" href="#" onclick="loadQuiz(2);switchPanel('quiz',this)">▸ Attack Vectors</a></li>
-            <li class="nav__item"><a class="nav__link" href="#" onclick="loadQuiz(3);switchPanel('quiz',this)">▸ Cryptography</a></li>
-            <li class="nav__item"><a class="nav__link" href="#" onclick="loadQuiz(4);switchPanel('quiz',this)">▸ Tools & Skills</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section__header"><h2 class="nav-section__title">Progress</h2></div>
-        <div class="nav-section__body" style="font-family:var(--fonts-secondary);font-size:0.95rem;color:var(--colors-primary--300);padding:0.4rem 0.25rem;line-height:2;">
-          <div>Modules visited: <span id="stat-visited" class="text-secondary">1</span></div>
-          <div>Quizzes taken: <span id="stat-taken" class="text-tertiary">0</span></div>
-          <div>Correct answers: <span id="stat-correct" class="text-active">0</span></div>
-          <div>Total XP: <span id="stat-xp" style="color:var(--colors-tertiary--500)">80</span></div>
-        </div>
-      </div>
-
-      <div class="pad">
-        <div class="pad__body">
-          <p class="pad__title">About</p>
-          <p class="pad__text">A cybersecurity learning terminal covering the history, major events, skills, and resources to break into information security.</p>
-        </div>
-      </div>
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// INTEL</div>
+    <div class="ticker-track">
+      <span>CVE-2024-3094 — XZ Utils backdoor analysis available</span>
+      <span>New course: Active Directory Attacks &amp; Defense</span>
+      <span>CTF Writeup: HackTheBox — Intuition (Insane)</span>
+      <span>Podcast EP. 47 — Red Team vs. Purple Team</span>
+      <span>Tool Spotlight: Sliver C2 Framework deep-dive</span>
+      <span>Community challenge: OSINT Scavenger Hunt live</span>
+      <span>CVE-2024-3094 — XZ Utils backdoor analysis available</span>
+      <span>New course: Active Directory Attacks &amp; Defense</span>
+      <span>CTF Writeup: HackTheBox — Intuition (Insane)</span>
+      <span>Podcast EP. 47 — Red Team vs. Purple Team</span>
     </div>
-
-    <!-- ============ MAIN CONTENT ============ -->
-    <div class="app-main">
-
-      <!-- TOPBAR -->
-      <div class="segment-topbar">
-        <div class="segment-topbar__header">
-          <span class="segment-topbar__overline" id="panel-overline">MODULE_02 // MAJOR EVENTS</span>
-          <h4 class="segment-topbar__title glitch" data-text="HACKING TIMELINE" id="panel-title">HACKING TIMELINE</h4>
-        </div>
-        <div class="segment-topbar__aside">
-          <div class="button-toolbar">
-            <button class="button" onclick="toggleAll(true)" title="Collapse all">▲ Collapse</button>
-            <button class="button" onclick="toggleAll(false)" title="Expand all">▼ Expand</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="main-scroll">
-
-        <!-- ===================== PANEL: HISTORY ===================== -->
-        <div id="panel-history" class="content-panel">
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Origins: Phone Phreaking (1950s–70s)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <p>The story of hacking begins not with computers, but with the telephone network. In the 1950s and 60s, a subculture of <em>phone phreaks</em> discovered that the AT&T long-distance network could be manipulated using precise audio tones to make free calls and explore the system.</p>
-              <p>The most famous phreak was <strong>John Draper</strong> — "Captain Crunch" — who discovered that a toy whistle included in Cap'n Crunch cereal produced a 2600 Hz tone that could seize AT&T's long-distance trunk lines. This wasn't about stealing calls; it was about understanding and manipulating a complex system — the foundational hacker impulse.</p>
-              <div class="callout tip">
-                <span class="callout__icon">📻</span>
-                <div>Two of Draper's protégés were Steve Wozniak and Steve Jobs, who sold "blue boxes" — tone generators for phone phreaking — before founding Apple. The hacker ethos of building something clever was already baked into Silicon Valley's DNA.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">The Computer Underground (1980s)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <p>When personal computers arrived, the phone phreak culture transformed into computer hacking. <em>Bulletin Board Systems (BBS)</em> became the dark web of their day — text-based forums where hackers traded techniques, software cracks, and stolen credentials over phone lines.</p>
-              <p>The 1983 film <strong>WarGames</strong> introduced the public to hacking and led directly to the <em>Computer Fraud and Abuse Act of 1986</em> — the first US federal anti-hacking law still used to prosecute cybercrime today. That same year, <strong>Robert Morris</strong> released the first internet worm, crashing roughly 10% of all connected computers.</p>
-              <div class="code-block">
-                <span class="c-comment"># The Hacker Ethic — Steven Levy, "Hackers" (1984)</span><br>
-                <span class="c-good">1.</span> <span class="c-out">Access to computers should be unlimited and total.</span><br>
-                <span class="c-good">2.</span> <span class="c-out">All information should be free.</span><br>
-                <span class="c-good">3.</span> <span class="c-out">Mistrust authority — promote decentralization.</span><br>
-                <span class="c-good">4.</span> <span class="c-out">Hackers should be judged by their hacking, not by criteria like age, race, or position.</span><br>
-                <span class="c-good">5.</span> <span class="c-out">You can create art and beauty on a computer.</span><br>
-                <span class="c-good">6.</span> <span class="c-out">Computers can change your life for the better.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">The Internet Era & Cybercrime (1990s–2000s)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <p>The commercialization of the internet transformed hacking from a hobbyist subculture into a global security industry. The same properties that made the internet powerful — openness, interoperability, trust — made it deeply vulnerable.</p>
-              <p>Groups like <strong>L0pht Heavy Industries</strong> testified before the US Senate in 1998 that they could take down the entire internet in 30 minutes. The NSA and CIA began recruiting hackers. A clear division emerged between <em>black hat</em> (criminal), <em>white hat</em> (ethical/professional), and <em>grey hat</em> (ambiguous) hackers.</p>
-              <p>The first bug bounty program launched at Netscape in 1995. <strong>Kevin Mitnick</strong> — once the FBI's most wanted cybercriminal — was arrested and later became a celebrated security consultant. The era established the template: adversarial knowledge is the most valuable security knowledge.</p>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">The Modern Threat Landscape (2010s–Present)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <p>Modern cybersecurity is defined by four converging forces: <strong>nation-state cyberwarfare</strong>, <strong>ransomware-as-a-service</strong>, <strong>supply chain attacks</strong>, and <strong>cloud infrastructure vulnerabilities</strong>.</p>
-              <p>The Snowden revelations (2013) exposed mass surveillance programs and caused a seismic shift in cryptography adoption. <em>WannaCry</em> and <em>NotPetya</em> (2017) demonstrated that cyberweapons could cause billions in real-world economic damage. The SolarWinds breach (2020) showed that even security vendors themselves could be weaponized as attack vectors.</p>
-              <div class="callout danger">
-                <span class="callout__icon">⚠</span>
-                <div>The global cost of cybercrime is projected to reach <strong>$10.5 trillion annually by 2025</strong>. Information security is no longer an IT function — it is a geopolitical and economic imperative.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===================== PANEL: TIMELINE ===================== -->
-        <div id="panel-timeline" class="content-panel active">
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Pre-Internet Era (1960s–1989)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-year">1969</div>
-                  <div class="timeline-event">ARPANET Goes Live</div>
-                  <div class="timeline-desc">The precursor to the internet connects four universities. The seeds of every future cyberattack are planted in its open, trust-based design.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">MILESTONE</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">1971</div>
-                  <div class="timeline-event">Creeper — First Known Malware</div>
-                  <div class="timeline-desc">Creeper self-replicates across ARPANET displaying "I'm the creeper, catch me if you can!" — the first program to move between machines autonomously. Reaper, the first "antivirus," was written to delete it.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">MALWARE</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">1983</div>
-                  <div class="timeline-event">WarGames Film & CFAA Legislation</div>
-                  <div class="timeline-desc">A Hollywood film about a teenager nearly triggering nuclear war via a school computer triggers the US Computer Fraud and Abuse Act (1986) — still the primary federal anti-hacking law.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">LEGAL</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">1988</div>
-                  <div class="timeline-event">Morris Worm</div>
-                  <div class="timeline-desc">Cornell student Robert Morris releases a "test" worm that exploits Unix vulnerabilities and crashes ~6,000 machines — roughly 10% of the entire internet. First person convicted under the CFAA.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">MALWARE</span><span class="timeline-tag">LEGAL</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Early Internet Era (1990s)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-year">1994</div>
-                  <div class="timeline-event">Mitnick Hunted — The "Most Wanted" Hacker</div>
-                  <div class="timeline-desc">Kevin Mitnick — who had broken into Motorola, Nokia, and Sun Microsystems — is tracked and arrested by FBI and Tsutomu Shimomura. Sentenced to 5 years. Later becomes the world's most famous security consultant.</div>
-                  <div class="timeline-tags"><span class="timeline-tag criminal">CRIMINAL</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">1995</div>
-                  <div class="timeline-event">First Bug Bounty Program</div>
-                  <div class="timeline-desc">Netscape launches the first formal bug bounty program, paying researchers to find vulnerabilities in Netscape Navigator 2.0. The model that now underpins billions in security research is born.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">INDUSTRY</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">1998</div>
-                  <div class="timeline-event">L0pht Testifies Before Senate</div>
-                  <div class="timeline-desc">Seven members of hacker collective L0pht Heavy Industries testify that they could take down the entire internet within 30 minutes. Watershed moment for government recognition of cybersecurity as national security.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">POLICY</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">1999</div>
-                  <div class="timeline-event">Melissa Virus — $80M in Damages</div>
-                  <div class="timeline-desc">Melissa propagates via Microsoft Word macros and email, crippling corporate mail servers worldwide. One of the first malware outbreaks to cause widespread economic damage, foreshadowing the ransomware era.</div>
-                  <div class="timeline-tags"><span class="timeline-tag criminal">CRIMINAL</span><span class="timeline-tag">MALWARE</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">The Weaponization Era (2000s)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-year">2000</div>
-                  <div class="timeline-event">I LOVE YOU Worm — $10B Damage</div>
-                  <div class="timeline-desc">A Filipino student's email worm spreads to 50 million computers in 10 days, overwriting files and stealing passwords. At the time, the costliest malware outbreak in history. The Philippines had no cybercrime laws — charges were dropped.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">MALWARE</span><span class="timeline-tag">LEGAL</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2007</div>
-                  <div class="timeline-event">Estonia DDoS — First Cyberwar</div>
-                  <div class="timeline-desc">Following a dispute over a Soviet war memorial, coordinated DDoS attacks paralyze Estonian government, banking, and media for weeks. Widely attributed to Russian state actors. NATO establishes its Cooperative Cyber Defence Centre in Tallinn the following year.</div>
-                  <div class="timeline-tags"><span class="timeline-tag nation">NATION-STATE</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2008</div>
-                  <div class="timeline-event">Operation Aurora — China vs Silicon Valley</div>
-                  <div class="timeline-desc">Chinese APT group (later attributed to PLA Unit 61398) breaches Google, Adobe, and 30 other US tech companies via zero-day IE exploit. Goal: steal source code and access Gmail accounts of human rights activists. Triggers Google's near-exit from China.</div>
-                  <div class="timeline-tags"><span class="timeline-tag nation">NATION-STATE</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2010</div>
-                  <div class="timeline-event">Stuxnet — Cyberweapon Crosses Into Physical World</div>
-                  <div class="timeline-desc">A joint US-Israeli cyberweapon physically destroys Iranian nuclear centrifuges by manipulating industrial control systems while showing false "normal" readings. The first known cyberweapon to cause physical destruction. Detonated a new era of ICS/SCADA security awareness.</div>
-                  <div class="timeline-tags"><span class="timeline-tag nation">NATION-STATE</span><span class="timeline-tag">ICS/SCADA</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">The Mega-Breach & Ransomware Era (2013–Present)</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-year">2013</div>
-                  <div class="timeline-event">Snowden Revelations</div>
-                  <div class="timeline-desc">NSA contractor Edward Snowden leaks classified documents revealing mass surveillance programs including PRISM. Causes global adoption of encryption and end-to-end messaging (Signal, WhatsApp), reshaping expectations of digital privacy.</div>
-                  <div class="timeline-tags"><span class="timeline-tag nation">NATION-STATE</span><span class="timeline-tag">PRIVACY</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2014</div>
-                  <div class="timeline-event">Heartbleed (CVE-2014-0160)</div>
-                  <div class="timeline-desc">A catastrophic memory disclosure bug in OpenSSL allows attackers to silently read server memory — including private keys and passwords — from millions of HTTPS servers. Affected ~66% of all secure web traffic. No logs. No traces.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">CVE</span><span class="timeline-tag">CRYPTO</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2016</div>
-                  <div class="timeline-event">Mirai Botnet — IoT Takes Down the Internet</div>
-                  <div class="timeline-desc">A botnet of 600,000 compromised IoT devices (cameras, DVRs) launches a 1.2 Tbps DDoS attack on DNS provider Dyn, taking down Twitter, Netflix, Reddit, and CNN simultaneously. Written by college students to win Minecraft server wars.</div>
-                  <div class="timeline-tags"><span class="timeline-tag criminal">CRIMINAL</span><span class="timeline-tag">IoT</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2017</div>
-                  <div class="timeline-event">WannaCry & NotPetya — Ransomware Goes Nuclear</div>
-                  <div class="timeline-desc">WannaCry (North Korea) uses the NSA's stolen EternalBlue exploit to encrypt 230,000 machines in 150 countries, crippling the UK's NHS. NotPetya (Russia), disguised as ransomware, is actually destructive malware causing $10B in damage — the costliest cyberattack in history.</div>
-                  <div class="timeline-tags"><span class="timeline-tag nation">NATION-STATE</span><span class="timeline-tag criminal">RANSOMWARE</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2020</div>
-                  <div class="timeline-event">SolarWinds Supply Chain Attack</div>
-                  <div class="timeline-desc">Russian SVR intelligence embeds a backdoor into SolarWinds Orion software updates, compromising 18,000 organizations including the US Treasury, State Dept, and NSA itself. Active for 9 months before detection. Redefines supply chain security.</div>
-                  <div class="timeline-tags"><span class="timeline-tag nation">NATION-STATE</span><span class="timeline-tag">SUPPLY CHAIN</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2021</div>
-                  <div class="timeline-event">Log4Shell (CVE-2021-44228) — CVSS 10.0</div>
-                  <div class="timeline-desc">A remote code execution vulnerability in Apache Log4j — a logging library used in virtually every Java application on earth — affects hundreds of millions of systems. A single string in a server log can execute arbitrary code. Called "the worst vulnerability in the history of the internet."</div>
-                  <div class="timeline-tags"><span class="timeline-tag">CVE-10.0</span><span class="timeline-tag">RCE</span></div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-year">2024</div>
-                  <div class="timeline-event">CrowdStrike Falcon Update Outage</div>
-                  <div class="timeline-desc">A faulty content update from CrowdStrike causes 8.5 million Windows systems to crash globally — airlines, hospitals, banks, 911 centers affected. Not a hack, but a stunning demonstration of critical infrastructure fragility from over-reliance on a single security vendor.</div>
-                  <div class="timeline-tags"><span class="timeline-tag">RESILIENCE</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===================== PANEL: SKILLS ===================== -->
-        <div id="panel-skills" class="content-panel">
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Foundation Skills</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <p>Every security practitioner regardless of specialty needs this bedrock knowledge. You cannot defend or attack what you don't understand at a technical level.</p>
-              <div class="skill-grid">
-                <div class="skill-card">
-                  <div class="skill-card__title">Networking</div>
-                  <div class="skill-card__body">TCP/IP, OSI model, DNS, ARP, routing, subnetting. How packets move is how attacks move.</div>
-                  <span class="skill-card__level beginner">BEGINNER</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Linux CLI</div>
-                  <div class="skill-card__body">Bash scripting, file permissions, SUID, process management. ~96% of servers run Linux.</div>
-                  <span class="skill-card__level beginner">BEGINNER</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Cryptography</div>
-                  <div class="skill-card__body">Symmetric/asymmetric encryption, hashing, TLS, PKI, common implementation flaws.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Programming</div>
-                  <div class="skill-card__body">Python for scripting and tooling. C/C++ for low-level. JavaScript for web attacks. SQL is mandatory.</div>
-                  <span class="skill-card__level beginner">BEGINNER</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Operating Systems</div>
-                  <div class="skill-card__body">Windows AD, Linux kernel, memory management, privilege models, syscalls.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Web Architecture</div>
-                  <div class="skill-card__body">HTTP/HTTPS, REST APIs, authentication flows, cookies, CORS, CSP headers.</div>
-                  <span class="skill-card__level beginner">BEGINNER</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Offensive Security Topics</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="skill-grid">
-                <div class="skill-card">
-                  <div class="skill-card__title">Web App Pentesting</div>
-                  <div class="skill-card__body">OWASP Top 10: SQLi, XSS, IDOR, SSRF, XXE. Burp Suite is your weapon. PortSwigger Academy is your dojo.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Network Pentesting</div>
-                  <div class="skill-card__body">Nmap, Metasploit, service exploitation, Active Directory attacks: Kerberoasting, pass-the-hash, BloodHound.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Privilege Escalation</div>
-                  <div class="skill-card__body">SUID abuse, sudo misconfig, writable cron jobs, kernel exploits, token impersonation (Windows).</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Exploit Development</div>
-                  <div class="skill-card__body">Buffer overflows, ROP chains, heap exploitation, shellcode writing. Requires deep C/assembly knowledge.</div>
-                  <span class="skill-card__level advanced">ADVANCED</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Social Engineering</div>
-                  <div class="skill-card__body">Phishing campaigns, pretexting, vishing, physical security. GoPhish for simulation.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Reverse Engineering</div>
-                  <div class="skill-card__body">Static/dynamic malware analysis, Ghidra, IDA Pro, x64dbg, deobfuscation techniques.</div>
-                  <span class="skill-card__level advanced">ADVANCED</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Defensive Security Topics</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="skill-grid">
-                <div class="skill-card">
-                  <div class="skill-card__title">SIEM & Log Analysis</div>
-                  <div class="skill-card__body">Splunk, ELK stack, detection rules, alert tuning, Sigma rules. The SOC analyst's core toolset.</div>
-                  <span class="skill-card__level beginner">BEGINNER</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Incident Response</div>
-                  <div class="skill-card__body">PICERL framework, digital forensics, memory acquisition, chain of custody, threat containment.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Threat Intelligence</div>
-                  <div class="skill-card__body">MITRE ATT&CK, STIX/TAXII, IOC management, APT tracking, threat actor TTPs.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-                <div class="skill-card">
-                  <div class="skill-card__title">Cloud Security</div>
-                  <div class="skill-card__body">AWS/Azure/GCP IAM, misconfigs, S3 bucket exposure, CloudTrail, serverless attack surfaces.</div>
-                  <span class="skill-card__level intermediate">INTERMEDIATE</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Certification Roadmap</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <p style="margin-bottom:0.5rem;">Certifications signal credibility. Pick the track matching your career direction, not just salary rankings.</p>
-              <div class="roadmap">
-                <div class="rm-item done"><strong>CompTIA Security+</strong><small>Baseline, vendor-neutral, DoD 8570 compliant. Get this first.</small></div>
-                <div class="rm-item done"><strong>CompTIA Network+ / eJPT</strong><small>Networking fundamentals or first pentest cert (eLearnSecurity).</small></div>
-                <div class="rm-item"><strong>PNPT / CEH / PenTest+</strong><small>PNPT is highly respected in the community for practical skills.</small></div>
-                <div class="rm-item"><strong>OSCP (OffSec)</strong><small>Gold standard pentest cert. 24-hour hands-on exam. Brutal. Essential.</small></div>
-                <div class="rm-item"><strong>CISSP / CISM</strong><small>Senior architecture and management roles.</small></div>
-                <div class="rm-item"><strong>GREM / OSED / GXPN</strong><small>Elite: malware RE, advanced exploit dev, network exploitation.</small></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===================== PANEL: RESOURCES ===================== -->
-        <div id="panel-resources" class="content-panel">
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Practice Platforms</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <table class="res-table">
-                <tr><th>Platform</th><th>Best For</th><th>Cost</th></tr>
-                <tr><td><a href="https://hackthebox.com" target="_blank">HackTheBox</a></td><td>Industry-standard machines + pro labs</td><td class="res-cat">FREE/PAID</td></tr>
-                <tr><td><a href="https://tryhackme.com" target="_blank">TryHackMe</a></td><td>Guided learning paths, browser-based</td><td class="res-cat">FREE/PAID</td></tr>
-                <tr><td><a href="https://portswigger.net/web-security" target="_blank">PortSwigger Academy</a></td><td>Best free web security labs — period</td><td class="res-cat">FREE</td></tr>
-                <tr><td><a href="https://picoctf.org" target="_blank">picoCTF</a></td><td>Beginner CTF challenges (Carnegie Mellon)</td><td class="res-cat">FREE</td></tr>
-                <tr><td><a href="https://ctftime.org" target="_blank">CTFtime.org</a></td><td>Directory of all active CTF competitions</td><td class="res-cat">FREE</td></tr>
-                <tr><td><a href="https://www.vulnhub.com" target="_blank">VulnHub</a></td><td>Offline VM-based vulnerable machines</td><td class="res-cat">FREE</td></tr>
-                <tr><td><a href="https://pentesterlab.com" target="_blank">PentesterLab</a></td><td>Web & code review labs with badges</td><td class="res-cat">FREE/PAID</td></tr>
-              </table>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Essential Tools</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="code-block">
-                <span class="c-comment"># Recon & Scanning</span><br>
-                <span class="c-hi">nmap</span>          <span class="c-out">port/service/OS fingerprinting</span><br>
-                <span class="c-hi">theHarvester</span>  <span class="c-out">email, subdomain, OSINT gathering</span><br>
-                <span class="c-hi">Shodan</span>        <span class="c-out">internet-wide device/service search</span><br>
-                <span class="c-hi">amass</span>         <span class="c-out">attack surface mapping</span><br><br>
-                <span class="c-comment"># Web Security</span><br>
-                <span class="c-hi">Burp Suite</span>    <span class="c-out">intercept proxy, scanner (essential)</span><br>
-                <span class="c-hi">sqlmap</span>        <span class="c-out">automated SQL injection testing</span><br>
-                <span class="c-hi">gobuster</span>      <span class="c-out">directory/file/DNS brute-forcing</span><br><br>
-                <span class="c-comment"># Exploitation</span><br>
-                <span class="c-hi">Metasploit</span>    <span class="c-out">exploitation framework</span><br>
-                <span class="c-hi">pwntools</span>      <span class="c-out">Python CTF/binary exploitation library</span><br><br>
-                <span class="c-comment"># Defense & Forensics</span><br>
-                <span class="c-hi">Wireshark</span>     <span class="c-out">packet capture and protocol analysis</span><br>
-                <span class="c-hi">Ghidra</span>        <span class="c-out">NSA reverse engineering suite (free)</span><br>
-                <span class="c-hi">Volatility</span>    <span class="c-out">memory forensics framework</span><br>
-                <span class="c-hi">Splunk/ELK</span>   <span class="c-out">SIEM and log analysis</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Books & Reading</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <table class="res-table">
-                <tr><th>Title</th><th>Focus</th></tr>
-                <tr><td>The Web Application Hacker's Handbook</td><td>Web security bible (Stuttard & Pinto)</td></tr>
-                <tr><td>Hacking: The Art of Exploitation</td><td>Low-level exploits, shellcode, buffer overflows</td></tr>
-                <tr><td>The Hacker Playbook 3</td><td>Red team methodology (Peter Kim)</td></tr>
-                <tr><td>Countdown to Zero Day</td><td>Stuxnet — best cyberwar narrative non-fiction</td></tr>
-                <tr><td>Threat Modeling</td><td>Security design thinking (Adam Shostack)</td></tr>
-                <tr><td>Blue Team Handbook</td><td>SOC analyst and incident responder reference</td></tr>
-              </table>
-            </div>
-          </div>
-
-          <div class="section-block">
-            <div class="section-block__header" onclick="toggleSection(this)">
-              <span class="section-block__title">Communities & News</span>
-              <span class="section-block__chevron">▾</span>
-            </div>
-            <div class="section-block__body">
-              <div class="step-list">
-                <div class="step-item"><span class="step-num">◈</span><div><strong>r/netsec</strong> — High-signal security research aggregator. Avoid r/hacking.</div></div>
-                <div class="step-item"><span class="step-num">◈</span><div><strong>DEF CON / Black Hat</strong> — Annual conferences. DEF CON talks are free on YouTube.</div></div>
-                <div class="step-item"><span class="step-num">◈</span><div><strong>Krebs on Security</strong> — Investigative cybercrime journalism by Brian Krebs.</div></div>
-                <div class="step-item"><span class="step-num">◈</span><div><strong>The Daily Swig</strong> — Web security news from PortSwigger.</div></div>
-                <div class="step-item"><span class="step-num">◈</span><div><strong>Darknet Diaries</strong> — Podcast covering real hacking incidents and threat actors.</div></div>
-                <div class="step-item"><span class="step-num">◈</span><div><strong>MITRE ATT&CK</strong> — Living knowledge base of adversary TTPs. Bookmark it.</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===================== PANEL: QUIZ ===================== -->
-        <div id="panel-quiz" class="content-panel">
-          <div id="quiz-container">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-
-      </div><!-- /main-scroll -->
-    </div><!-- /app-main -->
-
-    <!-- ============ SIDEBAR: AUDIT LOG TERMINAL ============ -->
-    <div class="app-side">
-      <div class="terminal-wrap">
-        <div class="terminal-topbar">
-          <div class="tdot r"></div><div class="tdot a"></div><div class="tdot g"></div>
-          <span class="terminal-title">AUDIT_LOG // LIVE</span>
-        </div>
-        <div id="terminal-log" class="terminal-log"></div>
-        <div class="terminal-input-row">
-          <span class="term-prompt-sym">root@cipher:~$</span>
-          <input type="text" id="terminal-input" placeholder="help" autocomplete="off" spellcheck="false">
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /app-container -->
-</div><!-- /app-skeleton -->
-
-<!-- TICKER TAPE -->
-<div id="ticker-wrap">
-  <div id="ticker-track">
-    <span><span class="t-alert">ALERT:</span> Log4Shell (CVE-2021-44228) CVSS 10.0 — RCE via JNDI injection in Apache Log4j</span>
-    <span><span class="t-label">TIP:</span> Always use parameterized queries — SQL injection is still the #1 web vuln</span>
-    <span><span class="t-alert">ALERT:</span> EternalBlue (MS17-010) — patch SMBv1 immediately on all Windows systems</span>
-    <span><span class="t-info">STAT:</span> Average breach detection time = 207 days — improve logging and monitoring</span>
-    <span><span class="t-label">TIP:</span> Enable MFA everywhere — defeats 99.9% of credential-based attacks</span>
-    <span><span class="t-info">CERT:</span> OSCP is the gold standard offensive security certification — 24-hour hands-on exam</span>
-    <span><span class="t-alert">FACT:</span> 90% of successful cyberattacks begin with a phishing email — train your users</span>
-    <span><span class="t-info">TOOL:</span> PortSwigger Web Security Academy — best free web hacking labs on the internet</span>
-    <span><span class="t-label">TIP:</span> "Never trust, always verify" — Zero Trust assumes breach from the start</span>
-    <span><span class="t-alert">CVE:</span> ProxyLogon (CVE-2021-26855) CVSS 9.8 — Microsoft Exchange SSRF to RCE chain</span>
-    <span><span class="t-info">FACT:</span> Global cybercrime costs projected at $10.5 trillion annually by 2025</span>
-    <span><span class="t-label">TIP:</span> Patch critical CVEs within 72 hours — most breaches exploit known vulnerabilities</span>
   </div>
-</div>
 
-<script>
-/* ============================================================
-   STATE
-   ============================================================ */
-const state = {
-  xp: 80,
-  visited: new Set(['timeline']),
-  quizzesTaken: 0,
-  correctAnswers: 0,
-  currentQuiz: 0,
-  currentQ: 0,
-  sessionCorrect: 0,
-};
+  <!-- ===== MAIN ===== -->
+  <main class="page">
 
-/* ============================================================
-   QUIZ DATA
-   ============================================================ */
-const quizData = [
-  {
-    title: 'History Basics',
-    overline: 'MODULE_Q01 // HISTORY',
-    questions: [
-      {
-        q: 'John "Captain Crunch" Draper discovered he could seize AT&T long-distance lines using a 2600 Hz tone from which unlikely source?',
-        opts: ['A ham radio','A Cap\'n Crunch cereal toy whistle','A modified telephone handset','A government signal generator'],
-        correct: 1,
-        explain: 'Correct. The toy whistle in Cap\'n Crunch cereal happened to produce a precise 2600 Hz tone that AT&T\'s trunk lines used as a supervisory signal — a perfect accidental skeleton key.'
-      },
-      {
-        q: 'The 1988 Morris Worm was historically significant primarily because it was the first malware to:',
-        opts: ['Encrypt victim data for ransom','Self-replicate across the internet, crashing ~10% of connected machines','Steal financial credentials','Target industrial control systems'],
-        correct: 1,
-        explain: 'Correct. The Morris Worm was the first self-propagating internet worm, exploiting Unix sendmail, fingerd, and rsh vulnerabilities to crash thousands of machines.'
-      },
-      {
-        q: 'The Snowden revelations in 2013 caused which major measurable shift in internet behavior?',
-        opts: ['Widespread adoption of end-to-end encryption and privacy tools','A global decline in social media usage','The shutdown of NSA surveillance programs','Mass migration from US to European cloud providers'],
-        correct: 0,
-        explain: 'Correct. After Snowden, Signal downloads surged, WhatsApp adopted E2E encryption, and HTTPS adoption accelerated dramatically across the web.'
-      },
-      {
-        q: 'Stuxnet was groundbreaking because it was the first known cyberweapon to:',
-        opts: ['Exfiltrate classified government documents','Physically destroy real-world hardware (Iranian centrifuges)','Compromise a global DNS provider','Spread via USB drives without any user interaction'],
-        correct: 1,
-        explain: 'Correct. Stuxnet manipulated Siemens PLCs controlling centrifuge spin rates, causing physical destruction while displaying false "normal" readings to operators.'
-      },
-    ]
-  },
-  {
-    title: 'Networking',
-    overline: 'MODULE_Q02 // NETWORKING',
-    questions: [
-      {
-        q: 'An attacker sends gratuitous ARP replies associating their MAC with the default gateway\'s IP. Which attack is this and what is the goal?',
-        opts: ['DNS cache poisoning — redirect to fake websites','ARP spoofing — intercept traffic via man-in-the-middle','SYN flood — exhaust TCP connection resources','VLAN hopping — reach other network segments'],
-        correct: 1,
-        explain: 'Correct. ARP has no authentication. By poisoning the ARP cache, the attacker positions themselves as the gateway, intercepting all traffic transparently.'
-      },
-      {
-        q: 'Which OSI layer is targeted by SQL injection and XSS attacks?',
-        opts: ['Layer 3 — Network','Layer 4 — Transport','Layer 7 — Application','Layer 6 — Presentation'],
-        correct: 2,
-        explain: 'Correct. Web application attacks like SQLi and XSS operate at Layer 7, exploiting the HTTP protocol and application logic rather than lower-level network infrastructure.'
-      },
-      {
-        q: 'WannaCry ransomware spread laterally across networks by exploiting which SMB vulnerability?',
-        opts: ['Heartbleed (CVE-2014-0160)','BlueKeep (CVE-2019-0708)','EternalBlue (MS17-010)','PrintNightmare (CVE-2021-34527)'],
-        correct: 2,
-        explain: 'Correct. WannaCry used the NSA\'s stolen EternalBlue exploit targeting a buffer overflow in SMBv1 (port 445) to spread automatically without user interaction.'
-      },
-      {
-        q: 'During a TCP 3-way handshake, a SYN flood attack works by:',
-        opts: ['Forging RST packets to terminate established connections','Sending thousands of SYN packets with spoofed source IPs, exhausting the server\'s connection table','Intercepting the SYN-ACK to hijack the session','Replaying captured SYN packets to bypass authentication'],
-        correct: 1,
-        explain: 'Correct. The server allocates resources for each half-open connection waiting for the final ACK that never arrives from the spoofed IPs, eventually exhausting its connection table.'
-      },
-    ]
-  },
-  {
-    title: 'Attack Vectors',
-    overline: 'MODULE_Q03 // ATTACK VECTORS',
-    questions: [
-      {
-        q: 'A piece of malware encrypts all files on a system and displays a payment demand. Which malware category is this, and which CIA Triad property does it primarily violate?',
-        opts: ['Spyware — Confidentiality','Ransomware — Availability','Trojan — Integrity','Rootkit — Confidentiality'],
-        correct: 1,
-        explain: 'Correct. Ransomware primarily attacks Availability — the data exists but is inaccessible. The attacker is not interested in stealing the data, only denying access to coerce payment.'
-      },
-      {
-        q: 'A targeted phishing email uses details about the recipient\'s job title, colleagues, and recent projects gathered from LinkedIn. This is called:',
-        opts: ['Vishing','Pretexting','Spear phishing','Baiting'],
-        correct: 2,
-        explain: 'Correct. Spear phishing is targeted phishing using personalized OSINT to build credibility. It has dramatically higher success rates than generic phishing blasts.'
-      },
-      {
-        q: 'The SolarWinds breach (2020) is considered a supply chain attack because:',
-        opts: ['Attackers physically broke into SolarWinds\' data center','Malware was embedded in a legitimate software update distributed to customers','Attackers compromised SolarWinds\' cloud infrastructure directly','A rogue SolarWinds employee inserted the backdoor'],
-        correct: 1,
-        explain: 'Correct. By compromising the build pipeline, attackers had SolarWinds unknowingly distribute their backdoor as a legitimate signed update to 18,000 customers — including US federal agencies.'
-      },
-      {
-        q: 'What is the primary goal of Command and Control (C2) infrastructure in an attack kill chain?',
-        opts: ['To exfiltrate data directly to the attacker','To maintain persistent communication with compromised hosts after initial access','To conduct reconnaissance before exploitation','To encrypt traffic to avoid detection'],
-        correct: 1,
-        explain: 'Correct. C2 infrastructure lets attackers issue commands, receive data, and maintain persistence on compromised hosts — often using HTTP/S, DNS tunneling, or social platforms as covert channels.'
-      },
-    ]
-  },
-  {
-    title: 'Cryptography',
-    overline: 'MODULE_Q04 // CRYPTOGRAPHY',
-    questions: [
-      {
-        q: 'A database stores user passwords as unsalted MD5 hashes. Why are these trivially crackable even without brute force?',
-        opts: ['MD5 output can be reversed mathematically','Pre-computed rainbow tables map common passwords to their MD5 hashes instantly','MD5 uses a weak key schedule','Unsalted hashes are stored in plaintext automatically'],
-        correct: 1,
-        explain: 'Correct. Without a salt, identical passwords produce identical hashes. Rainbow tables are pre-computed hash→password databases. Billions of MD5 hashes can be reversed instantly online.'
-      },
-      {
-        q: 'Heartbleed (CVE-2014-0160) allowed attackers to read server memory because:',
-        opts: ['It exploited a buffer overflow to inject shellcode','OpenSSL\'s heartbeat extension failed to validate payload length, leaking up to 64KB of memory per request','It used a timing side-channel to recover private keys','It downgraded TLS connections to export-grade cipher suites'],
-        correct: 1,
-        explain: 'Correct. The TLS heartbeat message included a length field that OpenSSL trusted without bounds checking. Attackers could request 64KB of adjacent memory — potentially containing private keys, session tokens, or passwords.'
-      },
-      {
-        q: 'Which password hashing algorithm is most appropriate for storing user credentials in a modern application?',
-        opts: ['SHA-256 with a random salt','MD5 (fast for quick comparisons)','bcrypt, scrypt, or Argon2 (deliberately slow, salted)','AES-256 encryption with a server-side key'],
-        correct: 2,
-        explain: 'Correct. bcrypt/scrypt/Argon2 are purpose-built for passwords: they\'re deliberately slow (raising brute-force cost), include automatic salting, and have tunable work factors.'
-      },
-      {
-        q: 'In TLS, asymmetric cryptography is used during the handshake phase to accomplish what?',
-        opts: ['Encrypt the entire HTTPS session data','Authenticate the server and securely exchange a symmetric session key','Replace symmetric encryption entirely','Verify the client\'s password'],
-        correct: 1,
-        explain: 'Correct. Asymmetric crypto (RSA/ECDH) is computationally expensive. TLS uses it only during handshake to authenticate and agree on a symmetric session key, then switches to AES for bulk data.'
-      },
-    ]
-  },
-  {
-    title: 'Tools & Skills',
-    overline: 'MODULE_Q05 // TOOLS',
-    questions: [
-      {
-        q: 'Nmap\'s "-sV" flag performs what function during a port scan?',
-        opts: ['Scans only UDP ports','Attempts to identify service versions running on open ports','Performs a stealth SYN scan without completing handshakes','Uses vulnerability scripts to test discovered services'],
-        correct: 1,
-        explain: 'Correct. -sV enables version detection — Nmap probes open ports with service-specific payloads to fingerprint the exact software and version running (e.g., "Apache 2.4.54" vs just "port 80 open").'
-      },
-      {
-        q: 'Burp Suite\'s primary function in web application testing is to act as:',
-        opts: ['A port scanner for web servers','An intercepting proxy between your browser and the target application','An automated exploit framework','A passive packet capture tool'],
-        correct: 1,
-        explain: 'Correct. Burp Suite intercepts, inspects, and modifies HTTP/S requests and responses in real time, letting you manipulate every aspect of web traffic to probe for vulnerabilities.'
-      },
-      {
-        q: 'You find a binary with the SUID bit set, owned by root. Why is this potentially a privilege escalation vector?',
-        opts: ['SUID binaries run as the current user with elevated logging','The binary executes with the owner\'s (root\'s) privileges regardless of who runs it','SUID disables ASLR protections for the binary','SUID binaries bypass firewall rules'],
-        correct: 1,
-        explain: 'Correct. The SUID (Set User ID) bit causes a binary to run with the file owner\'s privileges. A misconfigured or vulnerable SUID root binary can be exploited to gain a root shell.'
-      },
-      {
-        q: 'Ghidra, released publicly by the NSA in 2019, is primarily used for:',
-        opts: ['Network packet analysis','Reverse engineering binaries and analyzing malware','Log aggregation and SIEM alerting','Automated web vulnerability scanning'],
-        correct: 1,
-        explain: 'Correct. Ghidra is a free, powerful reverse engineering suite that disassembles, decompiles, and analyzes compiled binaries — essential for malware analysis and vulnerability research.'
-      },
-    ]
-  }
-];
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <a href="#" class="hero-card">
+        <!-- Hero image: animated hex grid SVG -->
+        <div class="hero-image">
+          <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hex" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+                <polygon points="30,1 58,16 58,46 30,61 2,46 2,16" fill="none" stroke="#3c181a" stroke-width="1"/>
+              </pattern>
+              <radialGradient id="heroGrad" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#461616" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#0d0a0d" stop-opacity="1"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+            <rect width="600" height="420" fill="url(#heroGrad)"/>
+            <rect width="600" height="420" fill="url(#hex)"/>
+            <!-- terminal window -->
+            <rect x="40" y="60" width="340" height="240" rx="3" fill="#12101a" stroke="#5e2122" stroke-width="1.5"/>
+            <rect x="40" y="60" width="340" height="22" rx="3" fill="#1e181e"/>
+            <rect x="40" y="71" width="340" height="11" fill="#1e181e"/>
+            <circle cx="56" cy="71" r="4" fill="#5e2122"/>
+            <circle cx="72" cy="71" r="4" fill="#5e2122"/>
+            <circle cx="88" cy="71" r="4" fill="#5e2122"/>
+            <text x="200" y="75" fill="#9c3230" font-family="monospace" font-size="9" text-anchor="middle">root@attacker:~# shell.py</text>
+            <text x="55" y="103" fill="#e8615a" font-family="monospace" font-size="10">[*] Initializing payload delivery...</text>
+            <text x="55" y="120" fill="#9c3230" font-family="monospace" font-size="10">[*] Scanning open ports: 22, 80, 443, 8080</text>
+            <text x="55" y="137" fill="#e8615a" font-family="monospace" font-size="10">[+] SMB null session: ENABLED</text>
+            <text x="55" y="154" fill="#2bfea0" font-family="monospace" font-size="10" filter="url(#glow)">[+] Kerberoastable SPN found: MSSQLSvc</text>
+            <text x="55" y="171" fill="#9c3230" font-family="monospace" font-size="10">[*] Requesting TGS ticket...</text>
+            <text x="55" y="188" fill="#2be4ea" font-family="monospace" font-size="10">[+] Hash captured: $krb5tgs$23$*...</text>
+            <text x="55" y="205" fill="#e8615a" font-family="monospace" font-size="10">[*] Cracking offline with hashcat -m 13100</text>
+            <text x="55" y="222" fill="#2bfea0" font-family="monospace" font-size="10" filter="url(#glow)">[+] Password: Summer2024!</text>
+            <text x="55" y="239" fill="#9c3230" font-family="monospace" font-size="10">[*] Lateral movement initiated...</text>
+            <text x="55" y="256" fill="#e8615a" font-family="monospace" font-size="10">[+] Admin shell on DC01: ESTABLISHED</text>
+            <text x="55" y="280" fill="#e8615a" font-family="monospace" font-size="10">▌</text>
+            <!-- side decorative elements -->
+            <rect x="420" y="100" width="140" height="1" fill="#3c181a"/>
+            <rect x="420" y="150" width="140" height="1" fill="#3c181a"/>
+            <rect x="420" y="200" width="140" height="1" fill="#3c181a"/>
+            <rect x="420" y="250" width="140" height="1" fill="#3c181a"/>
+            <text x="490" y="130" fill="#461616" font-family="monospace" font-size="8" text-anchor="middle">KERBEROS</text>
+            <text x="490" y="180" fill="#461616" font-family="monospace" font-size="8" text-anchor="middle">ROASTING</text>
+            <text x="490" y="230" fill="#9c3230" font-family="monospace" font-size="8" text-anchor="middle">AD ATTACK</text>
+            <text x="490" y="280" fill="#5e2122" font-family="monospace" font-size="8" text-anchor="middle">PATH DEMO</text>
+          </svg>
+        </div>
+        <div class="hero-content">
+          <span class="hero-tag">Training Protocol</span>
+          <h1 class="hero-title glitch" data-text="InfosecEducator: Your Guide to Cybersecurity">InfosecEducator: Your Guide to Cybersecurity</h1>
+          <p class="hero-excerpt">From initial foothold to full domain compromise — we walk through every step of a realistic Active Directory attack chain, covering Kerberoasting, Pass-the-Hash, and DCSync in a lab environment.</p>
+          <div class="hero-meta">
+            <span class="author">// root_access</span>
+            <span>APR 25, 2026</span>
+            <span>14 min read</span>
+          </div>
+          <span class="btn-read">Read Full Writeup &rarr;</span>
+        </div>
+      </a>
+    </section>
 
-/* ============================================================
-   QUIZ RENDERER
-   ============================================================ */
-let quizAnswered = {}; // tracks answered questions per quiz
+    <!-- ===== LATEST WORDS ===== -->
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="overline">// latest</span>
+        Dispatches from the Field
+      </h2>
+      <a href="#" class="section-link">View All &rarr;</a>
+    </div>
 
-function loadQuiz(idx) {
-  state.currentQuiz = idx;
-  state.currentQ = 0;
-  if (!quizAnswered[idx]) quizAnswered[idx] = {};
-  renderQuiz();
-  updateStats();
-}
+    <div class="article-grid">
+      <!-- Card 1 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-blueteam">Blue Team</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#0d1a1f"/>
+            <rect x="0" y="0" width="320" height="180" fill="url(#hexBg2)"/>
+            <defs>
+              <pattern id="hexBg2" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <!-- Shield icon -->
+            <path d="M160 40 L200 60 L200 100 Q200 130 160 145 Q120 130 120 100 L120 60 Z" fill="none" stroke="#2be4ea" stroke-width="2" opacity="0.6"/>
+            <path d="M160 55 L188 70 L188 100 Q188 122 160 133 Q132 122 132 100 L132 70 Z" fill="rgba(43,228,234,0.05)" stroke="#295459" stroke-width="1"/>
+            <text x="160" y="102" fill="#2be4ea" font-family="monospace" font-size="14" text-anchor="middle" opacity="0.8">SIEM</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Building a Home SIEM With Elastic Stack for Under $0</h3>
+          <p class="article-excerpt">Set up enterprise-grade log aggregation, alerting, and threat hunting on your home lab without spending a dime on licensing.</p>
+          <div class="article-meta">
+            <span class="author">// blue_sentinel</span>
+            <span>APR 23, 2026</span>
+          </div>
+        </div>
+      </a>
 
-function renderQuiz() {
-  const qz = quizData[state.currentQuiz];
-  const qi = state.currentQ;
-  const q = qz.questions[qi];
-  const answered = quizAnswered[state.currentQuiz];
-  const totalQ = qz.questions.length;
-  const correctCount = Object.values(answered).filter(v => v === true).length;
+      <!-- Card 2 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-malware">Malware</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#0a130d"/>
+            <defs>
+              <pattern id="hexBg3" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0b2e1e" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg3)"/>
+            <!-- Worm/virus code visualization -->
+            <rect x="50" y="50" width="220" height="12" rx="1" fill="#0b2e1e" stroke="#1a5c33" stroke-width="0.5"/>
+            <rect x="50" y="68" width="160" height="12" rx="1" fill="#0b2e1e" stroke="#1a5c33" stroke-width="0.5"/>
+            <rect x="50" y="86" width="200" height="12" rx="1" fill="#0b2e1e" stroke="#2bfea0" stroke-width="0.5" opacity="0.6"/>
+            <rect x="50" y="104" width="140" height="12" rx="1" fill="#0b2e1e" stroke="#1a5c33" stroke-width="0.5"/>
+            <rect x="50" y="122" width="180" height="12" rx="1" fill="#132a1c" stroke="#2bfea0" stroke-width="1" opacity="0.8"/>
+            <text x="55" y="131" fill="#2bfea0" font-family="monospace" font-size="8">_inject_shellcode(pid=1337, payload=buf)</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Reverse Engineering a Ransomware Sample with Ghidra</h3>
+          <p class="article-excerpt">Step-by-step static analysis of a LockBit variant — from initial triage to unpacking, string decryption, and IOC extraction.</p>
+          <div class="article-meta">
+            <span class="author">// hexdump_hero</span>
+            <span>APR 20, 2026</span>
+          </div>
+        </div>
+      </a>
 
-  // Update topbar
-  document.getElementById('panel-overline').textContent = qz.overline;
-  document.getElementById('panel-title').setAttribute('data-text', qz.title.toUpperCase());
-  document.getElementById('panel-title').textContent = qz.title.toUpperCase();
+      <!-- Card 3 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-osint">OSINT</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#13110a"/>
+            <defs>
+              <pattern id="hexBg4" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2e2408" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg4)"/>
+            <!-- Network graph nodes -->
+            <circle cx="160" cy="90" r="12" fill="none" stroke="#fed33f" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="90"  cy="55" r="7"  fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="230" cy="60" r="7"  fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="80"  cy="130" r="7" fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="240" cy="125" r="7" fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="160" cy="145" r="5" fill="none" stroke="#fed33f" stroke-width="1" opacity="0.4"/>
+            <line x1="160" y1="90" x2="90"  y2="55"  stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="230" y2="60"  stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="80"  y2="130" stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="240" y2="125" stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="160" y2="145" stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <text x="160" y="94" fill="#fed33f" font-family="monospace" font-size="9" text-anchor="middle">TARGET</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">OSINT Tradecraft: Building a Target Profile From Zero</h3>
+          <p class="article-excerpt">From an email address to a full digital footprint — using Maltego, Shodan, social media pivoting, and breach databases ethically and legally.</p>
+          <div class="article-meta">
+            <span class="author">// ghost_analyst</span>
+            <span>APR 17, 2026</span>
+          </div>
+        </div>
+      </a>
 
-  const keys = ['A','B','C','D'];
-  const isAnswered = answered[qi] !== undefined;
-  const wasCorrect = answered[qi] === true;
+      <!-- Card 4 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-ctf">CTF</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#100a18"/>
+            <defs>
+              <pattern id="hexBg5" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#1a0f2a" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg5)"/>
+            <text x="55" y="70"  fill="#c882ff" font-family="monospace" font-size="9" opacity="0.9">FLAG: picoCTF{r3v3rs3_3ng_ftw}</text>
+            <text x="55" y="88"  fill="#6a2ea0" font-family="monospace" font-size="9">gdb-peda$ pattern_create 200</text>
+            <text x="55" y="106" fill="#c882ff" font-family="monospace" font-size="9" opacity="0.7">'AAA%AAsAABAA$AAnAACAA-AA'</text>
+            <text x="55" y="124" fill="#6a2ea0" font-family="monospace" font-size="9">info registers rip</text>
+            <text x="55" y="142" fill="#c882ff" font-family="monospace" font-size="9" opacity="0.9">rip  0x4141414141414141</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Pwn 101: Buffer Overflows for Absolute Beginners</h3>
+          <p class="article-excerpt">A ground-up walkthrough of stack-based buffer overflows using a vulnerable 32-bit binary — no prior assembly knowledge needed.</p>
+          <div class="article-meta">
+            <span class="author">// stack_smasher</span>
+            <span>APR 14, 2026</span>
+          </div>
+        </div>
+      </a>
 
-  let optsHTML = q.opts.map((o, i) => {
-    let cls = '';
-    if (isAnswered) {
-      if (i === q.correct) cls = 'correct';
-      else if (answered[qi + '_chosen'] === i) cls = 'wrong';
+      <!-- Card 5 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-offensive">Offensive</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#130d0d"/>
+            <defs>
+              <pattern id="hexBg6" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2a1010" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg6)"/>
+            <text x="55" y="60"  fill="#9c3230" font-family="monospace" font-size="9"># Sliver C2 — implant staging</text>
+            <text x="55" y="78"  fill="#e8615a" font-family="monospace" font-size="9">sliver> generate --http 10.10.14.5</text>
+            <text x="55" y="96"  fill="#9c3230" font-family="monospace" font-size="9">[*] Generating binary implant...</text>
+            <text x="55" y="114" fill="#e8615a" font-family="monospace" font-size="9">[+] Implant saved: BRAVE_ANTEATER</text>
+            <text x="55" y="132" fill="#9c3230" font-family="monospace" font-size="9">sliver> http</text>
+            <text x="55" y="150" fill="#2bfea0" font-family="monospace" font-size="9">[*] Session C2 active on :443</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Sliver C2: The Open-Source Metasploit Killer?</h3>
+          <p class="article-excerpt">A hands-on review of BishopFox's Sliver framework — comparing implant evasion, operator UX, and detections vs. Cobalt Strike.</p>
+          <div class="article-meta">
+            <span class="author">// c2_architect</span>
+            <span>APR 11, 2026</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 6 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-tools">Tools</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#0f1108"/>
+            <defs>
+              <pattern id="hexBg7" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#1e2208" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg7)"/>
+            <text x="55" y="65"  fill="#ff9a28" font-family="monospace" font-size="9">$ nmap -sV -sC -p- 10.10.10.1</text>
+            <text x="55" y="83"  fill="#6e4010" font-family="monospace" font-size="9">22/tcp  open  ssh     OpenSSH 8.9</text>
+            <text x="55" y="101" fill="#6e4010" font-family="monospace" font-size="9">80/tcp  open  http    nginx 1.24</text>
+            <text x="55" y="119" fill="#ff9a28" font-family="monospace" font-size="9">8080/tcp open jenkins 2.387.2</text>
+            <text x="55" y="137" fill="#6e4010" font-family="monospace" font-size="9">Nmap done: 1 IP address up</text>
+            <text x="55" y="155" fill="#ff9a28" font-family="monospace" font-size="9">$ gobuster dir -u http://...</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Nmap to Exploitation: The Recon-to-Shell Pipeline</h3>
+          <p class="article-excerpt">A systematic methodology for turning raw nmap output into actionable attack vectors — covering service fingerprinting, vuln correlation, and rapid exploitation.</p>
+          <div class="article-meta">
+            <span class="author">// portscanner_pro</span>
+            <span>APR 09, 2026</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== FEATURED + SIDEBAR ===== -->
+    <div class="featured-row">
+      <a href="#" class="featured-wide">
+        <div class="article-thumb">
+          <span class="article-cat cat-blueteam">Blue Team</span>
+          <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" style="height:100%">
+            <rect width="300" height="220" fill="#0d1a1f"/>
+            <defs>
+              <pattern id="hexBg8" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="300" height="220" fill="url(#hexBg8)"/>
+            <!-- Network diagram -->
+            <rect x="20"  y="80"  width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="120" y="40"  width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="120" y="140" width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="220" y="80"  width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <line x1="80"  y1="100" x2="120" y2="60"  stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <line x1="80"  y1="100" x2="120" y2="160" stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <line x1="180" y1="60"  x2="220" y2="100" stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <line x1="180" y1="160" x2="220" y2="100" stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <text x="50"  y="104" fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">FIREWALL</text>
+            <text x="150" y="64"  fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">IDS</text>
+            <text x="150" y="164" fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">SIEM</text>
+            <text x="250" y="104" fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">SOC</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <span class="hero-tag">Featured</span>
+          <h3 class="article-title">SOC Analyst Survival Guide: Triage, Alert Fatigue, and Winning the Noise War</h3>
+          <p class="article-excerpt">Real-world tactics from a Tier 2 analyst on structuring investigations, cutting false positives, and building detections that actually fire on real threats — not your own scanner.</p>
+          <div class="article-meta">
+            <span class="author">// soc_warrior</span>
+            <span>APR 21, 2026 · 18 min</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="sidebar-stack">
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#100a18"/>
+              <text x="45" y="44" fill="#c882ff" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">⚑</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">CTF</div>
+            <div class="mini-card__title">HTB Intuition — Insane Writeup</div>
+            <div class="mini-card__date">APR 19, 2026</div>
+          </div>
+        </a>
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#130d0d"/>
+              <text x="45" y="44" fill="#e8615a" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">⚙</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">Offensive</div>
+            <div class="mini-card__title">NTLM Relay: From Theory to Domain Admin</div>
+            <div class="mini-card__date">APR 15, 2026</div>
+          </div>
+        </a>
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#0a130d"/>
+              <text x="45" y="44" fill="#2bfea0" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">⬡</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">Malware</div>
+            <div class="mini-card__title">Unpacking UPX-Packed Binaries by Hand</div>
+            <div class="mini-card__date">APR 12, 2026</div>
+          </div>
+        </a>
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#13110a"/>
+              <text x="45" y="44" fill="#fed33f" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">◎</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">OSINT</div>
+            <div class="mini-card__title">Pivoting on LinkedIn Profiles: OPSEC Risks</div>
+            <div class="mini-card__date">APR 08, 2026</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== WELCOME ===== -->
+    <div class="welcome-section">
+      <div>
+        <p class="welcome-section__eyebrow">// about infosec//educator</p>
+        <h2 class="welcome-section__title">Learn. Break. Defend. Repeat.</h2>
+        <p class="welcome-section__body">
+          <strong>Infosec//Educator</strong> is a practitioner-first cybersecurity publication for people who learn by doing. We publish in-depth writeups, course content, tool reviews, and research spanning offensive security, blue team operations, malware analysis, and OSINT.<br><br>
+          Whether you're grinding your first CTF or running red team ops professionally, this is the field manual you keep open on the second monitor.
+        </p>
+      </div>
+      <div class="welcome-stats">
+        <div class="stat-item">
+          <span class="stat-number">847</span>
+          <span class="stat-label">Articles</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">12k</span>
+          <span class="stat-label">Subscribers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">47</span>
+          <span class="stat-label">Episodes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PODCAST ===== -->
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="overline">// audio</span>
+        Latest from the Pod
+      </h2>
+      <a href="#" class="section-link">All Episodes &rarr;</a>
+    </div>
+
+    <div class="podcast-grid">
+      <a href="#" class="pod-card">
+        <div class="pod-num">047</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 047 — RED VS. PURPLE</div>
+          <h3 class="pod-title">Red Team vs. Purple Team: Who Wins in the Long Run?</h3>
+          <p class="pod-desc">We debate the operational and organizational value of adversarial simulation vs. collaborative purple teaming, with guests from both sides of the fence.</p>
+          <div class="pod-footer">
+            <span>1h 12m · APR 22, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="pod-card">
+        <div class="pod-num">046</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 046 — THREAT INTEL</div>
+          <h3 class="pod-title">Operationalizing Threat Intelligence Without a $1M Budget</h3>
+          <p class="pod-desc">How to build a threat intel program using open-source feeds, MISP, and structured reporting — even when you're a team of one.</p>
+          <div class="pod-footer">
+            <span>58m · APR 15, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="pod-card">
+        <div class="pod-num">045</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 045 — CLOUD SECURITY</div>
+          <h3 class="pod-title">Hacking AWS: IAM Privilege Escalation Techniques in the Wild</h3>
+          <p class="pod-desc">A deep dive into the most common AWS misconfigurations attackers exploit in the real world — and how to detect them before they do.</p>
+          <div class="pod-footer">
+            <span>1h 4m · APR 8, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="pod-card">
+        <div class="pod-num">044</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 044 — OPSEC</div>
+          <h3 class="pod-title">OPSEC Failures That Got Hackers Caught: A Case Study Breakdown</h3>
+          <p class="pod-desc">Real incidents where operational security mistakes led to identification and arrest — and what defenders and red teamers should take away from each.</p>
+          <div class="pod-footer">
+            <span>49m · APR 1, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== TOOLS ===== -->
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="overline">// arsenal</span>
+        Tool Spotlight
+      </h2>
+      <a href="#" class="section-link">Full Arsenal &rarr;</a>
+    </div>
+
+    <div class="tools-grid">
+      <a href="#" class="tool-card">
+        <span class="tool-icon">&gt;_</span>
+        <h4 class="tool-name">Nuclei</h4>
+        <p class="tool-desc">Fast, template-based vulnerability scanner by ProjectDiscovery. Covers CVEs, misconfigs, and custom checks.</p>
+        <div class="tool-tags">
+          <span class="tag">recon</span>
+          <span class="tag">vuln-scan</span>
+          <span class="tag">OSS</span>
+        </div>
+      </a>
+      <a href="#" class="tool-card">
+        <span class="tool-icon">⬡</span>
+        <h4 class="tool-name">Ghidra</h4>
+        <p class="tool-desc">NSA's open-source reverse engineering framework. Decompile, disassemble, and analyze binaries across architectures.</p>
+        <div class="tool-tags">
+          <span class="tag">RE</span>
+          <span class="tag">malware</span>
+          <span class="tag">free</span>
+        </div>
+      </a>
+      <a href="#" class="tool-card">
+        <span class="tool-icon">◉</span>
+        <h4 class="tool-name">BloodHound</h4>
+        <p class="tool-desc">Active Directory attack path visualization. Find the shortest path to Domain Admin using graph theory.</p>
+        <div class="tool-tags">
+          <span class="tag">AD</span>
+          <span class="tag">offensive</span>
+          <span class="tag">OSS</span>
+        </div>
+      </a>
+      <a href="#" class="tool-card">
+        <span class="tool-icon">⌖</span>
+        <h4 class="tool-name">Shodan</h4>
+        <p class="tool-desc">Search engine for internet-exposed devices, services, and vulnerabilities. Essential for recon and attack surface mapping.</p>
+        <div class="tool-tags">
+          <span class="tag">OSINT</span>
+          <span class="tag">recon</span>
+          <span class="tag">paid</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <div class="newsletter">
+      <div>
+        <p class="newsletter__eyebrow">// intel drops — weekly</p>
+        <h3 class="newsletter__title">The Payload: Weekly Infosec Intel</h3>
+        <p class="newsletter__desc">CVEs worth caring about, new tooling, CTF announcements, and one long-form analysis — delivered every Monday. No spam, no vendor pitches.</p>
+      </div>
+      <div class="newsletter__form">
+        <input class="newsletter__input" type="email" placeholder="operator@domain.com">
+        <button class="newsletter__btn">Subscribe →</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Content</h5>
+        <ul class="footer-links">
+          <li><a href="#">Writeups</a></li>
+          <li><a href="#">_PasswordAnalyzer</a></li>
+          <li><a href="#">_PhishTest</a></li>
+          <li><a href="#">Tool Reviews</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">CTF Archive</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 INFOSEC//EDUCATOR — All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+    // Collapsible section blocks (reused from main.html pattern)
+    document.querySelectorAll('.section-block__header').forEach(h => {
+      h.addEventListener('click', () => h.closest('.section-block').classList.toggle('collapsed'));
+    });
+
+    // Glitch text effect on hero title hover
+    const hero = document.querySelector('.hero-card');
+    if (hero) {
+      hero.addEventListener('mouseenter', () => {
+        const el = hero.querySelector('.glitch');
+        if (el) el.style.animation = 'none';
+      });
+      hero.addEventListener('mouseleave', () => {
+        const el = hero.querySelector('.glitch');
+        if (el) el.style.animation = '';
+      });
     }
-    return `<div class="quiz-opt ${cls}" onclick="${isAnswered ? '' : `selectAnswer(${i})`}" style="${isAnswered ? 'pointer-events:none;' : ''}">
-      <span class="opt-key">${keys[i]}</span>${o}
-    </div>`;
-  }).join('');
 
-  const progPct = Math.round(((qi) / totalQ) * 100);
-
-  document.getElementById('quiz-container').innerHTML = `
-    <div class="quiz-wrap">
-      <div class="quiz-meta">
-        <span class="quiz-label">// ${qz.title.toUpperCase()}</span>
-        <span class="quiz-score">SCORE: ${correctCount}/${totalQ}</span>
-      </div>
-      <div class="quiz-progress">
-        <span style="font-family:var(--fonts-secondary);font-size:0.85rem;color:var(--colors-primary--600)">Q ${qi+1} / ${totalQ}</span>
-        <div class="quiz-prog-bar"><div class="quiz-prog-fill" style="width:${progPct}%"></div></div>
-      </div>
-      <div class="quiz-q-text">${q.q}</div>
-      <div class="quiz-opts" id="quiz-opts">${optsHTML}</div>
-      <div id="quiz-fb" class="quiz-feedback ${isAnswered ? 'show ' + (wasCorrect ? 'ok' : 'fail') : ''}">
-        ${isAnswered ? (wasCorrect ? '✓ ' : '✗ ') + q.explain : ''}
-      </div>
-      <div class="quiz-nav">
-        <button class="button" onclick="prevQuestion()" ${qi === 0 ? 'disabled style="opacity:0.3"' : ''}>◀ Prev</button>
-        <span class="quiz-counter">
-          ${Array.from({length:totalQ}, (_,i) => `<span style="color:${answered[i]===true ? 'var(--colors-active--500)' : answered[i]===false ? 'var(--colors-primary--500)' : 'var(--colors-primary--700)'}">●</span>`).join(' ')}
-        </span>
-        <button class="button button--primary" onclick="nextQuestion()" ${qi >= totalQ-1 ? 'disabled style="opacity:0.3"' : ''}>Next ▶</button>
-      </div>
-    </div>
-    <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-      ${quizData.map((qz,i) => `<button class="button ${i===state.currentQuiz?'button--primary':''}" onclick="loadQuiz(${i})">${qz.title}</button>`).join('')}
-      <button class="button" onclick="retakeQuiz()" style="margin-left:auto;">↺ Retake</button>
-    </div>
-  `;
-}
-
-function selectAnswer(chosenIdx) {
-  const qz = quizData[state.currentQuiz];
-  const qi = state.currentQ;
-  const q = qz.questions[qi];
-  const correct = chosenIdx === q.correct;
-
-  quizAnswered[state.currentQuiz][qi] = correct;
-  quizAnswered[state.currentQuiz][qi + '_chosen'] = chosenIdx;
-
-  if (correct) {
-    state.xp += 60;
-    state.correctAnswers++;
-    addLog(`[XP] +60 — Quiz "${qz.title}" Q${qi+1} correct`, 'ok');
-  } else {
-    addLog(`[FAIL] Quiz "${qz.title}" Q${qi+1} — incorrect`, 'err');
-  }
-
-  state.quizzesTaken++;
-  updateXP();
-  updateStats();
-  renderQuiz();
-}
-
-function nextQuestion() {
-  const qz = quizData[state.currentQuiz];
-  if (state.currentQ < qz.questions.length - 1) {
-    state.currentQ++;
-    renderQuiz();
-  }
-}
-
-function prevQuestion() {
-  if (state.currentQ > 0) {
-    state.currentQ--;
-    renderQuiz();
-  }
-}
-
-function retakeQuiz() {
-  quizAnswered[state.currentQuiz] = {};
-  state.currentQ = 0;
-  addLog(`[SYS] Quiz "${quizData[state.currentQuiz].title}" reset`, 'warn');
-  renderQuiz();
-}
-
-/* ============================================================
-   PANEL SWITCHING
-   ============================================================ */
-const panelMeta = {
-  history: { overline: 'MODULE_01 // HISTORY', title: 'BRIEF HISTORY' },
-  timeline: { overline: 'MODULE_02 // MAJOR EVENTS', title: 'HACKING TIMELINE' },
-  skills: { overline: 'MODULE_03 // SKILLS', title: 'SKILLS & TOPICS' },
-  resources: { overline: 'MODULE_04 // RESOURCES', title: 'RESOURCES' },
-  quiz: { overline: 'MODULE_Q // QUIZ', title: 'KNOWLEDGE CHECK' },
-};
-
-function switchPanel(id, el) {
-  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + id)?.classList.add('active');
-  document.querySelectorAll('.app-header .nav__link, .nav-section .nav__link').forEach(a => a.classList.remove('nav__link--active'));
-  if (el) el.classList.add('nav__link--active');
-
-  const meta = panelMeta[id];
-  if (meta) {
-    document.getElementById('panel-overline').textContent = meta.overline;
-    const titleEl = document.getElementById('panel-title');
-    titleEl.textContent = meta.title;
-    titleEl.setAttribute('data-text', meta.title);
-  }
-
-  state.visited.add(id);
-  document.getElementById('stat-visited').textContent = state.visited.size;
-
-  if (id === 'quiz' && !document.getElementById('quiz-container').innerHTML.trim()) {
-    loadQuiz(0);
-  }
-
-  addLog(`[NAV] module loaded: ${id.toUpperCase()}`, 'info');
-  document.querySelector('.main-scroll').scrollTop = 0;
-  return false;
-}
-
-/* ============================================================
-   SECTION TOGGLE
-   ============================================================ */
-function toggleSection(headerEl) {
-  headerEl.closest('.section-block').classList.toggle('collapsed');
-}
-
-function toggleAll(collapse) {
-  document.querySelectorAll('#panel-' + getCurrentPanel() + ' .section-block').forEach(b => {
-    if (collapse) b.classList.add('collapsed');
-    else b.classList.remove('collapsed');
-  });
-}
-
-function getCurrentPanel() {
-  const active = document.querySelector('.content-panel.active');
-  return active ? active.id.replace('panel-', '') : 'timeline';
-}
-
-/* ============================================================
-   XP & STATS
-   ============================================================ */
-function updateXP() {
-  const maxXP = getRankXP();
-  const pct = Math.min((state.xp / maxXP) * 100, 100);
-  document.getElementById('xp-fill').style.width = pct + '%';
-  document.getElementById('xp-label').textContent = `${state.xp}/${maxXP}`;
-  document.getElementById('rank-chip').textContent = getRank();
-  document.getElementById('stat-xp').textContent = state.xp;
-}
-
-function updateStats() {
-  document.getElementById('stat-visited').textContent = state.visited.size;
-  document.getElementById('stat-taken').textContent = state.quizzesTaken;
-  document.getElementById('stat-correct').textContent = state.correctAnswers;
-  document.getElementById('stat-xp').textContent = state.xp;
-}
-
-function getRank() {
-  if (state.xp < 300) return 'SCRIPT KIDDIE';
-  if (state.xp < 600) return 'RECON AGENT';
-  if (state.xp < 900) return 'PACKET JOCKEY';
-  if (state.xp < 1200) return 'EXPLOIT ARTIST';
-  return 'ELITE OPERATOR';
-}
-
-function getRankXP() {
-  if (state.xp < 300) return 300;
-  if (state.xp < 600) return 600;
-  if (state.xp < 900) return 900;
-  if (state.xp < 1200) return 1200;
-  return 1500;
-}
-
-/* ============================================================
-   TERMINAL LOG
-   ============================================================ */
-const logEl = document.getElementById('terminal-log');
-
-function addLog(text, cls = '') {
-  const line = document.createElement('div');
-  line.className = 'log-line ' + cls;
-  line.textContent = text;
-  logEl.appendChild(line);
-  logEl.scrollTop = logEl.scrollHeight;
-}
-
-// Boot sequence
-const bootLines = [
-  ['[SYS] INFOSEC//EDUCATOR v3.1 initializing...', 'sys', 0],
-  ['[SYS] Loading knowledge base...', 'sys', 250],
-  ['[OK ] CVE database indexed (2847 entries)', 'ok', 550],
-  ['[OK ] MITRE ATT&CK v14 loaded', 'ok', 800],
-  ['[OK ] Quiz engine online (5 modules)', 'ok', 1050],
-  ['[SYS] Establishing secure session...', 'sys', 1300],
-  ['[OK ] TLS 1.3 — cipher: AES_256_GCM', 'ok', 1600],
-  ['[INF] Welcome, operator. Stay legal.', 'info', 1900],
-  ['[INF] Type "help" for commands.', 'info', 2100],
-];
-
-bootLines.forEach(([t, c, d]) => setTimeout(() => addLog(t, c), d));
-
-// Terminal commands
-const cmds = {
-  help() {
-    addLog('> help', 'prompt');
-    addLog('Commands: modules, quiz, status, scan, tips, clear', 'sys');
-  },
-  modules() {
-    addLog('> modules', 'prompt');
-    ['01 HISTORY','02 TIMELINE','03 SKILLS','04 RESOURCES','Q1-Q5 QUIZZES'].forEach(m => addLog('  ' + m, ''));
-  },
-  quiz() {
-    addLog('> quiz', 'prompt');
-    addLog(`Active quiz: ${quizData[state.currentQuiz].title}`, 'info');
-    const a = quizAnswered[state.currentQuiz] || {};
-    const correct = Object.values(a).filter(v => v === true).length;
-    addLog(`Score: ${correct}/${quizData[state.currentQuiz].questions.length}`, 'ok');
-  },
-  status() {
-    addLog('> status', 'prompt');
-    addLog(`XP: ${state.xp} | Rank: ${getRank()}`, 'info');
-    addLog(`Correct answers: ${state.correctAnswers}`, 'ok');
-    addLog(`Modules visited: ${state.visited.size}`, '');
-  },
-  scan() {
-    addLog('> nmap -sV 10.0.0.1', 'prompt');
-    const ports = [
-      [300, '22/tcp  open  ssh     OpenSSH 8.9', 'ok'],
-      [500, '80/tcp  open  http    Apache 2.4.54', 'ok'],
-      [700, '443/tcp open  https   nginx 1.23', 'ok'],
-      [900, '3306/tcp open mysql   MySQL 8.0 (!)', 'warn'],
-      [1100, '8080/tcp open http   Tomcat 9.0.65', 'warn'],
-      [1300, '[!] MySQL exposed to 0.0.0.0 — investigate', 'err'],
-    ];
-    ports.forEach(([d, t, c]) => setTimeout(() => addLog(t, c), d));
-  },
-  tips() {
-    const tips = [
-      'Patch critical CVEs within 72 hours of disclosure.',
-      'Every account needs a unique password — use a manager.',
-      'Enable MFA. SMS > nothing. Hardware key > TOTP > SMS.',
-      '"Assume breach" — design systems expecting compromise.',
-      'Defense in depth: never rely on a single control.',
-      'OSINT yourself before attackers do.',
-      'Rotate secrets. Leaked API keys don\'t expire themselves.',
-    ];
-    addLog('> tips', 'prompt');
-    addLog('[TIP] ' + tips[Math.floor(Math.random() * tips.length)], 'info');
-  },
-  clear() { logEl.innerHTML = ''; }
-};
-
-document.getElementById('terminal-input').addEventListener('keydown', function(e) {
-  if (e.key !== 'Enter') return;
-  const val = this.value.trim().toLowerCase();
-  this.value = '';
-  if (!val) return;
-  if (cmds[val]) { cmds[val](); }
-  else {
-    addLog('> ' + val, 'prompt');
-    addLog('command not found. try: help', 'err');
-  }
-});
-</script>
+    // Ticker pause on hover
+    const track = document.querySelector('.ticker-track');
+    if (track) {
+      track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+      track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+    }
+  </script>
 </body>
 </html>
