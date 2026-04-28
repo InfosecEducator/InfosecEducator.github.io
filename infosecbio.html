@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFOSEC//EDUCATOR — What Is Information Security?</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-400: #5ffeb8;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --purple-500: #c084fc;
+      --purple-900: #2d1b4e;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 24px rgba(232,97,90,0.35);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 24px rgba(43,228,234,0.35);
+      --glow-green:  0 0 8px var(--green-500),  0 0 24px rgba(43,254,160,0.3);
+      --glow-yellow: 0 0 8px var(--yellow-500), 0 0 24px rgba(254,211,63,0.3);
+      --notch: 0.85rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 15% 0%, rgba(60,24,26,0.55) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 5%, rgba(13,51,54,0.4) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 100%, rgba(45,27,78,0.25) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* scanline overlay */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.07) 3px,
+        rgba(0,0,0,0.07) 4px
+      );
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== GLITCH ===== */
+    @keyframes glitch {
+      0%   { clip-path: inset(0 0 94% 0); transform: translateX(-3px); }
+      15%  { clip-path: inset(25% 0 55% 0); transform: translateX(3px); }
+      30%  { clip-path: inset(55% 0 25% 0); transform: translateX(-2px); }
+      50%  { clip-path: inset(78% 0 8% 0);  transform: translateX(2px); }
+      70%  { clip-path: inset(10% 0 78% 0); transform: translateX(-3px); }
+      100% { clip-path: inset(0 0 94% 0);   transform: translateX(0); }
+    }
+    .glitch { position: relative; display: inline-block; }
+    .glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; }
+    .glitch::before { color: var(--cyan-500); animation: glitch 5s step-start infinite; animation-delay: 0.3s; }
+    .glitch::after  { color: var(--red-500);  animation: glitch 5s step-start infinite; animation-delay: 1.1s; }
+
+    @keyframes flicker {
+      0%, 96%, 100% { opacity: 1; }
+      97%            { opacity: 0.85; }
+      98%            { opacity: 1; }
+      99%            { opacity: 0.9; }
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { border-color: var(--red-800); }
+      50%       { border-color: var(--red-700); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; } 50% { opacity: 0; }
+    }
+
+    /* ===== LAYOUT ===== */
+    .poster {
+      position: relative; z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 3rem;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      padding: 2rem 1rem 2.5rem;
+      border-bottom: 1px solid var(--red-900);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .hero__overline {
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.25em;
+      color: var(--cyan-500); text-transform: uppercase;
+      display: block; margin-bottom: 0.6rem;
+    }
+    .hero__title {
+      font-family: var(--font-display); font-size: clamp(3.2rem, 8vw, 6.5rem);
+      letter-spacing: 0.06em; line-height: 1; color: var(--red-500);
+      text-shadow: var(--glow-red); margin: 0 0 0.4rem;
+      animation: flicker 8s ease infinite;
+    }
+    .hero__slash { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .hero__subtitle {
+      font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 0.08em; color: var(--red-700); margin: 0 0 1.4rem;
+    }
+    .hero__definition {
+      max-width: 720px; margin: 0 auto 1.5rem;
+      font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.75;
+      color: var(--red-300); letter-spacing: 0.02em;
+      border-left: 2px solid var(--red-800); padding: 0.75rem 1.25rem;
+      text-align: left; background: rgba(232,97,90,0.04);
+    }
+    .hero__definition strong { color: var(--cyan-500); }
+    .hero__badges {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem;
+    }
+    .badge {
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.3em 0.75em; border-radius: 2px;
+    }
+    .badge-red    { color: var(--red-500);    border: 1px solid var(--red-800);    background: rgba(232,97,90,0.08); }
+    .badge-cyan   { color: var(--cyan-500);   border: 1px solid var(--cyan-900);   background: rgba(43,228,234,0.06); }
+    .badge-green  { color: var(--green-500);  border: 1px solid var(--green-900);  background: rgba(43,254,160,0.06); }
+    .badge-yellow { color: var(--yellow-500); border: 1px solid var(--yellow-900); background: rgba(254,211,63,0.06); }
+    .badge-orange { color: var(--orange-500); border: 1px solid #4a2c0a;           background: rgba(255,154,40,0.06); }
+
+    /* corner deco on hero */
+    .hero__corner {
+      position: absolute; font-family: var(--font-mono); font-size: 0.6rem;
+      color: var(--red-900); letter-spacing: 0.08em;
+    }
+    .hero__corner--tl { top: 0.5rem; left: 0.5rem; }
+    .hero__corner--tr { top: 0.5rem; right: 0.5rem; text-align: right; }
+    .hero__corner--bl { bottom: 0.5rem; left: 0.5rem; }
+    .hero__corner--br { bottom: 0.5rem; right: 0.5rem; text-align: right; }
+
+    /* ===== SECTION LABELS ===== */
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.2em;
+      text-transform: uppercase; margin-bottom: 0.4rem; display: block;
+    }
+    .label-red    { color: var(--red-700); }
+    .label-cyan   { color: var(--cyan-900); }
+    .label-green  { color: var(--green-900); }
+    .label-yellow { color: var(--yellow-900); }
+
+    .section-title {
+      font-family: var(--font-display); letter-spacing: 0.05em;
+      text-transform: uppercase; margin: 0 0 1.2rem; line-height: 1;
+    }
+    .title-red    { color: var(--red-500);    text-shadow: var(--glow-red);    font-size: 1.9rem; }
+    .title-cyan   { color: var(--cyan-500);   text-shadow: var(--glow-cyan);   font-size: 1.9rem; }
+    .title-green  { color: var(--green-500);  text-shadow: var(--glow-green);  font-size: 1.9rem; }
+    .title-yellow { color: var(--yellow-500); text-shadow: var(--glow-yellow); font-size: 1.9rem; }
+
+    /* ===== GRID LAYOUT ===== */
+    .grid-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .grid-mid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .grid-bottom {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* ===== PANEL ===== */
+    .panel {
+      background: var(--bg-600);
+      border: 1px solid var(--red-900);
+      clip-path: var(--notch-path);
+      padding: 1.4rem;
+      position: relative;
+      animation: pulse-border 6s ease infinite;
+    }
+    .panel::after {
+      content: ""; position: absolute; bottom: 4px; right: -5px;
+      width: 19px; height: 2px;
+      background: var(--red-900); transform: rotate(-45deg);
+    }
+    .panel-cyan   { border-color: var(--cyan-900); animation: none; }
+    .panel-cyan::after   { background: var(--cyan-900); }
+    .panel-green  { border-color: var(--green-900); animation: none; }
+    .panel-green::after  { background: var(--green-900); }
+    .panel-yellow { border-color: var(--yellow-900); animation: none; }
+    .panel-yellow::after { background: var(--yellow-900); }
+
+    /* ===== CIA TRIAD ===== */
+    .cia-row {
+      display: flex; gap: 0.75rem; margin-bottom: 1.1rem;
+    }
+    .cia-item {
+      flex: 1; padding: 0.75rem; text-align: center;
+      border: 1px solid var(--red-900); background: rgba(0,0,0,0.2);
+    }
+    .cia-item__letter {
+      font-family: var(--font-display); font-size: 2.8rem; line-height: 1;
+      display: block; margin-bottom: 0.2rem;
+    }
+    .cia-item__word {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase; display: block; margin-bottom: 0.4rem;
+    }
+    .cia-item__desc {
+      font-family: var(--font-ui); font-size: 0.75rem; color: var(--red-700);
+      line-height: 1.4;
+    }
+    .cia-c .cia-item__letter { color: var(--red-500); text-shadow: var(--glow-red); }
+    .cia-i .cia-item__letter { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .cia-a .cia-item__letter { color: var(--green-500); text-shadow: var(--glow-green); }
+    .cia-c { border-color: var(--red-800); }
+    .cia-i { border-color: var(--cyan-900); }
+    .cia-a { border-color: var(--green-900); }
+
+    .threat-list {
+      list-style: none; margin: 0; padding: 0;
+      display: flex; flex-direction: column; gap: 0.45rem;
+    }
+    .threat-list li {
+      font-family: var(--font-mono); font-size: 0.74rem; color: var(--red-700);
+      padding: 0.3rem 0.55rem; border-left: 2px solid var(--red-900);
+      background: rgba(0,0,0,0.15); letter-spacing: 0.02em;
+      display: flex; align-items: baseline; gap: 0.5rem;
+    }
+    .threat-list li .t-label {
+      color: var(--red-400); font-weight: 600; white-space: nowrap;
+      font-family: var(--font-ui); font-size: 0.78rem; letter-spacing: 0.04em;
+    }
+
+    /* ===== DOMAINS GRID ===== */
+    .domains-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;
+    }
+    .domain-item {
+      padding: 0.65rem 0.8rem;
+      border: 1px solid transparent;
+      background: rgba(0,0,0,0.2);
+    }
+    .domain-item__name {
+      font-family: var(--font-display); font-size: 1.15rem; letter-spacing: 0.04em;
+      display: block; margin-bottom: 0.15rem; line-height: 1.1;
+    }
+    .domain-item__desc {
+      font-family: var(--font-ui); font-size: 0.74rem; color: var(--red-700);
+      line-height: 1.4;
+    }
+    .d-red    { border-color: var(--red-900); }
+    .d-red    .domain-item__name { color: var(--red-500); }
+    .d-cyan   { border-color: var(--cyan-900); }
+    .d-cyan   .domain-item__name { color: var(--cyan-500); }
+    .d-green  { border-color: var(--green-900); }
+    .d-green  .domain-item__name { color: var(--green-500); }
+    .d-yellow { border-color: var(--yellow-900); }
+    .d-yellow .domain-item__name { color: var(--yellow-500); }
+    .d-orange { border-color: #4a2c0a; }
+    .d-orange .domain-item__name { color: var(--orange-500); }
+
+    /* ===== DAY IN THE LIFE ===== */
+    .timeline {
+      display: flex; flex-direction: column; gap: 0;
+      border-left: 2px solid var(--red-900);
+      margin-left: 0.5rem; padding-left: 0;
+    }
+    .timeline-item {
+      display: flex; gap: 0; position: relative;
+      padding: 0 0 0.85rem 1.2rem;
+    }
+    .timeline-item::before {
+      content: ""; position: absolute; left: -5px; top: 0.45rem;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red-900); border: 1px solid var(--red-700);
+    }
+    .timeline-item--active::before {
+      background: var(--red-500); box-shadow: var(--glow-red);
+    }
+    .timeline-item--cyan::before   { background: var(--cyan-500); border-color: var(--cyan-500); box-shadow: var(--glow-cyan); }
+    .timeline-item--green::before  { background: var(--green-500); border-color: var(--green-500); box-shadow: var(--glow-green); }
+    .timeline-item--yellow::before { background: var(--yellow-500); border-color: var(--yellow-500); box-shadow: var(--glow-yellow); }
+    .timeline-time {
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-800);
+      white-space: nowrap; padding-top: 0.08rem; width: 3.5rem; flex-shrink: 0;
+      letter-spacing: 0.04em;
+    }
+    .timeline-content { flex: 1; }
+    .timeline-content__title {
+      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.04em; color: var(--red-300); line-height: 1.2;
+    }
+    .timeline-content__detail {
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-800);
+      line-height: 1.5; margin-top: 0.15rem;
+    }
+
+    /* ===== ROADMAP ===== */
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .roadmap::before {
+      content: "";
+      position: absolute; top: 2.1rem; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(to right, var(--red-900), var(--cyan-900), var(--green-900));
+      z-index: 0;
+    }
+    .roadmap-step {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 0.5rem; position: relative; z-index: 1;
+    }
+    .roadmap-step__num {
+      font-family: var(--font-display); font-size: 1.6rem; line-height: 1;
+      width: 2.8rem; height: 2.8rem; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--red-800); background: var(--bg-800);
+      margin-bottom: 0.7rem;
+    }
+    .roadmap-step__title {
+      font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.04em;
+      margin-bottom: 0.4rem; line-height: 1.1;
+    }
+    .roadmap-step__items {
+      list-style: none; margin: 0; padding: 0;
+      font-family: var(--font-mono); font-size: 0.64rem;
+      color: var(--red-800); line-height: 1.65; letter-spacing: 0.01em;
+      text-align: left; width: 100%;
+    }
+    .roadmap-step__items li::before { content: "▸ "; color: var(--red-900); }
+
+    .rs-1 .roadmap-step__num { color: var(--red-500);    border-color: var(--red-700);    box-shadow: var(--glow-red); }
+    .rs-1 .roadmap-step__title { color: var(--red-400); }
+    .rs-2 .roadmap-step__num { color: var(--orange-500); border-color: #6a3c0a; }
+    .rs-2 .roadmap-step__title { color: var(--orange-500); }
+    .rs-3 .roadmap-step__num { color: var(--yellow-500); border-color: var(--yellow-900); box-shadow: var(--glow-yellow); }
+    .rs-3 .roadmap-step__title { color: var(--yellow-500); }
+    .rs-4 .roadmap-step__num { color: var(--cyan-500);   border-color: var(--cyan-900);   box-shadow: var(--glow-cyan); }
+    .rs-4 .roadmap-step__title { color: var(--cyan-500); }
+    .rs-5 .roadmap-step__num { color: var(--green-500);  border-color: var(--green-900);  box-shadow: var(--glow-green); }
+    .rs-5 .roadmap-step__title { color: var(--green-500); }
+
+    /* ===== TERMINAL BLOCK ===== */
+    .terminal {
+      background: #080c10; border: 1px solid var(--cyan-900);
+      border-radius: 3px; overflow: hidden; margin-bottom: 0.9rem;
+    }
+    .terminal__bar {
+      background: #0f1820; padding: 0.3rem 0.75rem;
+      display: flex; align-items: center; gap: 0.4rem;
+      border-bottom: 1px solid var(--cyan-900);
+    }
+    .terminal__dot { width: 8px; height: 8px; border-radius: 50%; }
+    .terminal__dot--r { background: var(--red-800); }
+    .terminal__dot--y { background: #5e4a10; }
+    .terminal__dot--g { background: #1a4a30; }
+    .terminal__title { font-family: var(--font-mono); font-size: 0.62rem; color: var(--cyan-900); margin-left: auto; letter-spacing: 0.08em; }
+    .terminal__body { padding: 0.75rem 0.9rem; }
+    .terminal__line {
+      font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.7;
+      display: flex; gap: 0.5rem;
+    }
+    .terminal__prompt { color: var(--cyan-900); flex-shrink: 0; }
+    .terminal__cmd { color: var(--cyan-500); }
+    .terminal__out { color: #2a5a5e; }
+    .terminal__val { color: var(--green-500); }
+    .terminal__warn { color: var(--yellow-500); }
+    .terminal__cursor {
+      display: inline-block; width: 0.55rem; height: 0.85em;
+      background: var(--cyan-500); animation: blink 1.1s step-start infinite;
+      vertical-align: middle; margin-left: 2px;
+    }
+
+    /* ===== STAT CHIPS ===== */
+    .stats-row {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem;
+    }
+    .stat-chip {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em;
+      padding: 0.25em 0.6em; border-radius: 2px;
+    }
+
+    /* ===== KEY TERMS GRID ===== */
+    .terms-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem;
+    }
+    .term {
+      padding: 0.5rem 0.65rem;
+      border-left: 2px solid var(--red-900);
+      background: rgba(0,0,0,0.18);
+    }
+    .term__name {
+      font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+      color: var(--red-300); letter-spacing: 0.04em; display: block; margin-bottom: 0.15rem;
+    }
+    .term__def {
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-800);
+      line-height: 1.5;
+    }
+    .term-c { border-color: var(--cyan-900); }
+    .term-c .term__name { color: var(--cyan-400); }
+    .term-g { border-color: var(--green-900); }
+    .term-g .term__name { color: var(--green-400); }
+    .term-y { border-color: var(--yellow-900); }
+    .term-y .term__name { color: var(--yellow-500); }
+
+    /* ===== BOTTOM STRIP ===== */
+    .bottom-strip {
+      margin-top: 2.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--red-900);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .bottom-logo {
+      font-family: var(--font-display); font-size: 1.5rem; color: var(--red-500);
+      text-shadow: var(--glow-red); letter-spacing: 0.08em;
+    }
+    .bottom-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .bottom-meta {
+      font-family: var(--font-mono); font-size: 0.64rem; color: var(--red-900);
+      letter-spacing: 0.06em; text-align: right;
+    }
+    .btn-home {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 1rem;
+      cursor: pointer; border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-home:hover { color: var(--red-400); border-color: var(--red-500); box-shadow: var(--glow-red); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      border: none; border-top: 1px solid var(--red-900);
+      margin: 0; height: 0;
+    }
+    .divider-label {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.16em;
+      color: var(--red-900); text-transform: uppercase;
+      text-align: center; margin: -0.05rem 0 1.4rem;
+      position: relative;
+    }
+    .divider-label::before, .divider-label::after {
+      content: "────────────";
+      display: inline; margin: 0 0.75rem; opacity: 0.3;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .grid-top  { grid-template-columns: 1fr 1fr; }
+      .grid-mid  { grid-template-columns: 1fr; }
+      .roadmap   { grid-template-columns: repeat(3, 1fr); gap: 1rem 0; }
+      .roadmap::before { display: none; }
+      .roadmap-step { padding: 0.5rem; }
+    }
+    @media (max-width: 680px) {
+      .poster { padding: 1.5rem 1rem 2rem; }
+      .grid-top { grid-template-columns: 1fr; }
+      .domains-grid { grid-template-columns: 1fr; }
+      .terms-grid { grid-template-columns: 1fr; }
+      .cia-row { flex-direction: column; }
+      .roadmap { grid-template-columns: 1fr 1fr; }
+      .hero__title { font-size: 2.8rem; }
+      .bottom-meta { text-align: left; }
+    }
+    @media (max-width: 420px) {
+      .roadmap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <span class="hero__corner hero__corner--tl">SYS:INFOSEC // REV 2.6.1</span>
+    <span class="hero__corner hero__corner--tr">CLASSIFICATION: UNCLASSIFIED</span>
+    <span class="hero__corner hero__corner--bl">© 2026 INFOSEC//EDUCATOR</span>
+    <span class="hero__corner hero__corner--br">EDU-MODE: ACTIVE</span>
+
+    <span class="hero__overline">// field guide — zero experience required</span>
+    <h1 class="hero__title glitch" data-text="INFORMATION SECURITY">
+      INFORMATION<span class="hero__slash">//</span>SECURITY
+    </h1>
+    <p class="hero__subtitle">What it is. What you do. How to get in.</p>
+    <p class="hero__definition">
+      Information Security — or <strong>InfoSec</strong> — is the practice of
+      <strong>protecting digital assets</strong> (data, systems, networks) from
+      unauthorized access, damage, or theft. It is a discipline at the intersection
+      of technology, human behavior, and policy. Every organization that touches a
+      computer has an attack surface. InfoSec professionals are the ones who map it,
+      defend it, and hunt the threats moving across it.
+    </p>
+    <div class="hero__badges">
+      <span class="badge badge-red">Offensive Security</span>
+      <span class="badge badge-cyan">Blue Team / SOC</span>
+      <span class="badge badge-yellow">Threat Intelligence</span>
+      <span class="badge badge-green">DFIR</span>
+      <span class="badge badge-orange">GRC &amp; Compliance</span>
+      <span class="badge badge-cyan">Cloud Security</span>
+      <span class="badge badge-red">Malware Analysis</span>
+      <span class="badge badge-green">DevSecOps</span>
+    </div>
+  </section>
+
+  <!-- ===== ROW 1: CIA | THREATS | DOMAINS ===== -->
+  <div class="grid-top">
+
+    <!-- CIA TRIAD -->
+    <div class="panel">
+      <span class="section-label label-red">// core framework</span>
+      <h2 class="section-title title-red">The CIA Triad</h2>
+      <div class="cia-row">
+        <div class="cia-item cia-c">
+          <span class="cia-item__letter">C</span>
+          <span class="cia-item__word">Confidentiality</span>
+          <span class="cia-item__desc">Only authorized parties can read the data. Enforced via encryption, access controls, and least-privilege.</span>
+        </div>
+        <div class="cia-item cia-i">
+          <span class="cia-item__letter">I</span>
+          <span class="cia-item__word">Integrity</span>
+          <span class="cia-item__desc">Data is accurate and hasn't been tampered with. Enforced via hashing, digital signatures, and audit logs.</span>
+        </div>
+        <div class="cia-item cia-a">
+          <span class="cia-item__letter">A</span>
+          <span class="cia-item__word">Availability</span>
+          <span class="cia-item__desc">Systems are accessible when needed. Enforced via redundancy, DDoS mitigation, and DR planning.</span>
+        </div>
+      </div>
+      <div class="terms-grid">
+        <div class="term">
+          <span class="term__name">Attack Surface</span>
+          <span class="term__def">Every point where an attacker could try to enter or extract data.</span>
+        </div>
+        <div class="term term-c">
+          <span class="term__name">Encryption</span>
+          <span class="term__def">Scrambling data so only parties with the key can read it.</span>
+        </div>
+        <div class="term term-g">
+          <span class="term__name">Zero Trust</span>
+          <span class="term__def">Never trust, always verify — no implicit trust inside or outside the network.</span>
+        </div>
+        <div class="term term-y">
+          <span class="term__name">Defense in Depth</span>
+          <span class="term__def">Layered security so a single failure doesn't expose everything.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THREAT LANDSCAPE -->
+    <div class="panel panel-cyan">
+      <span class="section-label label-cyan">// attack vectors</span>
+      <h2 class="section-title title-cyan">Threat Landscape</h2>
+      <ul class="threat-list">
+        <li>
+          <span class="t-label">Phishing</span>
+          Deceptive emails or messages tricking users into surrendering credentials or executing malware.
+        </li>
+        <li>
+          <span class="t-label">Malware</span>
+          Malicious software — ransomware, trojans, rootkits, spyware — deployed to disrupt or steal.
+        </li>
+        <li>
+          <span class="t-label">Social Engineering</span>
+          Manipulating humans to bypass technical controls. Often the easiest attack path.
+        </li>
+        <li>
+          <span class="t-label">Zero-Days</span>
+          Unknown, unpatched vulnerabilities in software exploited before a fix exists.
+        </li>
+        <li>
+          <span class="t-label">Insider Threats</span>
+          Malicious or negligent employees with legitimate access causing damage from within.
+        </li>
+        <li>
+          <span class="t-label">Supply Chain</span>
+          Compromising trusted vendors or software updates to reach downstream targets.
+        </li>
+        <li>
+          <span class="t-label">DDoS</span>
+          Flooding systems with traffic until they are unavailable to legitimate users.
+        </li>
+        <li>
+          <span class="t-label">SQL Injection</span>
+          Injecting malicious queries into input fields to read or destroy databases.
+        </li>
+      </ul>
+    </div>
+
+    <!-- DOMAINS -->
+    <div class="panel panel-yellow">
+      <span class="section-label label-yellow">// career paths</span>
+      <h2 class="section-title title-yellow">Five Domains</h2>
+      <div class="domains-grid">
+        <div class="domain-item d-red">
+          <span class="domain-item__name">Pentest / Red Team</span>
+          <span class="domain-item__desc">Attack systems with permission to find weaknesses before real attackers do.</span>
+        </div>
+        <div class="domain-item d-cyan">
+          <span class="domain-item__name">Blue Team / SOC</span>
+          <span class="domain-item__desc">Monitor, detect, and respond to threats in real time. The defenders.</span>
+        </div>
+        <div class="domain-item d-green">
+          <span class="domain-item__name">DFIR</span>
+          <span class="domain-item__desc">Digital Forensics &amp; Incident Response — analyze breaches and recover evidence.</span>
+        </div>
+        <div class="domain-item d-yellow">
+          <span class="domain-item__name">GRC</span>
+          <span class="domain-item__desc">Governance, Risk &amp; Compliance — policy, audits, regulatory frameworks.</span>
+        </div>
+        <div class="domain-item d-orange" style="grid-column: 1 / -1;">
+          <span class="domain-item__name">Threat Intelligence</span>
+          <span class="domain-item__desc">Track adversary TTPs, build threat models, brief leadership on risk posture.</span>
+        </div>
+      </div>
+      <div class="stats-row">
+        <span class="stat-chip badge-red">3.5M unfilled jobs globally</span>
+        <span class="stat-chip badge-cyan">$112k avg salary (US)</span>
+        <span class="stat-chip badge-green">0% unemployment</span>
+      </div>
+    </div>
+
+  </div><!-- /grid-top -->
+
+  <hr class="divider">
+  <p class="divider-label">// what does the work actually look like</p>
+
+  <!-- ===== ROW 2: DAY IN THE LIFE | TERMINAL ===== -->
+  <div class="grid-mid">
+
+    <!-- DAY IN THE LIFE -->
+    <div class="panel panel-green">
+      <span class="section-label label-green">// soc analyst — typical shift</span>
+      <h2 class="section-title title-green">A Day In The Role</h2>
+      <div class="timeline">
+        <div class="timeline-item timeline-item--active">
+          <span class="timeline-time">08:00</span>
+          <div class="timeline-content">
+            <div class="timeline-content__title">Shift Handoff &amp; Queue Review</div>
+            <div class="timeline-content__detail">Read the overnight incident log. Prioritize open alerts by severity. Assign tickets.</div>
+          </div>
+        </div>
+        <div class="timeline-item timeline-item--cyan">
+          <span class="timeline-time">09:15</span>
+          <div class="timeline-content">
+            <div class="timeline-content__title">Alert Triage</div>
+            <div class="timeline-content__detail">Investigate SIEM alerts — correlate logs, identify false positives, escalate real threats.</div>
+          </div>
+        </div>
+        <div class="timeline-item timeline-item--active">
+          <span class="timeline-time">11:00</span>
+          <div class="timeline-content">
+            <div class="timeline-content__title">Threat Hunt</div>
+            <div class="timeline-content__detail">Proactively search network telemetry for indicators of compromise (IOCs) and anomalies.</div>
+          </div>
+        </div>
+        <div class="timeline-item timeline-item--yellow">
+          <span class="timeline-time">13:30</span>
+          <div class="timeline-content">
+            <div class="timeline-content__title">Incident Response</div>
+            <div class="timeline-content__detail">A live alert: suspected lateral movement. Isolate host, pull forensic artifacts, begin IR runbook.</div>
+          </div>
+        </div>
+        <div class="timeline-item timeline-item--cyan">
+          <span class="timeline-time">15:45</span>
+          <div class="timeline-content">
+            <div class="timeline-content__title">Vulnerability Review</div>
+            <div class="timeline-content__detail">Review new CVEs from vendor advisories. Patch prioritization meeting with the IT team.</div>
+          </div>
+        </div>
+        <div class="timeline-item timeline-item--green">
+          <span class="timeline-time">17:00</span>
+          <div class="timeline-content">
+            <div class="timeline-content__title">Documentation &amp; Reporting</div>
+            <div class="timeline-content__detail">Write up incident findings. Update detection rules in SIEM. Hand off to night shift.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS OF THE TRADE -->
+    <div class="panel panel-cyan">
+      <span class="section-label label-cyan">// tools of the trade</span>
+      <h2 class="section-title title-cyan">The Toolkit</h2>
+
+      <div class="terminal">
+        <div class="terminal__bar">
+          <div class="terminal__dot terminal__dot--r"></div>
+          <div class="terminal__dot terminal__dot--y"></div>
+          <div class="terminal__dot terminal__dot--g"></div>
+          <span class="terminal__title">analyst@soc:~$</span>
+        </div>
+        <div class="terminal__body">
+          <div class="terminal__line"><span class="terminal__prompt">$</span><span class="terminal__cmd">nmap -sV -sC target.local</span></div>
+          <div class="terminal__line"><span class="terminal__out"># scanning open ports &amp; services...</span></div>
+          <div class="terminal__line"><span class="terminal__val">22/tcp open ssh OpenSSH 8.4</span></div>
+          <div class="terminal__line"><span class="terminal__val">80/tcp open http Apache 2.4.51</span></div>
+          <div class="terminal__line"><span class="terminal__warn">443/tcp — TLS cert expires in 3 days!</span></div>
+          <div class="terminal__line"><span class="terminal__prompt">$</span><span class="terminal__cmd">grep "FAILED" /var/log/auth.log | wc -l</span></div>
+          <div class="terminal__line"><span class="terminal__warn">2847</span><span class="terminal__out"> &nbsp;# brute force attempt detected</span></div>
+          <div class="terminal__line"><span class="terminal__prompt">$</span><span class="terminal__cursor"></span></div>
+        </div>
+      </div>
+
+      <ul class="threat-list">
+        <li><span class="t-label">Nmap / Masscan</span> Network discovery and port scanning</li>
+        <li><span class="t-label">Burp Suite</span> Web application security testing proxy</li>
+        <li><span class="t-label">Metasploit</span> Exploitation framework for pentesters</li>
+        <li><span class="t-label">Wireshark</span> Packet capture and protocol analysis</li>
+        <li><span class="t-label">Splunk / ELK</span> SIEM platforms for log correlation</li>
+        <li><span class="t-label">Volatility</span> Memory forensics and malware analysis</li>
+        <li><span class="t-label">Ghidra / IDA</span> Reverse engineering &amp; disassembly</li>
+      </ul>
+    </div>
+
+  </div><!-- /grid-mid -->
+
+  <hr class="divider">
+  <p class="divider-label">// the path from zero to working professional</p>
+
+  <!-- ===== ROW 3: ROADMAP ===== -->
+  <div class="grid-bottom">
+    <div class="panel">
+      <span class="section-label label-red">// entry roadmap</span>
+      <h2 class="section-title title-red" style="margin-bottom:2rem;">How To Get In</h2>
+      <div class="roadmap">
+
+        <div class="roadmap-step rs-1">
+          <div class="roadmap-step__num">01</div>
+          <div class="roadmap-step__title">Foundation</div>
+          <ul class="roadmap-step__items">
+            <li>CompTIA A+</li>
+            <li>CompTIA Network+</li>
+            <li>CompTIA Security+</li>
+            <li>Linux basics</li>
+            <li>Networking (TCP/IP)</li>
+            <li>Python scripting</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-step rs-2">
+          <div class="roadmap-step__num">02</div>
+          <div class="roadmap-step__title">Specialize</div>
+          <ul class="roadmap-step__items">
+            <li>eJPT (entry pentest)</li>
+            <li>CEH or PNPT</li>
+            <li>OSCP (offensive)</li>
+            <li>CySA+ (blue team)</li>
+            <li>GCIH (incident resp.)</li>
+            <li>AWS / Azure security</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-step rs-3">
+          <div class="roadmap-step__num">03</div>
+          <div class="roadmap-step__title">Practice</div>
+          <ul class="roadmap-step__items">
+            <li>HackTheBox</li>
+            <li>TryHackMe</li>
+            <li>PicoCTF / CTFtime</li>
+            <li>DVWA / VulnHub</li>
+            <li>Bug bounty (HackerOne)</li>
+            <li>Write up your work</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-step rs-4">
+          <div class="roadmap-step__num">04</div>
+          <div class="roadmap-step__title">Build &amp; Show</div>
+          <ul class="roadmap-step__items">
+            <li>Home lab (Proxmox / VMs)</li>
+            <li>GitHub portfolio</li>
+            <li>Personal blog / writeups</li>
+            <li>Open-source contributions</li>
+            <li>Capture-the-flag wins</li>
+            <li>LinkedIn presence</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-step rs-5">
+          <div class="roadmap-step__num">05</div>
+          <div class="roadmap-step__title">Break In</div>
+          <ul class="roadmap-step__items">
+            <li>IT helpdesk → SOC Tier 1</li>
+            <li>Cybersecurity internships</li>
+            <li>DEF CON / BSides talks</li>
+            <li>Discord communities</li>
+            <li>Mentorship programs</li>
+            <li>Apply early &amp; often</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="stats-row" style="margin-top:1.8rem; justify-content:center; gap:1rem;">
+        <span class="stat-chip badge-red">// no CS degree required</span>
+        <span class="stat-chip badge-cyan">// self-taught paths are common</span>
+        <span class="stat-chip badge-green">// certs &gt; degrees for entry roles</span>
+        <span class="stat-chip badge-yellow">// community is everything</span>
+      </div>
+    </div>
+  </div><!-- /grid-bottom -->
+
+  <!-- ===== BOTTOM STRIP ===== -->
+  <div class="bottom-strip">
+    <div class="bottom-logo">INFOSEC<span>//</span>EDUCATOR</div>
+    <a href="main.html" class="btn-home">&#8592; Home</a>
+    <div class="bottom-meta">
+      INFOSEC//EDUCATOR &nbsp;·&nbsp; Educational Use Only<br>
+      All content for awareness and career development.
+    </div>
+  </div>
+
+</div><!-- /poster -->
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INFOSEC//EDUCATOR — Explore Tools</title>
+  <title>INFOSEC//EDUCATOR — Tools</title>
   <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -54,98 +54,17 @@
       line-height: 1.5;
       margin: 0;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
     }
 
     a { color: inherit; text-decoration: none; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg-900); }
     ::-webkit-scrollbar-thumb { background: var(--red-800); }
-
-    /* ===== HEADER ===== */
-    .site-header {
-      position: sticky; top: 0; z-index: 100;
-      background-color: rgba(13,10,13,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--red-800);
-      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
-    }
-    .header-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; gap: 2rem;
-    }
-    .site-logo {
-      font-family: var(--font-display); font-size: 1.8rem;
-      letter-spacing: 0.08em; color: var(--red-500);
-      text-shadow: var(--glow-red); white-space: nowrap; flex-shrink: 0;
-    }
-    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
-    .main-nav { display: flex; align-items: center; gap: 0; }
-    .main-nav a {
-      font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-300);
-      padding: 0.4rem 0.85rem; border-radius: 2px;
-      transition: color 0.2s, background 0.2s;
-    }
-    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
-    .main-nav a.active { color: var(--cyan-500); }
-    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
-    .search-box {
-      display: flex; align-items: center; background: var(--bg-700);
-      border: 1px solid var(--red-800); border-radius: 2px;
-      padding: 0.3rem 0.6rem; gap: 0.4rem;
-    }
-    .search-box input {
-      background: none; border: none; outline: none;
-      color: var(--red-300); font-family: var(--font-mono); font-size: 0.8rem; width: 140px;
-    }
-    .search-box input::placeholder { color: var(--red-800); }
-    .search-icon { color: var(--red-700); font-size: 0.9rem; }
-    .btn-subscribe {
-      background: transparent; border: 1px solid var(--cyan-500); color: var(--cyan-500);
-      font-family: var(--font-ui); font-size: 0.78rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.75rem;
-      cursor: pointer; border-radius: 2px; transition: background 0.2s, box-shadow 0.2s;
-    }
-    .btn-subscribe:hover { background: rgba(43,228,234,0.1); box-shadow: var(--glow-cyan); }
-
-    /* ===== TICKER ===== */
-    .ticker-bar {
-      background: var(--red-900); border-bottom: 1px solid var(--red-800);
-      overflow: hidden; height: 28px; display: flex; align-items: center;
-    }
-    .ticker-label {
-      background: var(--red-500); color: #0d0a0d; font-family: var(--font-display);
-      font-size: 1rem; letter-spacing: 0.1em; padding: 0 0.75rem; height: 100%;
-      display: flex; align-items: center; flex-shrink: 0;
-    }
-    .ticker-track {
-      display: flex; align-items: center; white-space: nowrap;
-      animation: ticker 30s linear infinite;
-      font-family: var(--font-mono); font-size: 0.75rem; color: var(--red-300);
-      gap: 3rem; padding-left: 2rem;
-    }
-    .ticker-track span::before { content: "▶ "; color: var(--red-500); }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* ===== PAGE ===== */
-    .page { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
-
-    /* ===== SECTION HEADER ===== */
-    .section-header {
-      display: flex; align-items: baseline; justify-content: space-between;
-      padding: 0.5rem 0 0.6rem; margin-bottom: 1.25rem;
-      border-bottom: 2px solid var(--red-500);
-      box-shadow: 0 2px 0 transparent, 0 3px 12px rgba(232,97,90,0.2);
-    }
-    .section-title {
-      font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--red-500); text-shadow: var(--glow-red); margin: 0;
-    }
-    .section-title .overline {
-      display: block; font-family: var(--font-mono); font-size: 0.65rem;
-      letter-spacing: 0.15em; color: var(--cyan-500); text-shadow: none; margin-bottom: -0.2rem;
-    }
 
     /* ===== GLITCH ===== */
     @keyframes glitch {
@@ -156,71 +75,31 @@
       80%  { clip-path: inset(10% 0 80% 0); transform: translateX(-2px); }
       100% { clip-path: inset(0 0 95% 0); transform: translateX(0); }
     }
-    .glitch { position: relative; }
-    .glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; }
-    .glitch::before { color: var(--cyan-500); animation: glitch 4s step-start infinite; animation-delay: 0.5s; }
-    .glitch::after  { color: var(--red-500);  animation: glitch 4s step-start infinite; animation-delay: 1s; }
-
-    /* ===== FOOTER ===== */
-    .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 1rem; }
-    .footer-inner {
-      max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem;
-      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem;
-    }
-    .footer-logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--red-500); text-shadow: var(--glow-red); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-    .footer-logo span { color: var(--cyan-500); }
-    .footer-tagline { font-family: var(--font-mono); font-size: 0.72rem; color: var(--red-700); line-height: 1.6; margin-bottom: 1rem; }
-    .footer-social { display: flex; gap: 0.5rem; }
-    .social-btn {
-      background: var(--bg-700); border: 1px solid var(--red-800); color: var(--red-700);
-      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
-      padding: 0.3em 0.6em; border-radius: 2px; transition: color 0.2s, border-color 0.2s;
-    }
-    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
-    .footer-col__title {
-      font-family: var(--font-display); font-size: 1rem; color: var(--red-500);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      margin: 0 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--red-900);
-    }
-    .footer-links { list-style: none; margin: 0; padding: 0; }
-    .footer-links li { margin-bottom: 0.35rem; }
-    .footer-links a { font-size: 0.82rem; color: var(--red-700); letter-spacing: 0.02em; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--red-400); }
-    .footer-links a::before { content: "// "; color: var(--red-900); }
-    .footer-bottom {
-      border-top: 1px solid var(--red-900); padding: 1rem 1.5rem;
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-900);
-    }
-    .footer-bottom span { color: var(--red-800); }
 
     /* ===== CAROUSEL ===== */
-    .carousel-intro {
-      font-family: var(--font-mono); font-size: 0.78rem; color: var(--red-700);
-      letter-spacing: 0.04em; margin: 0 0 2.5rem; text-align: center;
-    }
-    .carousel-intro strong { color: var(--cyan-500); }
-
     .carousel-wrap {
-      display: flex; flex-direction: column; align-items: center; gap: 2rem;
-      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      width: 100%;
     }
 
     /* ── Stage ── */
     .carousel-stage {
       position: relative;
       width: 100%;
-      max-width: 860px;
-      height: 530px;
+      max-width: 1000px;
+      height: 640px;
       overflow: hidden;
+      touch-action: pan-y;
     }
 
     /* ── Cards ── */
     .c-card {
       position: absolute;
       top: 50%; left: 50%;
-      width: 360px;
+      width: 440px;
       background: var(--bg-600);
       border: 1px solid var(--red-800);
       clip-path: var(--notch-path);
@@ -250,15 +129,19 @@
     .c-card--active:hover::after { background: var(--red-500); }
 
     .c-card--next {
-      transform: translate(calc(-50% + 420px), -50%) scale(0.8);
+      transform: translate(calc(-50% + 510px), -50%) scale(0.8);
       opacity: 0.5; filter: brightness(0.45) saturate(0.5); z-index: 5;
     }
     .c-card--prev {
-      transform: translate(calc(-50% - 420px), -50%) scale(0.8);
+      transform: translate(calc(-50% - 510px), -50%) scale(0.8);
       opacity: 0.5; filter: brightness(0.45) saturate(0.5); z-index: 5;
     }
     .c-card--next:hover, .c-card--prev:hover {
       opacity: 0.72; filter: brightness(0.6) saturate(0.7);
+    }
+    .c-card--hidden {
+      transform: translate(-50%, -50%) scale(0.65);
+      opacity: 0; pointer-events: none; z-index: 1;
     }
 
     /* ── Card image area ── */
@@ -270,7 +153,7 @@
 
     /* ── Card body ── */
     .c-card__body {
-      padding: 1.1rem 1.1rem 1.4rem;
+      padding: 1.3rem 1.3rem 1.6rem;
     }
 
     .c-card__tag {
@@ -281,24 +164,26 @@
     }
     .c-card__tag::before { content: "//"; opacity: 0.6; }
 
-    .tag-red    { color: var(--red-500);    background: rgba(232,97,90,0.1);  border: 1px solid var(--red-900); }
-    .tag-cyan   { color: var(--cyan-500);   background: rgba(43,228,234,0.08); border: 1px solid var(--cyan-900); }
-    .tag-yellow { color: var(--yellow-500); background: rgba(254,211,63,0.08); border: 1px solid var(--yellow-900); }
+    .tag-red    { color: var(--red-500);    background: rgba(232,97,90,0.1);   border: 1px solid var(--red-900); }
+    .tag-cyan   { color: var(--cyan-500);   background: rgba(43,228,234,0.08);  border: 1px solid var(--cyan-900); }
+    .tag-yellow { color: var(--yellow-500); background: rgba(254,211,63,0.08);  border: 1px solid var(--yellow-900); }
+    .tag-green  { color: var(--green-500);  background: rgba(43,254,160,0.07);  border: 1px solid var(--green-900); }
+    .tag-blue   { color: #4fa3e0;           background: rgba(79,163,224,0.07);  border: 1px solid #0d1e30; }
 
     .c-card__title {
-      font-family: var(--font-display); font-size: 2rem; line-height: 1.05;
+      font-family: var(--font-display); font-size: 2.4rem; line-height: 1.05;
       letter-spacing: 0.04em; margin: 0 0 0.6rem; color: var(--red-300);
       transition: color 0.2s;
     }
     .c-card--active:hover .c-card__title { color: var(--cyan-400); }
 
     .c-card__desc {
-      font-size: 0.82rem; line-height: 1.65; color: var(--red-700); margin: 0 0 1rem;
+      font-size: 0.88rem; line-height: 1.65; color: var(--red-700); margin: 0 0 1rem;
     }
 
     .c-card__enter {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 700;
+      font-family: var(--font-ui); font-size: 0.88rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-500);
       border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s;
     }
@@ -313,8 +198,8 @@
 
     .c-arrow {
       background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
-      font-family: var(--font-mono); font-size: 1.2rem; line-height: 1;
-      padding: 0.4rem 0.75rem; cursor: pointer; border-radius: 2px;
+      font-family: var(--font-mono); font-size: 1.4rem; line-height: 1;
+      padding: 0.5rem 0.9rem; cursor: pointer; border-radius: 2px;
       transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .c-arrow:hover { color: var(--red-400); border-color: var(--red-500); box-shadow: var(--glow-red); }
@@ -344,420 +229,528 @@
     .c-card--active { animation: pulse-ring 3s ease-out infinite; }
     .c-card--active:hover { animation: none; }
 
+    /* ===== HOME BUTTON ===== */
+    .home-btn-wrap {
+      margin-top: 1rem;
+    }
+
+    .btn-home {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 1.2rem;
+      cursor: pointer; border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-home:hover {
+      color: var(--red-400); border-color: var(--red-500); box-shadow: var(--glow-red);
+    }
+
     /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .carousel-stage { height: 580px; }
+      .c-card { width: 380px; }
+      .c-card--next { transform: translate(calc(-50% + 430px), -50%) scale(0.8); }
+      .c-card--prev { transform: translate(calc(-50% - 430px), -50%) scale(0.8); }
+    }
+
     @media (max-width: 768px) {
-      .header-actions { display: none; }
-      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
-      .carousel-stage { height: 470px; }
-      .c-card { width: 290px; }
-      .c-card--next { transform: translate(calc(-50% + 300px), -50%) scale(0.78); }
-      .c-card--prev { transform: translate(calc(-50% - 300px), -50%) scale(0.78); }
-      .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+      body { padding: 1.5rem 0.75rem; justify-content: flex-start; padding-top: 3rem; }
+      .carousel-stage { height: 540px; }
+      .c-card { width: 340px; }
+      .c-card--next { transform: translate(calc(-50% + 370px), -50%) scale(0.78); }
+      .c-card--prev { transform: translate(calc(-50% - 370px), -50%) scale(0.78); }
     }
 
     @media (max-width: 480px) {
-      .site-logo { font-size: 1.3rem; }
-      .carousel-stage { height: 430px; }
-      .c-card { width: 260px; }
+      body { padding-top: 2rem; }
+      .carousel-stage { height: 490px; }
+      .c-card { width: 300px; }
       .c-card--next, .c-card--prev { opacity: 0 !important; pointer-events: none; }
-      .footer-inner { grid-template-columns: 1fr; }
+      .c-card__title { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="main.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
-      <nav class="main-nav">
-        <a href="main.html">Home</a>
-        <a href="password.html">_PasswordAnalyzer</a>
-        <a href="#">Writeups</a>
-        <a href="phishy.html">_PhishTest</a>
-        <a href="domains.html">_Domains</a>
-        <a href="carousel.html" class="active">_Tools</a>
-        <a href="#">About</a>
-      </nav>
-      <div class="header-actions">
-        <div class="search-box">
-          <span class="search-icon">⌕</span>
-          <input type="text" placeholder="search topics...">
+  <div class="carousel-wrap">
+
+    <!-- ====== STAGE ====== -->
+    <div class="carousel-stage" id="carousel-stage">
+
+      <!-- ── CARD 1: domains.html ── -->
+      <div class="c-card" data-href="domains.html">
+        <div class="c-card__image">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="hexD" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#3c181a" stroke-width="0.6"/>
+              </pattern>
+              <filter id="glowD" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <filter id="glowDsm" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="2" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <rect width="360" height="220" fill="#0d0a0d"/>
+            <rect width="360" height="220" fill="url(#hexD)"/>
+
+            <polygon points="180,32 256,84 228,172 132,172 104,84"
+                     fill="rgba(232,97,90,0.04)" stroke="#3c181a" stroke-width="0.8"/>
+            <polygon points="180,65 222,95 208,148 152,148 138,95"
+                     fill="none" stroke="#3c181a" stroke-width="0.6"/>
+            <polygon points="180,86 198,99 193,122 167,122 162,99"
+                     fill="none" stroke="#3c181a" stroke-width="0.4"/>
+
+            <line x1="180" y1="108" x2="180" y2="32" stroke="#e8615a" stroke-width="1.2" opacity="0.55"/>
+            <line x1="180" y1="108" x2="256" y2="84" stroke="#2be4ea" stroke-width="1.2" opacity="0.55"/>
+            <line x1="180" y1="108" x2="228" y2="172" stroke="#fed33f" stroke-width="1.2" opacity="0.55"/>
+            <line x1="180" y1="108" x2="132" y2="172" stroke="#2bfea0" stroke-width="1.2" opacity="0.55"/>
+            <line x1="180" y1="108" x2="104" y2="84" stroke="#ff9a28" stroke-width="1.2" opacity="0.55"/>
+
+            <circle cx="180" cy="32"  r="5" fill="#e8615a" filter="url(#glowDsm)"/>
+            <circle cx="256" cy="84"  r="5" fill="#2be4ea" filter="url(#glowDsm)"/>
+            <circle cx="228" cy="172" r="5" fill="#fed33f" filter="url(#glowDsm)"/>
+            <circle cx="132" cy="172" r="5" fill="#2bfea0" filter="url(#glowDsm)"/>
+            <circle cx="104" cy="84"  r="5" fill="#ff9a28" filter="url(#glowDsm)"/>
+
+            <circle cx="180" cy="65"  r="2.5" fill="#e8615a" opacity="0.5"/>
+            <circle cx="222" cy="95"  r="2.5" fill="#2be4ea" opacity="0.5"/>
+            <circle cx="208" cy="148" r="2.5" fill="#fed33f" opacity="0.5"/>
+            <circle cx="152" cy="148" r="2.5" fill="#2bfea0" opacity="0.5"/>
+            <circle cx="138" cy="95"  r="2.5" fill="#ff9a28" opacity="0.5"/>
+
+            <circle cx="180" cy="108" r="4" fill="#3c181a" stroke="#e8615a" stroke-width="1.5"/>
+            <circle cx="180" cy="108" r="1.5" fill="#e8615a"/>
+
+            <text x="180" y="19"  fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="middle" letter-spacing="1.5">PENTEST</text>
+            <text x="268" y="84"  fill="#2be4ea" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="start"  letter-spacing="1">BLUE TEAM</text>
+            <text x="238" y="184" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="start"  letter-spacing="1">GRC</text>
+            <text x="122" y="184" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="end"    letter-spacing="1">DFIR</text>
+            <text x="92"  y="84"  fill="#ff9a28" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="end"    letter-spacing="1">THREAT INTEL</text>
+
+            <text x="180" y="210" fill="#3c181a" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">DOMAIN ASSESSMENT</text>
+          </svg>
         </div>
-        <button class="btn-subscribe">Subscribe</button>
+        <div class="c-card__body">
+          <span class="c-card__tag tag-red">Career Path</span>
+          <h3 class="c-card__title">Find Your Domain</h3>
+          <p class="c-card__desc">No experience needed. Five everyday scenarios, five gut-check choices. Discover which corner of cybersecurity fits the way you naturally think.</p>
+          <span class="c-card__enter">Launch Assessment &rarr;</span>
+        </div>
       </div>
+
+      <!-- ── CARD 2: password.html ── -->
+      <div class="c-card" data-href="password.html">
+        <div class="c-card__image">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="hexP" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="0.6"/>
+              </pattern>
+              <filter id="glowP">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <rect width="360" height="220" fill="#0d1118"/>
+            <rect width="360" height="220" fill="url(#hexP)"/>
+
+            <rect x="12" y="12" width="210" height="196" rx="3" fill="#0d1118" stroke="#0d3336" stroke-width="1.2"/>
+            <rect x="12" y="12" width="210" height="22" rx="3" fill="#0f1820"/>
+            <rect x="12" y="23"  width="210" height="11" fill="#0f1820"/>
+            <circle cx="26" cy="23" r="4" fill="#1a4a52"/>
+            <circle cx="40" cy="23" r="4" fill="#1a4a52"/>
+            <circle cx="54" cy="23" r="4" fill="#1a4a52"/>
+            <text x="117" y="27" fill="#2be4ea" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.5">pwd_analyzer.py</text>
+
+            <text x="22" y="52" fill="#0d7a7e" font-family="monospace" font-size="8">$</text>
+            <text x="31" y="52" fill="#2be4ea" font-family="monospace" font-size="8">analyze</text>
+            <text x="84" y="52" fill="#1a4a52" font-family="monospace" font-size="8">••••••••••••••</text>
+
+            <text x="22" y="71"  fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Length</text>
+            <rect x="102" y="63" width="64" height="7" rx="1" fill="#0a2a2e"/>
+            <rect x="102" y="63" width="64" height="7" rx="1" fill="#2be4ea" opacity="0.8"/>
+            <text x="171" y="71"  fill="#2be4ea" font-family="monospace" font-size="7.5">16 chars</text>
+
+            <text x="22" y="87"  fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Uppercase</text>
+            <rect x="113" y="79" width="50" height="7" rx="1" fill="#0a2a2e"/>
+            <rect x="113" y="79" width="50" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
+            <text x="168" y="87"  fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
+
+            <text x="22" y="103" fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Symbols</text>
+            <rect x="106" y="95" width="55" height="7" rx="1" fill="#0a2a2e"/>
+            <rect x="106" y="95" width="55" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
+            <text x="166" y="103" fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
+
+            <text x="22" y="119" fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Numbers</text>
+            <rect x="107" y="111" width="50" height="7" rx="1" fill="#0a2a2e"/>
+            <rect x="107" y="111" width="50" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
+            <text x="162" y="119" fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
+
+            <line x1="22" y1="127" x2="210" y2="127" stroke="#0d3336" stroke-width="0.8"/>
+
+            <text x="22" y="142" fill="#0d7a7e" font-family="monospace" font-size="7.5">Entropy: 89.2 bits</text>
+
+            <rect x="22" y="150" width="190" height="9" rx="2" fill="#071214"/>
+            <rect x="22" y="150" width="158" height="9" rx="2" fill="#2bfea0" filter="url(#glowP)"/>
+            <text x="22"  y="174" fill="#2be4ea"  font-family="monospace" font-size="7.5">STRONG</text>
+            <text x="120" y="174" fill="#0d7a7e"  font-family="monospace" font-size="7.5">crack: 247 years</text>
+
+            <text x="22" y="195" fill="#0d3336" font-family="monospace" font-size="7.5">▌</text>
+
+            <path d="M 272,100 L 272,72 Q 272,50 295,50 Q 318,50 318,72 L 318,100"
+                  fill="none" stroke="#1a4a52" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 272,100 L 272,72 Q 272,50 295,50 Q 318,50 318,72 L 318,100"
+                  fill="none" stroke="#2be4ea" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+            <rect x="256" y="96" width="78" height="64" rx="7" fill="#0f1820" stroke="#2be4ea" stroke-width="1.5"/>
+            <circle cx="295" cy="122" r="10" fill="#071214" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="291" y="122" width="8" height="14" rx="2" fill="#071214"/>
+            <rect x="256" y="96" width="78" height="64" rx="7" fill="none" stroke="#2be4ea" stroke-width="0.5" filter="url(#glowP)" opacity="0.4"/>
+
+            <line x1="256" y1="115" x2="235" y2="115" stroke="#0d3336" stroke-width="1"/>
+            <line x1="235" y1="115" x2="235" y2="145" stroke="#0d3336" stroke-width="1"/>
+            <rect x="231" y="143" width="8" height="4" rx="1" fill="#0d3336"/>
+
+            <line x1="334" y1="125" x2="348" y2="125" stroke="#0d3336" stroke-width="1"/>
+            <line x1="348" y1="125" x2="348" y2="150" stroke="#0d3336" stroke-width="1"/>
+            <rect x="344" y="148" width="8" height="4" rx="1" fill="#0d3336"/>
+
+            <line x1="295" y1="160" x2="295" y2="178" stroke="#0d3336" stroke-width="1"/>
+            <rect x="291" y="176" width="8" height="4" rx="1" fill="#0d3336"/>
+
+            <text x="295" y="200" fill="#0d3336" font-family="monospace" font-size="6.5" text-anchor="middle" letter-spacing="1.5">STRENGTH ANALYSIS</text>
+          </svg>
+        </div>
+        <div class="c-card__body">
+          <span class="c-card__tag tag-cyan">Analysis Tool</span>
+          <h3 class="c-card__title">Password Analyzer</h3>
+          <p class="c-card__desc">Drop in a password and see its entropy, estimated crack time, and real-world strength score — instant feedback on what makes it resistant or not.</p>
+          <span class="c-card__enter">Launch Analyzer &rarr;</span>
+        </div>
+      </div>
+
+      <!-- ── CARD 3: phishy.html ── -->
+      <div class="c-card" data-href="phishy.html">
+        <div class="c-card__image">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="hexPh" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2e2408" stroke-width="0.6"/>
+              </pattern>
+              <filter id="glowPh">
+                <feGaussianBlur stdDeviation="2" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <rect width="360" height="220" fill="#12100a"/>
+            <rect width="360" height="220" fill="url(#hexPh)"/>
+
+            <rect x="12" y="12" width="336" height="22" rx="2" fill="#1e1a0a" stroke="#5e4a10" stroke-width="1"/>
+            <text x="22" y="27" fill="#fed33f" font-family="monospace" font-size="9" font-weight="bold">INBOX</text>
+            <text x="70" y="27" fill="#5e4a10" font-family="monospace" font-size="8">(8 messages)</text>
+            <polygon points="330,15 344,15 337,26" fill="rgba(254,211,63,0.15)" stroke="#fed33f" stroke-width="1.2"/>
+            <text x="337" y="24" fill="#fed33f" font-family="monospace" font-size="6.5" text-anchor="middle">!</text>
+
+            <rect x="12" y="35" width="336" height="32" fill="#0e0d08" stroke="#2e2408" stroke-width="0.5"/>
+            <rect x="12" y="35" width="3"   height="32" fill="#2e2408"/>
+            <text x="22" y="49" fill="#5e4a10" font-family="monospace" font-size="7.5">IT Support</text>
+            <text x="22" y="61" fill="#3a3010" font-family="monospace" font-size="7">Monthly patch notes — please review before Friday</text>
+
+            <rect x="12" y="68" width="336" height="32" fill="#0d0c08" stroke="#2e2408" stroke-width="0.5"/>
+            <rect x="12" y="68" width="3"   height="32" fill="#2e2408"/>
+            <text x="22" y="82" fill="#5e4a10" font-family="monospace" font-size="7.5">hr@company.com</text>
+            <text x="22" y="94" fill="#3a3010" font-family="monospace" font-size="7">Q2 benefits enrollment deadline — action required</text>
+
+            <rect x="12" y="101" width="336" height="38" fill="rgba(232,97,90,0.07)" stroke="#9c3230" stroke-width="1.2"/>
+            <rect x="12" y="101" width="4" height="38" fill="#e8615a"/>
+            <rect x="20" y="106" width="66" height="11" rx="2" fill="rgba(232,97,90,0.2)" stroke="#e8615a" stroke-width="0.75"/>
+            <text x="53"  y="115" fill="#e8615a" font-family="monospace" font-size="6" text-anchor="middle" letter-spacing="0.5">&#x26A0; PHISHING</text>
+            <text x="92"  y="115" fill="#f4908b" font-family="monospace" font-size="7.5">security@paypa1.com</text>
+            <text x="20"  y="131" fill="#ea6f69" font-family="monospace" font-size="7">URGENT: Your account will be suspended — verify now</text>
+
+            <path d="M 338,103 Q 354,103 354,116 Q 354,132 338,132"
+                  fill="none" stroke="#9c3230" stroke-width="2" opacity="0.8"/>
+            <path d="M 338,132 L 345,140 M 338,132 L 331,140"
+                  fill="none" stroke="#9c3230" stroke-width="2" opacity="0.8"/>
+            <circle cx="338" cy="103" r="3" fill="#e8615a" opacity="0.8" filter="url(#glowPh)"/>
+
+            <rect x="12" y="140" width="336" height="32" fill="#0d0c08" stroke="#2e2408" stroke-width="0.5"/>
+            <rect x="12" y="140" width="3"   height="32" fill="#2e2408"/>
+            <text x="22" y="154" fill="#5e4a10" font-family="monospace" font-size="7.5">github@notifications.com</text>
+            <text x="22" y="166" fill="#3a3010" font-family="monospace" font-size="7">New pull request: feat/update-dependencies #247</text>
+
+            <rect x="12" y="173" width="336" height="32" fill="#0e0d08" stroke="#2e2408" stroke-width="0.5"/>
+            <rect x="12" y="173" width="3"   height="32" fill="#2e2408"/>
+            <text x="22" y="187" fill="#5e4a10" font-family="monospace" font-size="7.5">newsletter@medium.com</text>
+            <text x="22" y="199" fill="#3a3010" font-family="monospace" font-size="7">Your weekly digest — 12 stories curated for you</text>
+
+            <text x="180" y="213" fill="#2e2408" font-family="monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">PHISHING DETECTION TRAINING</text>
+          </svg>
+        </div>
+        <div class="c-card__body">
+          <span class="c-card__tag tag-yellow">Phishing Sim</span>
+          <h3 class="c-card__title">PhishTest</h3>
+          <p class="c-card__desc">Train your eye to catch malicious emails before they catch you. Real phishing tactics presented as interactive challenges — no actual risk.</p>
+          <span class="c-card__enter">Launch PhishTest &rarr;</span>
+        </div>
+      </div>
+
+      <!-- ── CARD 4: infosecbio.html ── -->
+      <div class="c-card" data-href="infosecbio.html">
+        <div class="c-card__image">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="hexBio" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2d1b4e" stroke-width="0.6"/>
+              </pattern>
+              <filter id="glowBio" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <rect width="360" height="220" fill="#0b0a12"/>
+            <rect width="360" height="220" fill="url(#hexBio)"/>
+
+            <!-- Left poster frame -->
+            <rect x="12" y="12" width="194" height="196" rx="2" fill="#0f0c1a" stroke="#2d1b4e" stroke-width="1"/>
+            <!-- Frame header bar -->
+            <rect x="12" y="12" width="194" height="20" rx="2" fill="#130f20"/>
+            <rect x="12" y="22" width="194" height="10" fill="#130f20"/>
+            <text x="109" y="26" fill="#c084fc" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="middle" letter-spacing="2" opacity="0.8">INFOSEC // FIELD GUIDE</text>
+
+            <!-- CIA boxes -->
+            <rect x="18" y="38" width="58" height="42" rx="1" fill="#1a0c0c" stroke="#5e2122" stroke-width="1"/>
+            <text x="47" y="59" fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="19" text-anchor="middle" filter="url(#glowBio)">C</text>
+            <text x="47" y="73" fill="#5e2122" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle" letter-spacing="0.5">CONFIDEN.</text>
+
+            <rect x="80" y="38" width="58" height="42" rx="1" fill="#071214" stroke="#0d3336" stroke-width="1"/>
+            <text x="109" y="59" fill="#2be4ea" font-family="Share Tech Mono,monospace" font-size="19" text-anchor="middle" filter="url(#glowBio)">I</text>
+            <text x="109" y="73" fill="#0d3336" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle" letter-spacing="0.5">INTEGRITY</text>
+
+            <rect x="142" y="38" width="58" height="42" rx="1" fill="#071410" stroke="#0b2e1e" stroke-width="1"/>
+            <text x="171" y="59" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="19" text-anchor="middle" filter="url(#glowBio)">A</text>
+            <text x="171" y="73" fill="#0b2e1e" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle" letter-spacing="0.5">AVAILABIL.</text>
+
+            <!-- Divider -->
+            <line x1="18" y1="88" x2="200" y2="88" stroke="#2d1b4e" stroke-width="0.8"/>
+
+            <!-- Domain rows -->
+            <rect x="18" y="94" width="5" height="14" rx="1" fill="#e8615a"/>
+            <text x="30" y="104" fill="#9c3230" font-family="Share Tech Mono,monospace" font-size="7">PENTEST / RED TEAM</text>
+
+            <rect x="18" y="112" width="5" height="14" rx="1" fill="#2be4ea"/>
+            <text x="30" y="122" fill="#0d3336" font-family="Share Tech Mono,monospace" font-size="7">BLUE TEAM / SOC</text>
+
+            <rect x="18" y="130" width="5" height="14" rx="1" fill="#2bfea0"/>
+            <text x="30" y="140" fill="#0b2e1e" font-family="Share Tech Mono,monospace" font-size="7">DFIR — FORENSICS</text>
+
+            <rect x="18" y="148" width="5" height="14" rx="1" fill="#fed33f"/>
+            <text x="30" y="158" fill="#2e2408" font-family="Share Tech Mono,monospace" font-size="7">THREAT INTELLIGENCE</text>
+
+            <rect x="18" y="166" width="5" height="14" rx="1" fill="#ff9a28"/>
+            <text x="30" y="176" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="7">GRC — COMPLIANCE</text>
+
+            <!-- Frame notch corner -->
+            <polygon points="194,196 206,196 206,208" fill="#0f0c1a" stroke="#2d1b4e" stroke-width="0.5"/>
+
+            <!-- Bottom frame label -->
+            <text x="109" y="206" fill="#2d1b4e" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle" letter-spacing="2">FIELD GUIDE</text>
+
+            <!-- Right roadmap — vertical line -->
+            <line x1="275" y1="20" x2="275" y2="200" stroke="#2d1b4e" stroke-width="1" stroke-dasharray="3,4"/>
+
+            <!-- Step 01 -->
+            <circle cx="275" cy="42" r="13" fill="#0b0a12" stroke="#e8615a" stroke-width="1.2" filter="url(#glowBio)" opacity="0.8"/>
+            <text x="275" y="47" fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">01</text>
+            <text x="294" y="40" fill="#5e2122" font-family="Share Tech Mono,monospace" font-size="6.5">LEARN</text>
+            <text x="294" y="49" fill="#3c181a" font-family="Share Tech Mono,monospace" font-size="5.5">Sec+ · Net+</text>
+
+            <!-- Step 02 -->
+            <circle cx="275" cy="90" r="13" fill="#0b0a12" stroke="#ff9a28" stroke-width="1.2" opacity="0.75"/>
+            <text x="275" y="95" fill="#ff9a28" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">02</text>
+            <text x="294" y="88" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="6.5">CERTIFY</text>
+            <text x="294" y="97" fill="#2e1a06" font-family="Share Tech Mono,monospace" font-size="5.5">OSCP · CEH</text>
+
+            <!-- Step 03 -->
+            <circle cx="275" cy="138" r="13" fill="#0b0a12" stroke="#fed33f" stroke-width="1.2" opacity="0.75"/>
+            <text x="275" y="143" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">03</text>
+            <text x="294" y="136" fill="#2e2408" font-family="Share Tech Mono,monospace" font-size="6.5">PRACTICE</text>
+            <text x="294" y="145" fill="#1e1606" font-family="Share Tech Mono,monospace" font-size="5.5">HTB · CTFs</text>
+
+            <!-- Step 04 -->
+            <circle cx="275" cy="186" r="13" fill="#0b0a12" stroke="#2bfea0" stroke-width="1.2" filter="url(#glowBio)" opacity="0.75"/>
+            <text x="275" y="191" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">04</text>
+            <text x="294" y="184" fill="#0b2e1e" font-family="Share Tech Mono,monospace" font-size="6.5">APPLY</text>
+            <text x="294" y="193" fill="#071a12" font-family="Share Tech Mono,monospace" font-size="5.5">SOC Tier 1</text>
+
+            <!-- Bottom label -->
+            <text x="315" y="213" fill="#2d1b4e" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle" letter-spacing="1.5">ROADMAP</text>
+          </svg>
+        </div>
+        <div class="c-card__body">
+          <span class="c-card__tag tag-green">Field Guide</span>
+          <h3 class="c-card__title">InfoSec 101</h3>
+          <p class="c-card__desc">New to information security? A poster-style breakdown of the CIA triad, the five major domains, what the job actually looks like, and a step-by-step path in.</p>
+          <span class="c-card__enter">Read the Guide &rarr;</span>
+        </div>
+      </div>
+
+      <!-- ── CARD 5: posdbio.html ── -->
+      <div class="c-card" data-href="posdbio.html">
+        <div class="c-card__image">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="hexPosd" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d1e30" stroke-width="0.6"/>
+              </pattern>
+              <filter id="glowPosd" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <filter id="glowPosdSm" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <!-- Background -->
+            <rect width="360" height="220" fill="#06080e"/>
+            <rect width="360" height="220" fill="url(#hexPosd)"/>
+            <!-- Blue ambient glow -->
+            <radialGradient id="bayGlow" cx="30%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#0d1e30" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#06080e" stop-opacity="0"/>
+            </radialGradient>
+            <rect width="360" height="220" fill="url(#bayGlow)"/>
+
+            <!-- ── Left: San Diego Bay map ── -->
+            <!-- Bay water fill -->
+            <path d="M 52,18 L 72,14 L 95,17 L 112,26 L 122,44 L 126,66 L 122,90 L 112,110 L 96,120 L 74,118 L 56,108 L 44,88 L 40,64 L 42,40 Z"
+                  fill="rgba(79,163,224,0.1)" stroke="#1a3a54" stroke-width="1"/>
+            <!-- Inner bay ripple -->
+            <ellipse cx="82" cy="67" rx="22" ry="14" fill="none" stroke="#0d2a40" stroke-width="0.7" opacity="0.7"/>
+            <ellipse cx="82" cy="67" rx="13" ry="8"  fill="none" stroke="#0d2a40" stroke-width="0.4" opacity="0.4"/>
+
+            <!-- Pier / terminal structures -->
+            <rect x="116" y="38" width="14" height="5" rx="1" fill="#0d1e30" stroke="#1a3a54" stroke-width="0.8"/>
+            <rect x="116" y="48" width="14" height="5" rx="1" fill="#0d1e30" stroke="#1a3a54" stroke-width="0.8"/>
+            <rect x="116" y="58" width="14" height="5" rx="1" fill="#0d1e30" stroke="#1a3a54" stroke-width="0.8"/>
+            <text x="133" y="52" fill="#1a3a54" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing="0.5">PIERS</text>
+
+            <!-- Ship in harbor -->
+            <rect x="70" y="60" width="24" height="9" rx="1" fill="#0d1e30" stroke="#4fa3e0" stroke-width="0.9"/>
+            <polygon points="70,60 94,60 84,52" fill="#091420" stroke="#4fa3e0" stroke-width="0.7"/>
+            <line x1="82" y1="52" x2="82" y2="46" stroke="#4fa3e0" stroke-width="0.8" opacity="0.7"/>
+            <!-- Ship glow -->
+            <rect x="70" y="60" width="24" height="9" rx="1" fill="none" stroke="#4fa3e0" stroke-width="0.5" filter="url(#glowPosdSm)" opacity="0.5"/>
+
+            <!-- Member city dots -->
+            <circle cx="112" cy="26" r="3.5" fill="#e8615a" filter="url(#glowPosdSm)"/>
+            <text x="105" y="18"  fill="#5e2122" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">SAN DIEGO</text>
+            <circle cx="100" cy="108" r="3"   fill="#2be4ea"/>
+            <text x="100" y="118" fill="#0d3336" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">CHULA VISTA</text>
+            <circle cx="88"  cy="92"  r="2.5" fill="#fed33f"/>
+            <circle cx="48"  cy="90"  r="2.5" fill="#2bfea0"/>
+            <circle cx="56"  cy="42"  r="2.5" fill="#ff9a28"/>
+
+            <!-- Map label -->
+            <text x="12" y="135" fill="#0d1e30" font-family="Share Tech Mono,monospace" font-size="6" letter-spacing="1">SAN DIEGO BAY</text>
+            <text x="12" y="144" fill="#091420" font-family="Share Tech Mono,monospace" font-size="5.5">34 MI WATERFRONT</text>
+
+            <!-- Circuit traces from bay to right panel -->
+            <line x1="130" y1="67" x2="150" y2="67" stroke="#0d1e30" stroke-width="1"/>
+            <line x1="150" y1="67" x2="150" y2="30" stroke="#0d1e30" stroke-width="1"/>
+            <line x1="150" y1="30" x2="160" y2="30" stroke="#0d1e30" stroke-width="1"/>
+            <line x1="150" y1="67" x2="160" y2="67" stroke="#0d1e30" stroke-width="1"/>
+            <line x1="150" y1="110" x2="160" y2="110" stroke="#0d1e30" stroke-width="1"/>
+            <rect x="126" y="65" width="6" height="4" rx="1" fill="#0d1e30"/>
+
+            <!-- ── Right: incident display panel ── -->
+            <rect x="160" y="12" width="188" height="196" rx="2" fill="#080c12" stroke="#0d1e30" stroke-width="1"/>
+            <!-- Panel header -->
+            <rect x="160" y="12" width="188" height="20" rx="2" fill="#0a0f18"/>
+            <rect x="160" y="22" width="188" height="10" fill="#0a0f18"/>
+            <text x="254" y="26" fill="#4fa3e0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="middle" letter-spacing="1.5" opacity="0.8">PORT OF SAN DIEGO</text>
+
+            <!-- Status label — BREACH -->
+            <rect x="168" y="38" width="80" height="13" rx="1" fill="rgba(232,97,90,0.15)" stroke="#e8615a" stroke-width="0.8"/>
+            <text x="208" y="48" fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="middle" letter-spacing="1" filter="url(#glowPosdSm)">⚠ BREACH: SEP 2018</text>
+            <rect x="256" y="38" width="84" height="13" rx="1" fill="rgba(79,163,224,0.08)" stroke="#1a3a54" stroke-width="0.8"/>
+            <text x="298" y="48" fill="#4fa3e0" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="middle" letter-spacing="1">RANSOMWARE</text>
+
+            <!-- Stat rows -->
+            <line x1="168" y1="58" x2="340" y2="58" stroke="#0d1e30" stroke-width="0.7"/>
+
+            <text x="168" y="69" fill="#1a3a54" font-family="Share Tech Mono,monospace" font-size="6.5">Est.</text>
+            <text x="340" y="69" fill="#4fa3e0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">1962</text>
+            <text x="168" y="80" fill="#1a3a54" font-family="Share Tech Mono,monospace" font-size="6.5">Waterfront</text>
+            <text x="340" y="80" fill="#4fa3e0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">34 miles</text>
+            <text x="168" y="91" fill="#1a3a54" font-family="Share Tech Mono,monospace" font-size="6.5">Tidelands</text>
+            <text x="340" y="91" fill="#4fa3e0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">2,300+ acres</text>
+            <text x="168" y="102" fill="#1a3a54" font-family="Share Tech Mono,monospace" font-size="6.5">Econ. Impact</text>
+            <text x="340" y="102" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">~$18B / yr</text>
+            <text x="168" y="113" fill="#1a3a54" font-family="Share Tech Mono,monospace" font-size="6.5">Member Cities</text>
+            <text x="340" y="113" fill="#4fa3e0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">5</text>
+
+            <line x1="168" y1="120" x2="340" y2="120" stroke="#0d1e30" stroke-width="0.7"/>
+
+            <!-- Attack detail rows -->
+            <text x="168" y="131" fill="#9c3230" font-family="Share Tech Mono,monospace" font-size="6.5">Attack Type</text>
+            <text x="340" y="131" fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">Ransomware</text>
+            <text x="168" y="142" fill="#9c3230" font-family="Share Tech Mono,monospace" font-size="6.5">Ransom</text>
+            <text x="340" y="142" fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">Bitcoin</text>
+            <text x="168" y="153" fill="#9c3230" font-family="Share Tech Mono,monospace" font-size="6.5">Responders</text>
+            <text x="340" y="153" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">FBI + DHS</text>
+            <text x="168" y="164" fill="#9c3230" font-family="Share Tech Mono,monospace" font-size="6.5">OT / Safety</text>
+            <text x="340" y="164" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="end">UNAFFECTED</text>
+
+            <line x1="168" y1="171" x2="340" y2="171" stroke="#0d1e30" stroke-width="0.7"/>
+
+            <!-- Bottom label -->
+            <text x="254" y="184" fill="#0d1e30" font-family="Share Tech Mono,monospace" font-size="6" text-anchor="middle" letter-spacing="1.5">CRITICAL INFRASTRUCTURE</text>
+            <text x="254" y="198" fill="#091420" font-family="Share Tech Mono,monospace" font-size="6" text-anchor="middle" letter-spacing="1">SAN DIEGO UNIFIED PORT DISTRICT</text>
+          </svg>
+        </div>
+        <div class="c-card__body">
+          <span class="c-card__tag tag-blue">Case Study</span>
+          <h3 class="c-card__title">Port of San Diego</h3>
+          <p class="c-card__desc">Critical infrastructure meets real-world ransomware. A profile of the San Diego Unified Port District — what it does, who governs it, and how a 2018 Bitcoin ransom demand exposed maritime cyber risk.</p>
+          <span class="c-card__enter">Read the Profile &rarr;</span>
+        </div>
+      </div>
+
+    </div><!-- /carousel-stage -->
+
+    <!-- ── Nav controls ── -->
+    <div class="carousel-nav">
+      <button class="c-arrow" id="c-prev">&#8592;</button>
+      <div class="c-dots" id="c-dots">
+        <button class="c-dot" data-i="0"></button>
+        <button class="c-dot" data-i="1"></button>
+        <button class="c-dot" data-i="2"></button>
+        <button class="c-dot" data-i="3"></button>
+        <button class="c-dot" data-i="4"></button>
+      </div>
+      <button class="c-arrow" id="c-next">&#8594;</button>
     </div>
-  </header>
 
-  <!-- ===== TICKER ===== -->
-  <div class="ticker-bar">
-    <div class="ticker-label">// TOOLS</div>
-    <div class="ticker-track">
-      <span>_Domains — Discover your cybersecurity career path in 5 questions</span>
-      <span>_PasswordAnalyzer — Test entropy, crack time, and breach exposure</span>
-      <span>_PhishTest — Train your eye to spot malicious emails</span>
-      <span>Click the centered card to launch &nbsp;·&nbsp; Arrows or side cards to browse</span>
-      <span>_Domains — Discover your cybersecurity career path in 5 questions</span>
-      <span>_PasswordAnalyzer — Test entropy, crack time, and breach exposure</span>
-      <span>_PhishTest — Train your eye to spot malicious emails</span>
-      <span>Click the centered card to launch &nbsp;·&nbsp; Arrows or side cards to browse</span>
-    </div>
-  </div>
+    <p class="carousel-hint">Tap the centered card to launch &nbsp;&middot;&nbsp; Swipe or use arrows to browse</p>
 
-  <!-- ===== MAIN ===== -->
-  <main class="page">
-
-    <div class="section-header" style="margin-top:2rem;">
-      <h2 class="section-title glitch" data-text="INTERACTIVE TOOLS">
-        <span class="overline">// explore</span>
-        Interactive Tools
-      </h2>
+    <!-- ── Home button ── -->
+    <div class="home-btn-wrap">
+      <a href="main.html" class="btn-home">&#8592; Home</a>
     </div>
 
-    <p class="carousel-intro">
-      Three tools. <strong>Click the centered card</strong> to launch it.
-      Use the arrows or click side cards to browse.
-    </p>
-
-    <div class="carousel-wrap">
-
-      <!-- ====== STAGE ====== -->
-      <div class="carousel-stage" id="carousel-stage">
-
-        <!-- ── CARD 1: domains.html ── -->
-        <div class="c-card" data-href="domains.html">
-          <div class="c-card__image">
-            <!-- Diagram: Pentagon Radar Chart — 5 Cybersecurity Domains -->
-            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <pattern id="hexD" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
-                  <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#3c181a" stroke-width="0.6"/>
-                </pattern>
-                <filter id="glowD" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" result="blur"/>
-                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                </filter>
-                <filter id="glowDsm" x="-80%" y="-80%" width="260%" height="260%">
-                  <feGaussianBlur stdDeviation="2" result="blur"/>
-                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                </filter>
-              </defs>
-
-              <rect width="360" height="220" fill="#0d0a0d"/>
-              <rect width="360" height="220" fill="url(#hexD)"/>
-
-              <!-- Outer pentagon fill -->
-              <polygon points="180,32 256,84 228,172 132,172 104,84"
-                       fill="rgba(232,97,90,0.04)" stroke="#3c181a" stroke-width="0.8"/>
-              <!-- Mid pentagon -->
-              <polygon points="180,65 222,95 208,148 152,148 138,95"
-                       fill="none" stroke="#3c181a" stroke-width="0.6"/>
-              <!-- Inner pentagon -->
-              <polygon points="180,86 198,99 193,122 167,122 162,99"
-                       fill="none" stroke="#3c181a" stroke-width="0.4"/>
-
-              <!-- Axis lines — each domain color -->
-              <line x1="180" y1="108" x2="180" y2="32" stroke="#e8615a" stroke-width="1.2" opacity="0.55"/>
-              <line x1="180" y1="108" x2="256" y2="84" stroke="#2be4ea" stroke-width="1.2" opacity="0.55"/>
-              <line x1="180" y1="108" x2="228" y2="172" stroke="#fed33f" stroke-width="1.2" opacity="0.55"/>
-              <line x1="180" y1="108" x2="132" y2="172" stroke="#2bfea0" stroke-width="1.2" opacity="0.55"/>
-              <line x1="180" y1="108" x2="104" y2="84" stroke="#ff9a28" stroke-width="1.2" opacity="0.55"/>
-
-              <!-- Outer nodes (glowing) -->
-              <circle cx="180" cy="32"  r="5" fill="#e8615a" filter="url(#glowDsm)"/>
-              <circle cx="256" cy="84"  r="5" fill="#2be4ea" filter="url(#glowDsm)"/>
-              <circle cx="228" cy="172" r="5" fill="#fed33f" filter="url(#glowDsm)"/>
-              <circle cx="132" cy="172" r="5" fill="#2bfea0" filter="url(#glowDsm)"/>
-              <circle cx="104" cy="84"  r="5" fill="#ff9a28" filter="url(#glowDsm)"/>
-
-              <!-- Mid nodes -->
-              <circle cx="180" cy="65"  r="2.5" fill="#e8615a" opacity="0.5"/>
-              <circle cx="222" cy="95"  r="2.5" fill="#2be4ea" opacity="0.5"/>
-              <circle cx="208" cy="148" r="2.5" fill="#fed33f" opacity="0.5"/>
-              <circle cx="152" cy="148" r="2.5" fill="#2bfea0" opacity="0.5"/>
-              <circle cx="138" cy="95"  r="2.5" fill="#ff9a28" opacity="0.5"/>
-
-              <!-- Center node -->
-              <circle cx="180" cy="108" r="4" fill="#3c181a" stroke="#e8615a" stroke-width="1.5"/>
-              <circle cx="180" cy="108" r="1.5" fill="#e8615a"/>
-
-              <!-- Labels -->
-              <text x="180" y="19"  fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="middle" letter-spacing="1.5">PENTEST</text>
-              <text x="268" y="84"  fill="#2be4ea" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="start"  letter-spacing="1">BLUE TEAM</text>
-              <text x="238" y="184" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="start"  letter-spacing="1">GRC</text>
-              <text x="122" y="184" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="end"    letter-spacing="1">DFIR</text>
-              <text x="92"  y="84"  fill="#ff9a28" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="end"    letter-spacing="1">THREAT INTEL</text>
-
-              <!-- Bottom label -->
-              <text x="180" y="210" fill="#3c181a" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">DOMAIN ASSESSMENT</text>
-            </svg>
-          </div>
-          <div class="c-card__body">
-            <span class="c-card__tag tag-red">Career Path</span>
-            <h3 class="c-card__title">Find Your Domain</h3>
-            <p class="c-card__desc">No experience needed. Five everyday scenarios, five gut-check choices. Discover which corner of cybersecurity fits the way you naturally think.</p>
-            <span class="c-card__enter">Launch Assessment &rarr;</span>
-          </div>
-        </div>
-
-        <!-- ── CARD 2: password.html ── -->
-        <div class="c-card" data-href="password.html">
-          <div class="c-card__image">
-            <!-- Diagram: Password analysis terminal with lock -->
-            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <pattern id="hexP" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
-                  <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="0.6"/>
-                </pattern>
-                <filter id="glowP">
-                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                </filter>
-              </defs>
-
-              <rect width="360" height="220" fill="#0d1118"/>
-              <rect width="360" height="220" fill="url(#hexP)"/>
-
-              <!-- Terminal window -->
-              <rect x="12" y="12" width="210" height="196" rx="3" fill="#0d1118" stroke="#0d3336" stroke-width="1.2"/>
-              <!-- Terminal header -->
-              <rect x="12" y="12" width="210" height="22" rx="3" fill="#0f1820"/>
-              <rect x="12" y="23"  width="210" height="11" fill="#0f1820"/>
-              <circle cx="26" cy="23" r="4" fill="#1a4a52"/>
-              <circle cx="40" cy="23" r="4" fill="#1a4a52"/>
-              <circle cx="54" cy="23" r="4" fill="#1a4a52"/>
-              <text x="117" y="27" fill="#2be4ea" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.5">pwd_analyzer.py</text>
-
-              <!-- Prompt line -->
-              <text x="22" y="52" fill="#0d7a7e" font-family="monospace" font-size="8">$</text>
-              <text x="31" y="52" fill="#2be4ea" font-family="monospace" font-size="8">analyze</text>
-              <text x="84" y="52" fill="#1a4a52" font-family="monospace" font-size="8">••••••••••••••</text>
-
-              <!-- Bars -->
-              <text x="22" y="71"  fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Length</text>
-              <rect x="102" y="63" width="64" height="7" rx="1" fill="#0a2a2e"/>
-              <rect x="102" y="63" width="64" height="7" rx="1" fill="#2be4ea" opacity="0.8"/>
-              <text x="171" y="71"  fill="#2be4ea" font-family="monospace" font-size="7.5">16 chars</text>
-
-              <text x="22" y="87"  fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Uppercase</text>
-              <rect x="113" y="79" width="50" height="7" rx="1" fill="#0a2a2e"/>
-              <rect x="113" y="79" width="50" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
-              <text x="168" y="87"  fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
-
-              <text x="22" y="103" fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Symbols</text>
-              <rect x="106" y="95" width="55" height="7" rx="1" fill="#0a2a2e"/>
-              <rect x="106" y="95" width="55" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
-              <text x="166" y="103" fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
-
-              <text x="22" y="119" fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Numbers</text>
-              <rect x="107" y="111" width="50" height="7" rx="1" fill="#0a2a2e"/>
-              <rect x="107" y="111" width="50" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
-              <text x="162" y="119" fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
-
-              <!-- Divider -->
-              <line x1="22" y1="127" x2="210" y2="127" stroke="#0d3336" stroke-width="0.8"/>
-
-              <text x="22" y="142" fill="#0d7a7e" font-family="monospace" font-size="7.5">Entropy: 89.2 bits</text>
-
-              <!-- Strength bar -->
-              <rect x="22" y="150" width="190" height="9" rx="2" fill="#071214"/>
-              <rect x="22" y="150" width="158" height="9" rx="2" fill="#2bfea0" filter="url(#glowP)"/>
-              <text x="22"  y="174" fill="#2be4ea"  font-family="monospace" font-size="7.5">STRONG</text>
-              <text x="120" y="174" fill="#0d7a7e"  font-family="monospace" font-size="7.5">crack: 247 years</text>
-
-              <text x="22" y="195" fill="#0d3336" font-family="monospace" font-size="7.5">▌</text>
-
-              <!-- Padlock diagram on right side -->
-              <!-- Shackle -->
-              <path d="M 272,100 L 272,72 Q 272,50 295,50 Q 318,50 318,72 L 318,100"
-                    fill="none" stroke="#1a4a52" stroke-width="14" stroke-linecap="round"/>
-              <path d="M 272,100 L 272,72 Q 272,50 295,50 Q 318,50 318,72 L 318,100"
-                    fill="none" stroke="#2be4ea" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
-              <!-- Lock body -->
-              <rect x="256" y="96" width="78" height="64" rx="7" fill="#0f1820" stroke="#2be4ea" stroke-width="1.5"/>
-              <!-- Keyhole outer circle -->
-              <circle cx="295" cy="122" r="10" fill="#071214" stroke="#2be4ea" stroke-width="1"/>
-              <!-- Keyhole slot -->
-              <rect x="291" y="122" width="8" height="14" rx="2" fill="#071214"/>
-              <!-- Glow on lock body -->
-              <rect x="256" y="96" width="78" height="64" rx="7" fill="none" stroke="#2be4ea" stroke-width="0.5" filter="url(#glowP)" opacity="0.4"/>
-
-              <!-- Circuit traces around lock -->
-              <line x1="256" y1="115" x2="235" y2="115" stroke="#0d3336" stroke-width="1"/>
-              <line x1="235" y1="115" x2="235" y2="145" stroke="#0d3336" stroke-width="1"/>
-              <rect x="231" y="143" width="8" height="4" rx="1" fill="#0d3336"/>
-
-              <line x1="334" y1="125" x2="348" y2="125" stroke="#0d3336" stroke-width="1"/>
-              <line x1="348" y1="125" x2="348" y2="150" stroke="#0d3336" stroke-width="1"/>
-              <rect x="344" y="148" width="8" height="4" rx="1" fill="#0d3336"/>
-
-              <line x1="295" y1="160" x2="295" y2="178" stroke="#0d3336" stroke-width="1"/>
-              <rect x="291" y="176" width="8" height="4" rx="1" fill="#0d3336"/>
-
-              <!-- Label -->
-              <text x="295" y="200" fill="#0d3336" font-family="monospace" font-size="6.5" text-anchor="middle" letter-spacing="1.5">STRENGTH ANALYSIS</text>
-            </svg>
-          </div>
-          <div class="c-card__body">
-            <span class="c-card__tag tag-cyan">Analysis Tool</span>
-            <h3 class="c-card__title">Password Analyzer</h3>
-            <p class="c-card__desc">Drop in a password and see its entropy, estimated crack time, and real-world strength score — instant feedback on what makes it resistant or not.</p>
-            <span class="c-card__enter">Launch Analyzer &rarr;</span>
-          </div>
-        </div>
-
-        <!-- ── CARD 3: phishy.html ── -->
-        <div class="c-card" data-href="phishy.html">
-          <div class="c-card__image">
-            <!-- Diagram: Phishing inbox with suspicious email + hook -->
-            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <pattern id="hexPh" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
-                  <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2e2408" stroke-width="0.6"/>
-                </pattern>
-                <filter id="glowPh">
-                  <feGaussianBlur stdDeviation="2" result="blur"/>
-                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                </filter>
-              </defs>
-
-              <rect width="360" height="220" fill="#12100a"/>
-              <rect width="360" height="220" fill="url(#hexPh)"/>
-
-              <!-- Inbox header bar -->
-              <rect x="12" y="12" width="336" height="22" rx="2" fill="#1e1a0a" stroke="#5e4a10" stroke-width="1"/>
-              <text x="22" y="27" fill="#fed33f" font-family="monospace" font-size="9" font-weight="bold">INBOX</text>
-              <text x="70" y="27" fill="#5e4a10" font-family="monospace" font-size="8">(8 messages)</text>
-              <!-- Warning badge in header -->
-              <polygon points="330,15 344,15 337,26" fill="rgba(254,211,63,0.15)" stroke="#fed33f" stroke-width="1.2"/>
-              <text x="337" y="24" fill="#fed33f" font-family="monospace" font-size="6.5" text-anchor="middle">!</text>
-
-              <!-- Row 1 — normal -->
-              <rect x="12" y="35" width="336" height="32" fill="#0e0d08" stroke="#2e2408" stroke-width="0.5"/>
-              <rect x="12" y="35" width="3"   height="32" fill="#2e2408"/>
-              <text x="22" y="49" fill="#5e4a10" font-family="monospace" font-size="7.5">IT Support</text>
-              <text x="22" y="61" fill="#3a3010" font-family="monospace" font-size="7">Monthly patch notes — please review before Friday</text>
-
-              <!-- Row 2 — normal -->
-              <rect x="12" y="68" width="336" height="32" fill="#0d0c08" stroke="#2e2408" stroke-width="0.5"/>
-              <rect x="12" y="68" width="3"   height="32" fill="#2e2408"/>
-              <text x="22" y="82" fill="#5e4a10" font-family="monospace" font-size="7.5">hr@company.com</text>
-              <text x="22" y="94" fill="#3a3010" font-family="monospace" font-size="7">Q2 benefits enrollment deadline — action required</text>
-
-              <!-- Row 3 — PHISHING (highlighted) -->
-              <rect x="12" y="101" width="336" height="38" fill="rgba(232,97,90,0.07)" stroke="#9c3230" stroke-width="1.2"/>
-              <!-- Red left bar -->
-              <rect x="12" y="101" width="4" height="38" fill="#e8615a"/>
-              <!-- Phishing badge -->
-              <rect x="20" y="106" width="66" height="11" rx="2" fill="rgba(232,97,90,0.2)" stroke="#e8615a" stroke-width="0.75"/>
-              <text x="53"  y="115" fill="#e8615a" font-family="monospace" font-size="6" text-anchor="middle" letter-spacing="0.5">&#x26A0; PHISHING</text>
-              <!-- Fake sender -->
-              <text x="92"  y="115" fill="#f4908b" font-family="monospace" font-size="7.5">security@paypa1.com</text>
-              <!-- Subject -->
-              <text x="20"  y="131" fill="#ea6f69" font-family="monospace" font-size="7">URGENT: Your account will be suspended — verify now</text>
-
-              <!-- Fishing hook (right of phish row) -->
-              <path d="M 338,103 Q 354,103 354,116 Q 354,132 338,132"
-                    fill="none" stroke="#9c3230" stroke-width="2" opacity="0.8"/>
-              <path d="M 338,132 L 345,140 M 338,132 L 331,140"
-                    fill="none" stroke="#9c3230" stroke-width="2" opacity="0.8"/>
-              <circle cx="338" cy="103" r="3" fill="#e8615a" opacity="0.8" filter="url(#glowPh)"/>
-
-              <!-- Row 4 — normal -->
-              <rect x="12" y="140" width="336" height="32" fill="#0d0c08" stroke="#2e2408" stroke-width="0.5"/>
-              <rect x="12" y="140" width="3"   height="32" fill="#2e2408"/>
-              <text x="22" y="154" fill="#5e4a10" font-family="monospace" font-size="7.5">github@notifications.com</text>
-              <text x="22" y="166" fill="#3a3010" font-family="monospace" font-size="7">New pull request: feat/update-dependencies #247</text>
-
-              <!-- Row 5 — normal -->
-              <rect x="12" y="173" width="336" height="32" fill="#0e0d08" stroke="#2e2408" stroke-width="0.5"/>
-              <rect x="12" y="173" width="3"   height="32" fill="#2e2408"/>
-              <text x="22" y="187" fill="#5e4a10" font-family="monospace" font-size="7.5">newsletter@medium.com</text>
-              <text x="22" y="199" fill="#3a3010" font-family="monospace" font-size="7">Your weekly digest — 12 stories curated for you</text>
-
-              <!-- Bottom label -->
-              <text x="180" y="213" fill="#2e2408" font-family="monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">PHISHING DETECTION TRAINING</text>
-            </svg>
-          </div>
-          <div class="c-card__body">
-            <span class="c-card__tag tag-yellow">Phishing Sim</span>
-            <h3 class="c-card__title">PhishTest</h3>
-            <p class="c-card__desc">Train your eye to catch malicious emails before they catch you. Real phishing tactics presented as interactive challenges — no actual risk.</p>
-            <span class="c-card__enter">Launch PhishTest &rarr;</span>
-          </div>
-        </div>
-
-      </div><!-- /carousel-stage -->
-
-      <!-- ── Nav controls ── -->
-      <div class="carousel-nav">
-        <button class="c-arrow" id="c-prev">&#8592;</button>
-        <div class="c-dots" id="c-dots">
-          <button class="c-dot" data-i="0"></button>
-          <button class="c-dot" data-i="1"></button>
-          <button class="c-dot" data-i="2"></button>
-        </div>
-        <button class="c-arrow" id="c-next">&#8594;</button>
-      </div>
-
-    </div><!-- /carousel-wrap -->
-
-    <p class="carousel-hint">Click the centered card to launch &nbsp;&middot;&nbsp; Click side cards or use arrows to browse</p>
-
-  </main>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
-        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
-        <div class="footer-social">
-          <a href="#" class="social-btn">Twitter</a>
-          <a href="#" class="social-btn">GitHub</a>
-          <a href="#" class="social-btn">Discord</a>
-          <a href="#" class="social-btn">RSS</a>
-        </div>
-      </div>
-      <div>
-        <h5 class="footer-col__title">Tools</h5>
-        <ul class="footer-links">
-          <li><a href="domains.html">_Domains</a></li>
-          <li><a href="password.html">_PasswordAnalyzer</a></li>
-          <li><a href="phishy.html">_PhishTest</a></li>
-          <li><a href="carousel.html">_Tools Showcase</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="footer-col__title">Topics</h5>
-        <ul class="footer-links">
-          <li><a href="#">Offensive Security</a></li>
-          <li><a href="#">Blue Team / SOC</a></li>
-          <li><a href="#">Malware Analysis</a></li>
-          <li><a href="#">OSINT</a></li>
-          <li><a href="#">Cloud Security</a></li>
-          <li><a href="#">Bug Bounty</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="footer-col__title">Community</h5>
-        <ul class="footer-links">
-          <li><a href="#">Discord Server</a></li>
-          <li><a href="#">CTF Team</a></li>
-          <li><a href="#">Study Groups</a></li>
-          <li><a href="#">Newsletter</a></li>
-          <li><a href="#">Submit a Writeup</a></li>
-          <li><a href="#">Sponsor</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 INFOSEC//EDUCATOR &mdash; All content for educational purposes only.</span>
-      <span>Responsible disclosure: security@infosec-educator.io</span>
-    </div>
-  </footer>
+  </div><!-- /carousel-wrap -->
 
   <script>
     const stage = document.getElementById("carousel-stage");
@@ -769,9 +762,10 @@
 
     function stateFor(i) {
       const offset = ((i - current) % N + N) % N;
-      if (offset === 0) return "c-card--active";
-      if (offset === 1) return "c-card--next";
-      return "c-card--prev";
+      if (offset === 0)     return "c-card--active";
+      if (offset === 1)     return "c-card--next";
+      if (offset === N - 1) return "c-card--prev";
+      return "c-card--hidden";
     }
 
     function update() {
@@ -824,12 +818,26 @@
     stage.addEventListener("mouseenter", function() { clearInterval(timer); });
     stage.addEventListener("mouseleave", function() { startTimer(); });
 
-    // Ticker pause
-    var track = document.querySelector(".ticker-track");
-    if (track) {
-      track.addEventListener("mouseenter", function() { track.style.animationPlayState = "paused"; });
-      track.addEventListener("mouseleave", function() { track.style.animationPlayState = "running"; });
-    }
+    /* ── Touch / swipe support ── */
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var swipeThreshold = 50;
+
+    stage.addEventListener("touchstart", function(e) {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+      clearInterval(timer);
+    }, { passive: true });
+
+    stage.addEventListener("touchend", function(e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > swipeThreshold) {
+        go(dx < 0 ? 1 : -1);
+      } else {
+        startTimer();
+      }
+    }, { passive: true });
 
     update();
     startTimer();
