@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFOSEC//EDUCATOR — Cybersecurity Education & Research</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red: 0 0 8px var(--red-500), 0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan: 0 0 8px var(--cyan-500), 0 0 20px rgba(43,228,234,0.3);
+      --glow-green: 0 0 8px var(--green-500), 0 0 20px rgba(43,254,160,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(60,24,26,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(13,51,54,0.4) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 2rem;
+    }
+
+    .site-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+
+    .main-nav { display: flex; align-items: center; gap: 0; }
+
+    .main-nav a {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red-300);
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .main-nav a.active { color: var(--cyan-500); }
+
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      border-radius: 2px;
+      padding: 0.3rem 0.6rem;
+      gap: 0.4rem;
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--red-300);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      width: 140px;
+    }
+
+    .search-box input::placeholder { color: var(--red-800); }
+
+    .search-icon { color: var(--red-700); font-size: 0.9rem; }
+
+    .btn-subscribe {
+      background: transparent;
+      border: 1px solid var(--cyan-500);
+      color: var(--cyan-500);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-subscribe:hover {
+      background: rgba(43,228,234,0.1);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--red-900);
+      border-bottom: 1px solid var(--red-800);
+      overflow: hidden;
+      height: 28px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-label {
+      background: var(--red-500);
+      color: #0d0a0d;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0 0.75rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--red-300);
+      gap: 3rem;
+      padding-left: 2rem;
+    }
+
+    .ticker-track span::before { content: "▶ "; color: var(--red-500); }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===== PAGE WRAPPER ===== */
+    .page { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.5rem 0 0.6rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 2px solid var(--red-500);
+      box-shadow: 0 2px 0 transparent, 0 3px 12px rgba(232,97,90,0.2);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      margin: 0;
+    }
+
+    .section-title .overline {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--cyan-500);
+      text-shadow: none;
+      margin-bottom: -0.2rem;
+    }
+
+    .section-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .section-link:hover { border-color: var(--cyan-500); }
+
+    /* ===== HERO ===== */
+    .hero { margin: 2rem 0; position: relative; }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+      border: 1px solid var(--red-700);
+      overflow: hidden;
+      clip-path: var(--notch-path);
+      background: var(--bg-600);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 3px;
+      background: var(--red-700);
+      transform: rotate(-45deg);
+      z-index: 10;
+    }
+
+    .hero-image {
+      background: var(--bg-900);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image svg { width: 100%; height: 100%; display: block; }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--bg-600));
+    }
+
+    .hero-content {
+      padding: 2.5rem 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      background: rgba(43,228,234,0.1);
+      border: 1px solid var(--cyan-900);
+      padding: 0.2em 0.6em;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    .hero-tag::before { content: "//"; opacity: 0.6; }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+      color: var(--red-300);
+      text-shadow: var(--glow-red);
+      margin: 0 0 1rem;
+    }
+
+    .hero-excerpt {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--red-400);
+      margin: 0 0 1.5rem;
+      max-width: 38ch;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--red-700);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta .author { color: var(--red-300); }
+
+    .btn-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 2px solid var(--red-500);
+      color: var(--red-500);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem 0.6rem 0.75rem;
+      cursor: pointer;
+      clip-path: var(--notch-path);
+      transition: background 0.2s, box-shadow 0.2s;
+      width: fit-content;
+      position: relative;
+    }
+
+    .btn-read::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-500);
+      transform: rotate(-45deg);
+    }
+
+    .btn-read:hover {
+      background: var(--red-900);
+      box-shadow: var(--glow-red);
+    }
+
+    /* ===== ARTICLE GRID ===== */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .article-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      clip-path: var(--notch-path);
+      position: relative;
+    }
+
+    .article-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+      transition: background 0.25s;
+    }
+
+    .article-card:hover {
+      border-color: var(--red-700);
+      box-shadow: 0 0 20px rgba(232,97,90,0.12);
+    }
+
+    .article-card:hover::after { background: var(--red-700); }
+
+    .article-thumb {
+      background: var(--bg-900);
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .article-thumb svg { width: 100%; height: 100%; display: block; }
+
+    .article-cat {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15em 0.5em;
+      z-index: 1;
+    }
+
+    .cat-offensive { background: rgba(232,97,90,0.85); color: #0d0a0d; }
+    .cat-blueteam  { background: rgba(43,228,234,0.85); color: #0d0a0d; }
+    .cat-osint     { background: rgba(254,211,63,0.85); color: #0d0a0d; }
+    .cat-malware   { background: rgba(43,254,160,0.85); color: #0d0a0d; }
+    .cat-ctf       { background: rgba(200,130,255,0.85); color: #0d0a0d; }
+    .cat-tools     { background: rgba(255,160,40,0.85); color: #0d0a0d; }
+
+    .article-body { padding: 0.9rem; flex: 1; display: flex; flex-direction: column; }
+
+    .article-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      color: var(--red-300);
+      margin: 0 0 0.5rem;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .article-card:hover .article-title { color: var(--cyan-400); }
+
+    .article-excerpt {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--red-400);
+      margin: 0 0 0.75rem;
+      flex: 1;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--red-700);
+      border-top: 1px solid var(--red-900);
+      padding-top: 0.5rem;
+      margin-top: auto;
+    }
+
+    .article-meta .author { color: var(--red-500); }
+
+    /* ===== FEATURED ROW (2-col) ===== */
+    .featured-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .featured-wide {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      clip-path: var(--notch-path);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-wide::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+    }
+
+    .featured-wide .article-thumb { aspect-ratio: auto; }
+    .featured-wide .article-body { padding: 1.25rem; justify-content: center; }
+    .featured-wide .article-title { font-size: 1.55rem; }
+
+    .sidebar-stack { display: flex; flex-direction: column; gap: 1rem; }
+
+    .mini-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow: hidden;
+      clip-path: var(--notch-path);
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .mini-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+      transition: background 0.2s;
+    }
+
+    .mini-card:hover { border-color: var(--red-700); }
+    .mini-card:hover::after { background: var(--red-700); }
+
+    .mini-card__thumb {
+      width: 90px;
+      flex-shrink: 0;
+      background: var(--bg-900);
+    }
+
+    .mini-card__thumb svg { width: 100%; height: 100%; display: block; }
+
+    .mini-card__body {
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .mini-card__cat {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin-bottom: 0.2rem;
+    }
+
+    .mini-card__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      line-height: 1.1;
+      color: var(--red-300);
+      margin: 0 0 0.3rem;
+    }
+
+    .mini-card:hover .mini-card__title { color: var(--cyan-400); }
+
+    .mini-card__date {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--red-700);
+    }
+
+    /* ===== WELCOME PANEL ===== */
+    .welcome-section {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      border-left: 3px solid var(--red-500);
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .welcome-section__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin: 0 0 0.5rem;
+    }
+
+    .welcome-section__title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--red-300);
+      text-shadow: var(--glow-red);
+      margin: 0 0 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    .welcome-section__body {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--red-400);
+      max-width: 55ch;
+    }
+
+    .welcome-section__body strong { color: var(--cyan-500); }
+
+    .welcome-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      padding: 0.75rem 1.25rem;
+      min-width: 110px;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red-700);
+    }
+
+    /* ===== PODCAST ===== */
+    .podcast-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pod-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+      clip-path: var(--notch-path);
+      position: relative;
+      transition: border-color 0.25s;
+    }
+
+    .pod-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800);
+      transform: rotate(-45deg);
+    }
+
+    .pod-card:hover { border-color: var(--cyan-500); box-shadow: 0 0 15px rgba(43,228,234,0.1); }
+
+    .pod-num {
+      background: var(--bg-900);
+      border-right: 1px solid var(--red-800);
+      padding: 1rem;
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--red-800);
+      min-width: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pod-card:hover .pod-num { color: var(--red-700); }
+
+    .pod-body { padding: 0.9rem 1rem; flex: 1; }
+
+    .pod-ep {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin-bottom: 0.3rem;
+    }
+
+    .pod-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1.1;
+      color: var(--red-300);
+      margin: 0 0 0.4rem;
+    }
+
+    .pod-card:hover .pod-title { color: var(--cyan-400); }
+
+    .pod-desc {
+      font-size: 0.8rem;
+      line-height: 1.55;
+      color: var(--red-400);
+      margin: 0 0 0.6rem;
+    }
+
+    .pod-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--red-700);
+    }
+
+    .pod-play {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--cyan-500);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      border: 1px solid var(--cyan-900);
+      padding: 0.15em 0.5em;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .pod-play:hover { background: rgba(43,228,234,0.08); }
+    .pod-play::before { content: "▶"; font-size: 0.55rem; }
+
+    /* ===== TOOLS ROW ===== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .tool-card {
+      background: var(--bg-600);
+      border: 1px solid var(--red-900);
+      border-top: 2px solid var(--red-700);
+      padding: 1rem;
+      transition: border-top-color 0.2s, box-shadow 0.2s;
+    }
+
+    .tool-card:hover {
+      border-top-color: var(--cyan-500);
+      box-shadow: 0 -2px 12px rgba(43,228,234,0.15);
+    }
+
+    .tool-icon {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      color: var(--red-700);
+      margin-bottom: 0.5rem;
+      display: block;
+      transition: color 0.2s;
+    }
+
+    .tool-card:hover .tool-icon { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+
+    .tool-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--red-300);
+      margin: 0 0 0.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .tool-desc {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--red-700);
+    }
+
+    .tool-tags {
+      margin-top: 0.6rem;
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--red-800);
+      color: var(--red-700);
+      padding: 0.1em 0.4em;
+    }
+
+    /* ===== NEWSLETTER ===== */
+    .newsletter {
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      border-left: 3px solid var(--cyan-500);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .newsletter__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      margin: 0 0 0.4rem;
+    }
+
+    .newsletter__title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--red-300);
+      margin: 0 0 0.4rem;
+    }
+
+    .newsletter__desc {
+      font-size: 0.85rem;
+      color: var(--red-400);
+    }
+
+    .newsletter__form {
+      display: flex;
+      gap: 0.5rem;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    .newsletter__input {
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      border-radius: 2px;
+      color: var(--red-300);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      padding: 0.5rem 0.9rem;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter__input:focus { border-color: var(--cyan-500); }
+    .newsletter__input::placeholder { color: var(--red-800); }
+
+    .newsletter__btn {
+      background: var(--red-500);
+      border: none;
+      color: #0d0a0d;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter__btn:hover { background: var(--red-400); box-shadow: var(--glow-red); }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--bg-900);
+      border-top: 1px solid var(--red-900);
+      margin-top: 1rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand { }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-logo span { color: var(--cyan-500); }
+
+    .footer-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--red-700);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .social-btn {
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      color: var(--red-700);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.3em 0.6em;
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+
+    .footer-col__title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--red-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--red-900);
+    }
+
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+
+    .footer-links li { margin-bottom: 0.35rem; }
+
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--red-700);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red-400); }
+
+    .footer-links a::before { content: "// "; color: var(--red-900); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--red-900);
+      padding: 1rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--red-900);
+    }
+
+    .footer-bottom span { color: var(--red-800); }
+
+    /* ===== GLITCH ===== */
+    @keyframes glitch {
+      0%   { clip-path: inset(0 0 95% 0); transform: translateX(-2px); }
+      20%  { clip-path: inset(30% 0 50% 0); transform: translateX(2px); }
+      40%  { clip-path: inset(60% 0 20% 0); transform: translateX(-1px); }
+      60%  { clip-path: inset(80% 0 5% 0); transform: translateX(1px); }
+      80%  { clip-path: inset(10% 0 80% 0); transform: translateX(-2px); }
+      100% { clip-path: inset(0 0 95% 0); transform: translateX(0); }
+    }
+
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .glitch::before {
+      color: var(--cyan-500);
+      animation: glitch 4s step-start infinite;
+      animation-delay: 0.5s;
+    }
+
+    .glitch::after {
+      color: var(--red-500);
+      animation: glitch 4s step-start infinite;
+      animation-delay: 1s;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">Courses</a>
+        <a href="#">Writeups</a>
+        <a href="#">Podcast</a>
+        <a href="#">Tools</a>
+        <a href="#">Community</a>
+        <a href="#">About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+        <button class="btn-subscribe">Subscribe</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// INTEL</div>
+    <div class="ticker-track">
+      <span>CVE-2024-3094 — XZ Utils backdoor analysis available</span>
+      <span>New course: Active Directory Attacks &amp; Defense</span>
+      <span>CTF Writeup: HackTheBox — Intuition (Insane)</span>
+      <span>Podcast EP. 47 — Red Team vs. Purple Team</span>
+      <span>Tool Spotlight: Sliver C2 Framework deep-dive</span>
+      <span>Community challenge: OSINT Scavenger Hunt live</span>
+      <span>CVE-2024-3094 — XZ Utils backdoor analysis available</span>
+      <span>New course: Active Directory Attacks &amp; Defense</span>
+      <span>CTF Writeup: HackTheBox — Intuition (Insane)</span>
+      <span>Podcast EP. 47 — Red Team vs. Purple Team</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <a href="#" class="hero-card">
+        <!-- Hero image: animated hex grid SVG -->
+        <div class="hero-image">
+          <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hex" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+                <polygon points="30,1 58,16 58,46 30,61 2,46 2,16" fill="none" stroke="#3c181a" stroke-width="1"/>
+              </pattern>
+              <radialGradient id="heroGrad" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#461616" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#0d0a0d" stop-opacity="1"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+            <rect width="600" height="420" fill="url(#heroGrad)"/>
+            <rect width="600" height="420" fill="url(#hex)"/>
+            <!-- terminal window -->
+            <rect x="40" y="60" width="340" height="240" rx="3" fill="#12101a" stroke="#5e2122" stroke-width="1.5"/>
+            <rect x="40" y="60" width="340" height="22" rx="3" fill="#1e181e"/>
+            <rect x="40" y="71" width="340" height="11" fill="#1e181e"/>
+            <circle cx="56" cy="71" r="4" fill="#5e2122"/>
+            <circle cx="72" cy="71" r="4" fill="#5e2122"/>
+            <circle cx="88" cy="71" r="4" fill="#5e2122"/>
+            <text x="200" y="75" fill="#9c3230" font-family="monospace" font-size="9" text-anchor="middle">root@attacker:~# shell.py</text>
+            <text x="55" y="103" fill="#e8615a" font-family="monospace" font-size="10">[*] Initializing payload delivery...</text>
+            <text x="55" y="120" fill="#9c3230" font-family="monospace" font-size="10">[*] Scanning open ports: 22, 80, 443, 8080</text>
+            <text x="55" y="137" fill="#e8615a" font-family="monospace" font-size="10">[+] SMB null session: ENABLED</text>
+            <text x="55" y="154" fill="#2bfea0" font-family="monospace" font-size="10" filter="url(#glow)">[+] Kerberoastable SPN found: MSSQLSvc</text>
+            <text x="55" y="171" fill="#9c3230" font-family="monospace" font-size="10">[*] Requesting TGS ticket...</text>
+            <text x="55" y="188" fill="#2be4ea" font-family="monospace" font-size="10">[+] Hash captured: $krb5tgs$23$*...</text>
+            <text x="55" y="205" fill="#e8615a" font-family="monospace" font-size="10">[*] Cracking offline with hashcat -m 13100</text>
+            <text x="55" y="222" fill="#2bfea0" font-family="monospace" font-size="10" filter="url(#glow)">[+] Password: Summer2024!</text>
+            <text x="55" y="239" fill="#9c3230" font-family="monospace" font-size="10">[*] Lateral movement initiated...</text>
+            <text x="55" y="256" fill="#e8615a" font-family="monospace" font-size="10">[+] Admin shell on DC01: ESTABLISHED</text>
+            <text x="55" y="280" fill="#e8615a" font-family="monospace" font-size="10">▌</text>
+            <!-- side decorative elements -->
+            <rect x="420" y="100" width="140" height="1" fill="#3c181a"/>
+            <rect x="420" y="150" width="140" height="1" fill="#3c181a"/>
+            <rect x="420" y="200" width="140" height="1" fill="#3c181a"/>
+            <rect x="420" y="250" width="140" height="1" fill="#3c181a"/>
+            <text x="490" y="130" fill="#461616" font-family="monospace" font-size="8" text-anchor="middle">KERBEROS</text>
+            <text x="490" y="180" fill="#461616" font-family="monospace" font-size="8" text-anchor="middle">ROASTING</text>
+            <text x="490" y="230" fill="#9c3230" font-family="monospace" font-size="8" text-anchor="middle">AD ATTACK</text>
+            <text x="490" y="280" fill="#5e2122" font-family="monospace" font-size="8" text-anchor="middle">PATH DEMO</text>
+          </svg>
+        </div>
+        <div class="hero-content">
+          <span class="hero-tag">Training Protocol</span>
+          <h1 class="hero-title glitch" data-text="InfosecEducator: Your Guide to Cybersecurity">InfosecEducator: Your Guide to Cybersecurity</h1>
+          <p class="hero-excerpt">From initial foothold to full domain compromise — we walk through every step of a realistic Active Directory attack chain, covering Kerberoasting, Pass-the-Hash, and DCSync in a lab environment.</p>
+          <div class="hero-meta">
+            <span class="author">// root_access</span>
+            <span>APR 25, 2026</span>
+            <span>14 min read</span>
+          </div>
+          <span class="btn-read">Read Full Writeup &rarr;</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- ===== LATEST WORDS ===== -->
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="overline">// latest</span>
+        Dispatches from the Field
+      </h2>
+      <a href="#" class="section-link">View All &rarr;</a>
+    </div>
+
+    <div class="article-grid">
+      <!-- Card 1 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-blueteam">Blue Team</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#0d1a1f"/>
+            <rect x="0" y="0" width="320" height="180" fill="url(#hexBg2)"/>
+            <defs>
+              <pattern id="hexBg2" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <!-- Shield icon -->
+            <path d="M160 40 L200 60 L200 100 Q200 130 160 145 Q120 130 120 100 L120 60 Z" fill="none" stroke="#2be4ea" stroke-width="2" opacity="0.6"/>
+            <path d="M160 55 L188 70 L188 100 Q188 122 160 133 Q132 122 132 100 L132 70 Z" fill="rgba(43,228,234,0.05)" stroke="#295459" stroke-width="1"/>
+            <text x="160" y="102" fill="#2be4ea" font-family="monospace" font-size="14" text-anchor="middle" opacity="0.8">SIEM</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Building a Home SIEM With Elastic Stack for Under $0</h3>
+          <p class="article-excerpt">Set up enterprise-grade log aggregation, alerting, and threat hunting on your home lab without spending a dime on licensing.</p>
+          <div class="article-meta">
+            <span class="author">// blue_sentinel</span>
+            <span>APR 23, 2026</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-malware">Malware</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#0a130d"/>
+            <defs>
+              <pattern id="hexBg3" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0b2e1e" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg3)"/>
+            <!-- Worm/virus code visualization -->
+            <rect x="50" y="50" width="220" height="12" rx="1" fill="#0b2e1e" stroke="#1a5c33" stroke-width="0.5"/>
+            <rect x="50" y="68" width="160" height="12" rx="1" fill="#0b2e1e" stroke="#1a5c33" stroke-width="0.5"/>
+            <rect x="50" y="86" width="200" height="12" rx="1" fill="#0b2e1e" stroke="#2bfea0" stroke-width="0.5" opacity="0.6"/>
+            <rect x="50" y="104" width="140" height="12" rx="1" fill="#0b2e1e" stroke="#1a5c33" stroke-width="0.5"/>
+            <rect x="50" y="122" width="180" height="12" rx="1" fill="#132a1c" stroke="#2bfea0" stroke-width="1" opacity="0.8"/>
+            <text x="55" y="131" fill="#2bfea0" font-family="monospace" font-size="8">_inject_shellcode(pid=1337, payload=buf)</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Reverse Engineering a Ransomware Sample with Ghidra</h3>
+          <p class="article-excerpt">Step-by-step static analysis of a LockBit variant — from initial triage to unpacking, string decryption, and IOC extraction.</p>
+          <div class="article-meta">
+            <span class="author">// hexdump_hero</span>
+            <span>APR 20, 2026</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-osint">OSINT</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#13110a"/>
+            <defs>
+              <pattern id="hexBg4" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2e2408" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg4)"/>
+            <!-- Network graph nodes -->
+            <circle cx="160" cy="90" r="12" fill="none" stroke="#fed33f" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="90"  cy="55" r="7"  fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="230" cy="60" r="7"  fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="80"  cy="130" r="7" fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="240" cy="125" r="7" fill="none" stroke="#fed33f" stroke-width="1" opacity="0.5"/>
+            <circle cx="160" cy="145" r="5" fill="none" stroke="#fed33f" stroke-width="1" opacity="0.4"/>
+            <line x1="160" y1="90" x2="90"  y2="55"  stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="230" y2="60"  stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="80"  y2="130" stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="240" y2="125" stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <line x1="160" y1="90" x2="160" y2="145" stroke="#fed33f" stroke-width="0.75" opacity="0.3"/>
+            <text x="160" y="94" fill="#fed33f" font-family="monospace" font-size="9" text-anchor="middle">TARGET</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">OSINT Tradecraft: Building a Target Profile From Zero</h3>
+          <p class="article-excerpt">From an email address to a full digital footprint — using Maltego, Shodan, social media pivoting, and breach databases ethically and legally.</p>
+          <div class="article-meta">
+            <span class="author">// ghost_analyst</span>
+            <span>APR 17, 2026</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-ctf">CTF</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#100a18"/>
+            <defs>
+              <pattern id="hexBg5" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#1a0f2a" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg5)"/>
+            <text x="55" y="70"  fill="#c882ff" font-family="monospace" font-size="9" opacity="0.9">FLAG: picoCTF{r3v3rs3_3ng_ftw}</text>
+            <text x="55" y="88"  fill="#6a2ea0" font-family="monospace" font-size="9">gdb-peda$ pattern_create 200</text>
+            <text x="55" y="106" fill="#c882ff" font-family="monospace" font-size="9" opacity="0.7">'AAA%AAsAABAA$AAnAACAA-AA'</text>
+            <text x="55" y="124" fill="#6a2ea0" font-family="monospace" font-size="9">info registers rip</text>
+            <text x="55" y="142" fill="#c882ff" font-family="monospace" font-size="9" opacity="0.9">rip  0x4141414141414141</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Pwn 101: Buffer Overflows for Absolute Beginners</h3>
+          <p class="article-excerpt">A ground-up walkthrough of stack-based buffer overflows using a vulnerable 32-bit binary — no prior assembly knowledge needed.</p>
+          <div class="article-meta">
+            <span class="author">// stack_smasher</span>
+            <span>APR 14, 2026</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-offensive">Offensive</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#130d0d"/>
+            <defs>
+              <pattern id="hexBg6" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2a1010" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg6)"/>
+            <text x="55" y="60"  fill="#9c3230" font-family="monospace" font-size="9"># Sliver C2 — implant staging</text>
+            <text x="55" y="78"  fill="#e8615a" font-family="monospace" font-size="9">sliver> generate --http 10.10.14.5</text>
+            <text x="55" y="96"  fill="#9c3230" font-family="monospace" font-size="9">[*] Generating binary implant...</text>
+            <text x="55" y="114" fill="#e8615a" font-family="monospace" font-size="9">[+] Implant saved: BRAVE_ANTEATER</text>
+            <text x="55" y="132" fill="#9c3230" font-family="monospace" font-size="9">sliver> http</text>
+            <text x="55" y="150" fill="#2bfea0" font-family="monospace" font-size="9">[*] Session C2 active on :443</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Sliver C2: The Open-Source Metasploit Killer?</h3>
+          <p class="article-excerpt">A hands-on review of BishopFox's Sliver framework — comparing implant evasion, operator UX, and detections vs. Cobalt Strike.</p>
+          <div class="article-meta">
+            <span class="author">// c2_architect</span>
+            <span>APR 11, 2026</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 6 -->
+      <a href="#" class="article-card">
+        <div class="article-thumb">
+          <span class="article-cat cat-tools">Tools</span>
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#0f1108"/>
+            <defs>
+              <pattern id="hexBg7" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#1e2208" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="320" height="180" fill="url(#hexBg7)"/>
+            <text x="55" y="65"  fill="#ff9a28" font-family="monospace" font-size="9">$ nmap -sV -sC -p- 10.10.10.1</text>
+            <text x="55" y="83"  fill="#6e4010" font-family="monospace" font-size="9">22/tcp  open  ssh     OpenSSH 8.9</text>
+            <text x="55" y="101" fill="#6e4010" font-family="monospace" font-size="9">80/tcp  open  http    nginx 1.24</text>
+            <text x="55" y="119" fill="#ff9a28" font-family="monospace" font-size="9">8080/tcp open jenkins 2.387.2</text>
+            <text x="55" y="137" fill="#6e4010" font-family="monospace" font-size="9">Nmap done: 1 IP address up</text>
+            <text x="55" y="155" fill="#ff9a28" font-family="monospace" font-size="9">$ gobuster dir -u http://...</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <h3 class="article-title">Nmap to Exploitation: The Recon-to-Shell Pipeline</h3>
+          <p class="article-excerpt">A systematic methodology for turning raw nmap output into actionable attack vectors — covering service fingerprinting, vuln correlation, and rapid exploitation.</p>
+          <div class="article-meta">
+            <span class="author">// portscanner_pro</span>
+            <span>APR 09, 2026</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== FEATURED + SIDEBAR ===== -->
+    <div class="featured-row">
+      <a href="#" class="featured-wide">
+        <div class="article-thumb">
+          <span class="article-cat cat-blueteam">Blue Team</span>
+          <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" style="height:100%">
+            <rect width="300" height="220" fill="#0d1a1f"/>
+            <defs>
+              <pattern id="hexBg8" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="300" height="220" fill="url(#hexBg8)"/>
+            <!-- Network diagram -->
+            <rect x="20"  y="80"  width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="120" y="40"  width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="120" y="140" width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <rect x="220" y="80"  width="60" height="40" rx="2" fill="#0d3336" stroke="#2be4ea" stroke-width="1"/>
+            <line x1="80"  y1="100" x2="120" y2="60"  stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <line x1="80"  y1="100" x2="120" y2="160" stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <line x1="180" y1="60"  x2="220" y2="100" stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <line x1="180" y1="160" x2="220" y2="100" stroke="#2be4ea" stroke-width="0.75" opacity="0.5"/>
+            <text x="50"  y="104" fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">FIREWALL</text>
+            <text x="150" y="64"  fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">IDS</text>
+            <text x="150" y="164" fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">SIEM</text>
+            <text x="250" y="104" fill="#2be4ea" font-family="monospace" font-size="8" text-anchor="middle">SOC</text>
+          </svg>
+        </div>
+        <div class="article-body">
+          <span class="hero-tag">Featured</span>
+          <h3 class="article-title">SOC Analyst Survival Guide: Triage, Alert Fatigue, and Winning the Noise War</h3>
+          <p class="article-excerpt">Real-world tactics from a Tier 2 analyst on structuring investigations, cutting false positives, and building detections that actually fire on real threats — not your own scanner.</p>
+          <div class="article-meta">
+            <span class="author">// soc_warrior</span>
+            <span>APR 21, 2026 · 18 min</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="sidebar-stack">
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#100a18"/>
+              <text x="45" y="44" fill="#c882ff" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">⚑</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">CTF</div>
+            <div class="mini-card__title">HTB Intuition — Insane Writeup</div>
+            <div class="mini-card__date">APR 19, 2026</div>
+          </div>
+        </a>
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#130d0d"/>
+              <text x="45" y="44" fill="#e8615a" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">⚙</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">Offensive</div>
+            <div class="mini-card__title">NTLM Relay: From Theory to Domain Admin</div>
+            <div class="mini-card__date">APR 15, 2026</div>
+          </div>
+        </a>
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#0a130d"/>
+              <text x="45" y="44" fill="#2bfea0" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">⬡</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">Malware</div>
+            <div class="mini-card__title">Unpacking UPX-Packed Binaries by Hand</div>
+            <div class="mini-card__date">APR 12, 2026</div>
+          </div>
+        </a>
+        <a href="#" class="mini-card">
+          <div class="mini-card__thumb">
+            <svg viewBox="0 0 90 80" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="80" fill="#13110a"/>
+              <text x="45" y="44" fill="#fed33f" font-family="monospace" font-size="22" text-anchor="middle" opacity="0.5">◎</text>
+            </svg>
+          </div>
+          <div class="mini-card__body">
+            <div class="mini-card__cat">OSINT</div>
+            <div class="mini-card__title">Pivoting on LinkedIn Profiles: OPSEC Risks</div>
+            <div class="mini-card__date">APR 08, 2026</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== WELCOME ===== -->
+    <div class="welcome-section">
+      <div>
+        <p class="welcome-section__eyebrow">// about infosec//educator</p>
+        <h2 class="welcome-section__title">Learn. Break. Defend. Repeat.</h2>
+        <p class="welcome-section__body">
+          <strong>Infosec//Educator</strong> is a practitioner-first cybersecurity publication for people who learn by doing. We publish in-depth writeups, course content, tool reviews, and research spanning offensive security, blue team operations, malware analysis, and OSINT.<br><br>
+          Whether you're grinding your first CTF or running red team ops professionally, this is the field manual you keep open on the second monitor.
+        </p>
+      </div>
+      <div class="welcome-stats">
+        <div class="stat-item">
+          <span class="stat-number">847</span>
+          <span class="stat-label">Articles</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">12k</span>
+          <span class="stat-label">Subscribers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">47</span>
+          <span class="stat-label">Episodes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PODCAST ===== -->
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="overline">// audio</span>
+        Latest from the Pod
+      </h2>
+      <a href="#" class="section-link">All Episodes &rarr;</a>
+    </div>
+
+    <div class="podcast-grid">
+      <a href="#" class="pod-card">
+        <div class="pod-num">047</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 047 — RED VS. PURPLE</div>
+          <h3 class="pod-title">Red Team vs. Purple Team: Who Wins in the Long Run?</h3>
+          <p class="pod-desc">We debate the operational and organizational value of adversarial simulation vs. collaborative purple teaming, with guests from both sides of the fence.</p>
+          <div class="pod-footer">
+            <span>1h 12m · APR 22, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="pod-card">
+        <div class="pod-num">046</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 046 — THREAT INTEL</div>
+          <h3 class="pod-title">Operationalizing Threat Intelligence Without a $1M Budget</h3>
+          <p class="pod-desc">How to build a threat intel program using open-source feeds, MISP, and structured reporting — even when you're a team of one.</p>
+          <div class="pod-footer">
+            <span>58m · APR 15, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="pod-card">
+        <div class="pod-num">045</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 045 — CLOUD SECURITY</div>
+          <h3 class="pod-title">Hacking AWS: IAM Privilege Escalation Techniques in the Wild</h3>
+          <p class="pod-desc">A deep dive into the most common AWS misconfigurations attackers exploit in the real world — and how to detect them before they do.</p>
+          <div class="pod-footer">
+            <span>1h 4m · APR 8, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="pod-card">
+        <div class="pod-num">044</div>
+        <div class="pod-body">
+          <div class="pod-ep">EP. 044 — OPSEC</div>
+          <h3 class="pod-title">OPSEC Failures That Got Hackers Caught: A Case Study Breakdown</h3>
+          <p class="pod-desc">Real incidents where operational security mistakes led to identification and arrest — and what defenders and red teamers should take away from each.</p>
+          <div class="pod-footer">
+            <span>49m · APR 1, 2026</span>
+            <span class="pod-play">LISTEN</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== TOOLS ===== -->
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="overline">// arsenal</span>
+        Tool Spotlight
+      </h2>
+      <a href="#" class="section-link">Full Arsenal &rarr;</a>
+    </div>
+
+    <div class="tools-grid">
+      <a href="#" class="tool-card">
+        <span class="tool-icon">&gt;_</span>
+        <h4 class="tool-name">Nuclei</h4>
+        <p class="tool-desc">Fast, template-based vulnerability scanner by ProjectDiscovery. Covers CVEs, misconfigs, and custom checks.</p>
+        <div class="tool-tags">
+          <span class="tag">recon</span>
+          <span class="tag">vuln-scan</span>
+          <span class="tag">OSS</span>
+        </div>
+      </a>
+      <a href="#" class="tool-card">
+        <span class="tool-icon">⬡</span>
+        <h4 class="tool-name">Ghidra</h4>
+        <p class="tool-desc">NSA's open-source reverse engineering framework. Decompile, disassemble, and analyze binaries across architectures.</p>
+        <div class="tool-tags">
+          <span class="tag">RE</span>
+          <span class="tag">malware</span>
+          <span class="tag">free</span>
+        </div>
+      </a>
+      <a href="#" class="tool-card">
+        <span class="tool-icon">◉</span>
+        <h4 class="tool-name">BloodHound</h4>
+        <p class="tool-desc">Active Directory attack path visualization. Find the shortest path to Domain Admin using graph theory.</p>
+        <div class="tool-tags">
+          <span class="tag">AD</span>
+          <span class="tag">offensive</span>
+          <span class="tag">OSS</span>
+        </div>
+      </a>
+      <a href="#" class="tool-card">
+        <span class="tool-icon">⌖</span>
+        <h4 class="tool-name">Shodan</h4>
+        <p class="tool-desc">Search engine for internet-exposed devices, services, and vulnerabilities. Essential for recon and attack surface mapping.</p>
+        <div class="tool-tags">
+          <span class="tag">OSINT</span>
+          <span class="tag">recon</span>
+          <span class="tag">paid</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <div class="newsletter">
+      <div>
+        <p class="newsletter__eyebrow">// intel drops — weekly</p>
+        <h3 class="newsletter__title">The Payload: Weekly Infosec Intel</h3>
+        <p class="newsletter__desc">CVEs worth caring about, new tooling, CTF announcements, and one long-form analysis — delivered every Monday. No spam, no vendor pitches.</p>
+      </div>
+      <div class="newsletter__form">
+        <input class="newsletter__input" type="email" placeholder="operator@domain.com">
+        <button class="newsletter__btn">Subscribe →</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Content</h5>
+        <ul class="footer-links">
+          <li><a href="#">Writeups</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Podcast</a></li>
+          <li><a href="#">Tool Reviews</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">CTF Archive</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 INFOSEC//EDUCATOR — All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+    // Collapsible section blocks (reused from main.html pattern)
+    document.querySelectorAll('.section-block__header').forEach(h => {
+      h.addEventListener('click', () => h.closest('.section-block').classList.toggle('collapsed'));
+    });
+
+    // Glitch text effect on hero title hover
+    const hero = document.querySelector('.hero-card');
+    if (hero) {
+      hero.addEventListener('mouseenter', () => {
+        const el = hero.querySelector('.glitch');
+        if (el) el.style.animation = 'none';
+      });
+      hero.addEventListener('mouseleave', () => {
+        const el = hero.querySelector('.glitch');
+        if (el) el.style.animation = '';
+      });
+    }
+
+    // Ticker pause on hover
+    const track = document.querySelector('.ticker-track');
+    if (track) {
+      track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+      track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+    }
+  </script>
+</body>
+</html>

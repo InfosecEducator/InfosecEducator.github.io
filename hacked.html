@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOU'VE BEEN HACKED</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #e8615a;
+      --red-dim: #9c3230;
+      --red-dark: #3c181a;
+      --bg:     #040204;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      font-family: "VT323", monospace;
+      color: var(--red);
+      user-select: none;
+    }
+
+    /* ── SCANLINE OVERLAY ── */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 10;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.18) 0px,
+        rgba(0,0,0,0.18) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+    }
+
+    /* ── VIGNETTE ── */
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 9;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+    }
+
+    /* ── MATRIX RAIN CANVAS ── */
+    #matrix {
+      position: fixed; inset: 0; z-index: 0;
+      opacity: 0.18;
+    }
+
+    /* ── MAIN STAGE ── */
+    .stage {
+      position: relative; z-index: 20;
+      width: 100%; height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0;
+    }
+
+    /* ── SKULL ROW ── */
+    .skull-row {
+      font-size: 2.2rem;
+      letter-spacing: 0.1em;
+      color: var(--red-dim);
+      text-shadow: 0 0 10px var(--red-dim);
+      animation: flicker 3.5s step-start infinite;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ── MAIN HEADLINE ── */
+    .headline {
+      font-size: clamp(3.5rem, 11vw, 9rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 0.04em;
+      position: relative;
+    }
+
+    .headline .youve {
+      display: block;
+      color: #fff;
+      font-size: 0.38em;
+      letter-spacing: 0.3em;
+      text-shadow: 0 0 15px rgba(255,255,255,0.4);
+      animation: flicker 4s step-start infinite;
+    }
+
+    .headline .been {
+      display: block;
+      color: var(--red-dim);
+      font-size: 0.38em;
+      letter-spacing: 0.3em;
+      text-shadow: 0 0 10px var(--red-dim);
+      animation: flicker 5s step-start infinite 0.3s;
+    }
+
+    .headline .hacked {
+      display: block;
+      color: var(--red);
+      text-shadow:
+        0 0 10px  var(--red),
+        0 0 30px  var(--red),
+        0 0 60px  rgba(232,97,90,0.6),
+        0 0 120px rgba(232,97,90,0.3);
+      animation: glitch 2.5s step-start infinite, hacked-pulse 1.5s ease-in-out infinite;
+      position: relative;
+    }
+
+    /* glitch pseudo-elements */
+    .headline .hacked::before,
+    .headline .hacked::after {
+      content: "HACKED";
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    .headline .hacked::before {
+      color: #2be4ea;
+      clip-path: inset(30% 0 50% 0);
+      animation: glitch-before 2.5s step-start infinite;
+      opacity: 0.7;
+    }
+    .headline .hacked::after {
+      color: #fed33f;
+      clip-path: inset(60% 0 10% 0);
+      animation: glitch-after 2.5s step-start infinite 0.15s;
+      opacity: 0.5;
+    }
+
+    /* ── SKULL ROW BOTTOM ── */
+    .skull-row-bottom {
+      font-size: 2.2rem;
+      letter-spacing: 0.1em;
+      color: var(--red-dim);
+      text-shadow: 0 0 10px var(--red-dim);
+      animation: flicker 2.8s step-start infinite 0.5s;
+      margin-top: 0.25rem;
+    }
+
+    /* ── SUB TEXT ── */
+    .subtext {
+      font-family: "Share Tech Mono", monospace;
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red-dim);
+      margin-top: 1.5rem;
+      text-align: center;
+      animation: flicker 6s step-start infinite 1s;
+      line-height: 1.8;
+    }
+    .subtext .blink {
+      animation: blink 1s step-start infinite;
+    }
+
+    /* ── BOTTOM TICKER ── */
+    .ticker {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 25;
+      background: var(--red-dark);
+      border-top: 1px solid var(--red-dim);
+      overflow: hidden; height: 28px;
+      display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: var(--red);
+      color: #040204;
+      font-family: "VT323", monospace;
+      font-size: 1rem; letter-spacing: 0.1em;
+      padding: 0 0.75rem; height: 100%;
+      display: flex; align-items: center;
+      flex-shrink: 0; z-index: 1;
+    }
+    .ticker-track {
+      display: flex; align-items: center;
+      white-space: nowrap;
+      font-family: "Share Tech Mono", monospace;
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      color: var(--red-dim); gap: 4rem;
+      animation: scroll-ticker 18s linear infinite;
+      padding-left: 2rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes hacked-pulse {
+      0%, 100% { text-shadow: 0 0 10px var(--red), 0 0 30px var(--red), 0 0 60px rgba(232,97,90,0.6); }
+      50%       { text-shadow: 0 0 20px var(--red), 0 0 60px var(--red), 0 0 120px rgba(232,97,90,0.8), 0 0 200px rgba(232,97,90,0.4); }
+    }
+
+    @keyframes glitch {
+      0%,80%,100% { transform: translate(0); }
+      82%  { transform: translate(-3px, 1px); }
+      84%  { transform: translate(3px, -1px); }
+      86%  { transform: translate(-2px, 0); }
+      88%  { transform: translate(2px, 1px); }
+      90%  { transform: translate(0); }
+    }
+
+    @keyframes glitch-before {
+      0%,78%,100% { transform: translate(0); clip-path: inset(30% 0 50% 0); }
+      80%  { transform: translate(-4px, 0);   clip-path: inset(10% 0 70% 0); }
+      82%  { transform: translate(4px, 0);    clip-path: inset(60% 0 20% 0); }
+      84%  { transform: translate(0);         clip-path: inset(30% 0 50% 0); }
+    }
+
+    @keyframes glitch-after {
+      0%,78%,100% { transform: translate(0); clip-path: inset(60% 0 10% 0); }
+      80%  { transform: translate(4px, 1px);  clip-path: inset(20% 0 65% 0); }
+      82%  { transform: translate(-4px, -1px);clip-path: inset(75% 0 5% 0); }
+      84%  { transform: translate(0);         clip-path: inset(60% 0 10% 0); }
+    }
+
+    @keyframes flicker {
+      0%,96%,100% { opacity: 1; }
+      97%  { opacity: 0.2; }
+      98%  { opacity: 1; }
+      99%  { opacity: 0.4; }
+    }
+
+    @keyframes blink {
+      0%,49% { opacity: 1; }
+      50%,100% { opacity: 0; }
+    }
+
+    @keyframes scroll-ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="stage">
+  <div class="skull-row">☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠</div>
+
+  <h1 class="headline">
+    <span class="youve">YOU'VE</span>
+    <span class="been">BEEN</span>
+    <span class="hacked">HACKED</span>
+  </h1>
+
+  <div class="skull-row-bottom">☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠ ☠</div>
+
+  <div class="subtext">
+    Your credentials have been compromised<br>
+    All your data now belongs to us<br>
+    <span class="blink">█</span> This is what a phishing attack looks like <span class="blink">█</span>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-label">☠ PWNED</div>
+  <div class="ticker-track">
+    <span>CREDENTIALS EXFILTRATED</span>
+    <span>SESSION HIJACKED</span>
+    <span>PHISHING ATTACK SUCCESSFUL</span>
+    <span>NEVER CLICK SUSPICIOUS LINKS</span>
+    <span>VERIFY SENDER BEFORE CLICKING</span>
+    <span>THIS WAS A TRAINING SIMULATION</span>
+    <span>CREDENTIALS EXFILTRATED</span>
+    <span>SESSION HIJACKED</span>
+    <span>PHISHING ATTACK SUCCESSFUL</span>
+    <span>NEVER CLICK SUSPICIOUS LINKS</span>
+    <span>VERIFY SENDER BEFORE CLICKING</span>
+    <span>THIS WAS A TRAINING SIMULATION</span>
+  </div>
+</div>
+
+<script>
+  // ── MATRIX RAIN ──────────────────────────────────────────────────────────────
+  const canvas = document.getElementById('matrix');
+  const ctx    = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*☠<>{}[]|\\';
+  const FONT_SIZE = 14;
+  let cols, drops;
+
+  function initDrops() {
+    cols  = Math.floor(canvas.width / FONT_SIZE);
+    drops = Array.from({ length: cols }, () => Math.random() * -100);
+  }
+  initDrops();
+  window.addEventListener('resize', initDrops);
+
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(4,2,4,0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = FONT_SIZE + 'px "Share Tech Mono", monospace';
+
+    for (let i = 0; i < cols; i++) {
+      const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+      const x = i * FONT_SIZE;
+      const y = drops[i] * FONT_SIZE;
+
+      // Top character is bright red, rest fade
+      ctx.fillStyle = drops[i] > 0 && drops[i] * FONT_SIZE < canvas.height ? '#e8615a' : '#5e2122';
+      if (Math.random() > 0.98) ctx.fillStyle = '#f4908b'; // occasional bright flash
+
+      ctx.fillText(char, x, y);
+
+      if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i] += 0.6;
+    }
+  }
+
+  setInterval(drawMatrix, 40);
+</script>
+</body>
+</html>

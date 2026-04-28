@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Detector — INFOSEC//EDUCATOR</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:   0 0 10px var(--red-500),  0 0 30px rgba(232,97,90,0.35);
+      --glow-cyan:  0 0 10px var(--cyan-500), 0 0 30px rgba(43,228,234,0.35);
+      --glow-green: 0 0 10px var(--green-500),0 0 30px rgba(43,254,160,0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%,  rgba(60,24,26,0.65)  0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%,rgba(13,51,54,0.4)   0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky; top: 0; z-index: 200;
+      background-color: rgba(13,10,13,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 2px 20px rgba(232,97,90,0.15);
+    }
+    .header-inner {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; gap: 1.5rem;
+    }
+    .site-logo {
+      font-family: var(--font-display); font-size: 1.7rem;
+      letter-spacing: 0.08em; color: var(--red-500);
+      text-shadow: var(--glow-red); white-space: nowrap; flex-shrink: 0;
+    }
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .main-nav { display: flex; align-items: center; }
+    .main-nav a {
+      font-family: var(--font-ui); font-size: 0.83rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-300);
+      padding: 0.4rem 0.8rem; border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+
+    /* ===== MISSION BAR ===== */
+    .mission-bar {
+      background: var(--bg-900);
+      border-bottom: 1px solid var(--red-900);
+      padding: 0.5rem 1.5rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .mission-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: rgba(232,97,90,0.1);
+      border: 1px solid var(--red-800);
+      padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+    .mission-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red-500);
+      box-shadow: var(--glow-red);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+    .mission-badge-label {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-500);
+    }
+    .mission-text {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.06em; color: var(--red-800);
+    }
+    .mission-text em { color: var(--red-600); font-style: normal; }
+
+    /* ===== PAGE ===== */
+    .page {
+      max-width: 1300px; margin: 0 auto;
+      padding: 1.5rem 1.5rem 3rem;
+    }
+
+    /* ===== QUESTION BANNER ===== */
+    .question-banner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem;
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      border-left: 3px solid var(--red-500);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .question-icon {
+      font-family: var(--font-mono); font-size: 1.5rem;
+      color: var(--red-700); flex-shrink: 0;
+    }
+    .question-text {
+      font-family: var(--font-display); font-size: 2rem;
+      letter-spacing: 0.05em; color: var(--red-300);
+      text-shadow: var(--glow-red);
+      text-transform: uppercase; margin: 0;
+    }
+    .question-sub {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.12em; color: var(--red-800);
+      text-transform: uppercase; margin-left: auto;
+      text-align: right; flex-shrink: 0;
+    }
+
+    /* ===== CHALLENGE GRID ===== */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    /* ===== EMAIL PANEL ===== */
+    .email-panel {
+      display: flex; flex-direction: column;
+      border: 1px solid var(--red-800);
+      background: var(--bg-700);
+      position: relative;
+      transition: border-color 0.4s, box-shadow 0.4s;
+    }
+    .email-panel.reveal-phish {
+      border-color: var(--red-500);
+      box-shadow: var(--glow-red);
+    }
+    .email-panel.reveal-legit {
+      border-color: var(--red-900);
+      opacity: 0.7;
+    }
+
+    /* Panel chrome (fake email client toolbar) */
+    .panel-chrome {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg-900);
+      border-bottom: 1px solid var(--red-900);
+      flex-shrink: 0;
+    }
+    .chrome-dots { display: flex; gap: 5px; }
+    .chrome-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .dot-close   { background: #ff5f57; }
+    .dot-min     { background: #febc2e; }
+    .dot-max     { background: #28c840; }
+    .chrome-label {
+      font-family: var(--font-display); font-size: 1.1rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--red-700); flex: 1; text-align: center;
+    }
+    .chrome-icons {
+      display: flex; gap: 0.5rem;
+    }
+    .chrome-icon {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--red-900);
+    }
+
+    /* Email address bar */
+    .panel-addressbar {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--bg-800);
+      border-bottom: 1px solid var(--red-900);
+      flex-shrink: 0;
+    }
+    .addressbar-label {
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--red-900); flex-shrink: 0;
+    }
+    .addressbar-url {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.03em; color: var(--red-800);
+      flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* iframe */
+    .email-frame-wrap {
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .email-frame {
+      width: 100%; height: 580px;
+      border: none; display: block;
+      background: #fff;
+    }
+
+    /* Reveal overlay (shown after guess) */
+    .reveal-overlay {
+      display: none;
+      position: absolute; inset: 0;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.75rem;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .reveal-overlay.show { display: flex; }
+    .reveal-overlay.phish-reveal {
+      background: rgba(13,10,13,0.65);
+    }
+    .reveal-overlay.legit-reveal {
+      background: rgba(13,10,13,0.55);
+    }
+    .reveal-badge {
+      font-family: var(--font-display); font-size: 2.5rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 1.2rem;
+      border: 2px solid;
+    }
+    .phish-reveal .reveal-badge {
+      color: var(--red-500); border-color: var(--red-500);
+      text-shadow: var(--glow-red);
+      background: rgba(232,97,90,0.1);
+    }
+    .legit-reveal .reveal-badge {
+      color: var(--cyan-500); border-color: var(--cyan-500);
+      text-shadow: var(--glow-cyan);
+      background: rgba(43,228,234,0.08);
+    }
+    .reveal-sub {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .phish-reveal .reveal-sub { color: var(--red-400); }
+    .legit-reveal .reveal-sub { color: var(--cyan-400); }
+
+    /* Panel footer */
+    .panel-footer {
+      padding: 0.75rem; border-top: 1px solid var(--red-900);
+      background: var(--bg-900); flex-shrink: 0;
+    }
+    .select-btn {
+      width: 100%; padding: 0.65rem;
+      background: transparent;
+      border: 2px solid var(--red-700);
+      color: var(--red-500);
+      font-family: var(--font-display); font-size: 1.3rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .select-btn:hover:not(:disabled) {
+      background: var(--red-900);
+      border-color: var(--red-500);
+      box-shadow: var(--glow-red);
+      color: var(--red-300);
+    }
+    .select-btn:disabled {
+      opacity: 0.3; cursor: not-allowed;
+    }
+    .select-btn .btn-icon { font-size: 1rem; }
+
+    /* ===== RESULT OVERLAY ===== */
+    .result-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(7,5,10,0.92);
+      backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .result-overlay.show { display: flex; }
+
+    .result-box {
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      max-width: 560px; width: 100%;
+      position: relative;
+      animation: resultIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes resultIn {
+      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .result-box::after {
+      content: ""; position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 3px;
+      transform: rotate(-45deg);
+    }
+    .result-box.correct-box { border-color: var(--green-500); box-shadow: var(--glow-green); }
+    .result-box.correct-box::after { background: var(--green-500); }
+    .result-box.incorrect-box { border-color: var(--red-500); box-shadow: var(--glow-red); }
+    .result-box.incorrect-box::after { background: var(--red-500); }
+
+    .result-header {
+      padding: 1.5rem 2rem 1rem;
+      border-bottom: 1px solid var(--red-900);
+      text-align: center;
+    }
+    .result-eyebrow {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .correct-box .result-eyebrow { color: var(--green-500); }
+    .incorrect-box .result-eyebrow { color: var(--red-700); }
+
+    .result-verdict {
+      font-family: var(--font-display); font-size: 4.5rem;
+      letter-spacing: 0.06em; line-height: 1;
+      margin: 0 0 0.25rem;
+    }
+    .correct-box .result-verdict {
+      color: var(--green-500); text-shadow: var(--glow-green);
+    }
+    .incorrect-box .result-verdict {
+      color: var(--red-500); text-shadow: var(--glow-red);
+    }
+    .result-tagline {
+      font-family: var(--font-ui); font-size: 1rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .correct-box .result-tagline { color: var(--green-500); opacity: 0.7; }
+    .incorrect-box .result-tagline { color: var(--red-400); opacity: 0.7; }
+
+    .result-body { padding: 1.25rem 2rem; }
+
+    .result-detail {
+      font-size: 0.88rem; line-height: 1.7;
+      color: var(--red-400); margin-bottom: 1rem;
+    }
+    .result-detail strong { color: var(--red-300); }
+
+    .specimen-tags {
+      display: flex; gap: 0.6rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+    }
+    .specimen-tag {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.3em 0.75em; border: 1px solid; border-radius: 2px;
+    }
+    .stag-phish {
+      color: var(--red-500); border-color: var(--red-700);
+      background: rgba(232,97,90,0.08);
+    }
+    .stag-legit {
+      color: var(--cyan-500); border-color: var(--cyan-900);
+      background: rgba(43,228,234,0.06);
+    }
+
+    .result-actions { display: flex; gap: 0.75rem; }
+    .btn-retry {
+      flex: 1; padding: 0.7rem 1rem;
+      background: transparent;
+      color: var(--red-500); border: 2px solid var(--red-700);
+      font-family: var(--font-display); font-size: 1.3rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .btn-retry:hover {
+      background: var(--red-900); border-color: var(--red-500);
+      box-shadow: var(--glow-red);
+    }
+    .btn-study {
+      flex: 1; padding: 0.7rem 1rem;
+      background: transparent;
+      color: var(--cyan-500); border: 2px solid var(--cyan-900);
+      font-family: var(--font-display); font-size: 1.3rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .btn-study:hover {
+      background: var(--cyan-900); border-color: var(--cyan-500);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* Score tracker */
+    .score-bar {
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+      padding: 0.6rem 1.5rem;
+      background: var(--bg-900); border-bottom: 1px solid var(--red-900);
+      margin-bottom: 1.25rem;
+    }
+    .score-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .score-num {
+      font-family: var(--font-display); font-size: 1.4rem;
+      line-height: 1; letter-spacing: 0.04em;
+    }
+    .score-correct  .score-num { color: var(--green-500); text-shadow: var(--glow-green); }
+    .score-incorrect.score-num { color: var(--red-500);   text-shadow: var(--glow-red); }
+    .score-label { color: var(--red-800); }
+    .score-sep { color: var(--red-900); font-family: var(--font-mono); }
+    .score-pct {
+      font-family: var(--font-display); font-size: 1.2rem;
+      color: var(--yellow-500); letter-spacing: 0.04em;
+    }
+    .score-pct-label { color: var(--red-900); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 2rem; }
+    .footer-bottom {
+      max-width: 1300px; margin: 0 auto; padding: 0.85rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 0.65rem; color: var(--red-900);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="dev.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+    <nav class="main-nav">
+      <a href="dev.html">Home</a>
+      <a href="dev.html">Courses</a>
+      <a href="dev.html">Writeups</a>
+      <a href="dev.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== MISSION BAR ===== -->
+<div class="mission-bar">
+  <div class="mission-badge">
+    <span class="mission-badge-dot"></span>
+    <span class="mission-badge-label">Live Sim</span>
+  </div>
+  <span class="mission-text">Training module: Social Engineering Detection &nbsp;·&nbsp; Study both emails carefully before selecting</span>
+</div>
+
+<!-- ===== MAIN ===== -->
+<main class="page">
+
+  <!-- Score bar -->
+  <div class="score-bar">
+    <div class="score-item score-correct">
+      <span class="score-num" id="scoreCorrect">0</span>
+      <span class="score-label">Correct</span>
+    </div>
+    <span class="score-sep">//</span>
+    <div class="score-item">
+      <span class="score-num" style="color:var(--red-700);" id="scoreIncorrect">0</span>
+      <span class="score-label">Incorrect</span>
+    </div>
+    <span class="score-sep">//</span>
+    <div class="score-item">
+      <span class="score-pct" id="scorePct">—</span>
+      <span class="score-pct-label">&nbsp;accuracy</span>
+    </div>
+  </div>
+
+  <!-- Question -->
+  <div class="question-banner">
+    <span class="question-icon">⚑</span>
+    <h1 class="question-text">Which one is the phishing email?</h1>
+    <div class="question-sub">
+      Round <span id="roundNum">1</span><br>
+      Scroll &amp; inspect both specimens
+    </div>
+  </div>
+
+  <!-- Two email panels -->
+  <div class="challenge-grid">
+
+    <!-- PANEL LEFT -->
+    <div class="email-panel" id="panelLeft">
+      <div class="panel-chrome">
+        <div class="chrome-dots">
+          <span class="chrome-dot dot-close"></span>
+          <span class="chrome-dot dot-min"></span>
+          <span class="chrome-dot dot-max"></span>
+        </div>
+        <span class="chrome-label" id="labelLeft">SPECIMEN A</span>
+        <div class="chrome-icons">
+          <span class="chrome-icon">⊟</span>
+          <span class="chrome-icon">⊞</span>
+        </div>
+      </div>
+      <div class="panel-addressbar">
+        <span class="addressbar-label">inbox</span>
+        <span class="addressbar-url" id="addrLeft">loading…</span>
+      </div>
+      <div class="email-frame-wrap">
+        <iframe class="email-frame" id="frameLeft" src="" title="Specimen A" scrolling="yes"></iframe>
+        <div class="reveal-overlay" id="revealLeft">
+          <span class="reveal-badge" id="revealBadgeLeft"></span>
+          <span class="reveal-sub"  id="revealSubLeft"></span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="select-btn" id="btnLeft" onclick="guess('left')">
+          <span class="btn-icon">⚑</span> Select as Phishing Email
+        </button>
+      </div>
+    </div>
+
+    <!-- PANEL RIGHT -->
+    <div class="email-panel" id="panelRight">
+      <div class="panel-chrome">
+        <div class="chrome-dots">
+          <span class="chrome-dot dot-close"></span>
+          <span class="chrome-dot dot-min"></span>
+          <span class="chrome-dot dot-max"></span>
+        </div>
+        <span class="chrome-label" id="labelRight">SPECIMEN B</span>
+        <div class="chrome-icons">
+          <span class="chrome-icon">⊟</span>
+          <span class="chrome-icon">⊞</span>
+        </div>
+      </div>
+      <div class="panel-addressbar">
+        <span class="addressbar-label">inbox</span>
+        <span class="addressbar-url" id="addrRight">loading…</span>
+      </div>
+      <div class="email-frame-wrap">
+        <iframe class="email-frame" id="frameRight" src="" title="Specimen B" scrolling="yes"></iframe>
+        <div class="reveal-overlay" id="revealRight">
+          <span class="reveal-badge" id="revealBadgeRight"></span>
+          <span class="reveal-sub"  id="revealSubRight"></span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="select-btn" id="btnRight" onclick="guess('right')">
+          <span class="btn-icon">⚑</span> Select as Phishing Email
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /challenge-grid -->
+
+</main>
+
+<!-- ===== RESULT OVERLAY ===== -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-box" id="resultBox">
+    <div class="result-header">
+      <div class="result-eyebrow" id="resultEyebrow">// Analysis complete</div>
+      <div class="result-verdict" id="resultVerdict">CORRECT</div>
+      <div class="result-tagline" id="resultTagline">Phishing email identified</div>
+    </div>
+    <div class="result-body">
+      <p class="result-detail" id="resultDetail"></p>
+      <div class="specimen-tags" id="specimenTags"></div>
+      <div class="result-actions">
+        <button class="btn-retry" onclick="nextRound()">⟳ Next Round</button>
+        <button class="btn-study" onclick="closeOverlay()">◉ Study Emails</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-bottom">
+    <span>INFOSEC//EDUCATOR — Phishing Detection Training Simulation</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<script>
+  // ─── STATE ────────────────────────────────────────────────────────────────────
+  let legitIsLeft = true;   // tracks which panel has email_legit.html
+  let round       = 1;
+  let correct     = 0;
+  let incorrect   = 0;
+  let answered    = false;
+
+  // ─── INIT ─────────────────────────────────────────────────────────────────────
+  function init() {
+    answered    = false;
+    legitIsLeft = Math.random() > 0.5;
+
+    const leftSrc  = legitIsLeft ? 'email_legit.html' : 'email_phish.html';
+    const rightSrc = legitIsLeft ? 'email_phish.html' : 'email_legit.html';
+
+    document.getElementById('frameLeft').src  = leftSrc;
+    document.getElementById('frameRight').src = rightSrc;
+
+    // Address bar flavor text
+    document.getElementById('addrLeft').textContent  = leftSrc;
+    document.getElementById('addrRight').textContent = rightSrc;
+
+    // Reset panel state
+    ['panelLeft','panelRight'].forEach(id => {
+      const p = document.getElementById(id);
+      p.classList.remove('reveal-phish','reveal-legit');
+    });
+    ['revealLeft','revealRight'].forEach(id => {
+      document.getElementById(id).classList.remove('show','phish-reveal','legit-reveal');
+    });
+
+    // Re-enable buttons
+    document.getElementById('btnLeft').disabled  = false;
+    document.getElementById('btnRight').disabled = false;
+
+    // Update round display
+    document.getElementById('roundNum').textContent = round;
+
+    updateScore();
+  }
+
+  // ─── GUESS ────────────────────────────────────────────────────────────────────
+  function guess(side) {
+    if (answered) return;
+    answered = true;
+
+    // Disable both buttons immediately
+    document.getElementById('btnLeft').disabled  = true;
+    document.getElementById('btnRight').disabled = true;
+
+    // Correct if the chosen side has email_legit.html
+    const isCorrect = (side === 'left' && legitIsLeft) || (side === 'right' && !legitIsLeft);
+
+    // Reveal overlays on both panels
+    revealPanels(isCorrect, side);
+
+    if (isCorrect) correct++;
+    else incorrect++;
+
+    updateScore();
+
+    // Small delay so user can see the reveal before overlay pops
+    setTimeout(() => showResult(isCorrect), 700);
+  }
+
+  // ─── REVEAL PANELS ────────────────────────────────────────────────────────────
+  function revealPanels(isCorrect, chosenSide) {
+    // Determine which side has the phish (email_legit.html = the phish)
+    const phishSide = legitIsLeft ? 'left' : 'right';
+    const legitSide = legitIsLeft ? 'right' : 'left';
+
+    const setReveal = (side, isPhish) => {
+      const panel   = document.getElementById('panel' + cap(side));
+      const overlay = document.getElementById('reveal' + cap(side));
+      const badge   = document.getElementById('revealBadge' + cap(side));
+      const sub     = document.getElementById('revealSub' + cap(side));
+
+      if (isPhish) {
+        panel.classList.add('reveal-phish');
+        overlay.classList.add('show','phish-reveal');
+        badge.textContent = '⚑ PHISHING EMAIL';
+        sub.textContent   = 'This was the malicious email';
+      } else {
+        panel.classList.add('reveal-legit');
+        overlay.classList.add('show','legit-reveal');
+        badge.textContent = '✓ LEGITIMATE EMAIL';
+        sub.textContent   = 'This was the real email';
+      }
+    };
+
+    setReveal('left',  phishSide === 'left');
+    setReveal('right', phishSide === 'right');
+  }
+
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  // ─── SHOW RESULT ─────────────────────────────────────────────────────────────
+  function showResult(isCorrect) {
+    const overlay = document.getElementById('resultOverlay');
+    const box     = document.getElementById('resultBox');
+    const phishSpecimen = legitIsLeft ? 'SPECIMEN A' : 'SPECIMEN B';
+    const legitSpecimen = legitIsLeft ? 'SPECIMEN B' : 'SPECIMEN A';
+
+    document.getElementById('resultEyebrow').textContent = '// Analysis complete — Round ' + round;
+
+    if (isCorrect) {
+      box.className = 'result-box correct-box';
+      document.getElementById('resultVerdict').textContent  = 'CORRECT';
+      document.getElementById('resultTagline').textContent  = 'You spotted the phish';
+      document.getElementById('resultDetail').innerHTML =
+        'Good work, operator. <strong>' + phishSpecimen + '</strong> was the phishing email — '
+        + 'crafted to appear legitimate and bypass your defenses. '
+        + 'Always scrutinize sender addresses, hover over links before clicking, '
+        + 'and verify unexpected requests through a separate channel.';
+    } else {
+      box.className = 'result-box incorrect-box';
+      document.getElementById('resultVerdict').textContent  = 'INCORRECT';
+      document.getElementById('resultTagline').textContent  = 'The phish slipped through';
+      document.getElementById('resultDetail').innerHTML =
+        'That was the legitimate email. <strong>' + phishSpecimen + '</strong> was the actual phishing attempt. '
+        + 'Phishing emails are engineered to look real — check the full sender address, '
+        + 'inspect embedded links, look for urgency tactics, and verify with the supposed sender independently.';
+    }
+
+    document.getElementById('specimenTags').innerHTML =
+      '<span class="specimen-tag stag-phish">⚑ ' + phishSpecimen + ' = Phishing Email</span>' +
+      '<span class="specimen-tag stag-legit">✓ ' + legitSpecimen + ' = Legitimate Email</span>';
+
+    overlay.classList.add('show');
+  }
+
+  // ─── SCORE ────────────────────────────────────────────────────────────────────
+  function updateScore() {
+    document.getElementById('scoreCorrect').textContent   = correct;
+    document.getElementById('scoreIncorrect').textContent = incorrect;
+    const total = correct + incorrect;
+    document.getElementById('scorePct').textContent =
+      total > 0 ? Math.round(correct / total * 100) + '%' : '—';
+  }
+
+  // ─── NEXT ROUND ───────────────────────────────────────────────────────────────
+  function nextRound() {
+    round++;
+    document.getElementById('resultOverlay').classList.remove('show');
+    init();
+  }
+
+  // ─── CLOSE OVERLAY (study mode) ───────────────────────────────────────────────
+  function closeOverlay() {
+    document.getElementById('resultOverlay').classList.remove('show');
+  }
+
+  // ─── START ────────────────────────────────────────────────────────────────────
+  init();
+</script>
+</body>
+</html>
