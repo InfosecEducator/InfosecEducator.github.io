@@ -1010,6 +1010,43 @@
       animation: glitch 4s step-start infinite;
       animation-delay: 1s;
     }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .article-grid  { grid-template-columns: 1fr 1fr; }
+      .tools-grid    { grid-template-columns: 1fr 1fr; }
+      .footer-inner  { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+
+    @media (max-width: 768px) {
+      .header-actions { display: none; }
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .hero-card { grid-template-columns: 1fr; }
+      .hero-image { display: none; }
+      .hero-content { padding: 1.5rem 1.25rem; }
+      .hero-title { font-size: 2rem; }
+      .featured-row { grid-template-columns: 1fr; }
+      .featured-wide { grid-template-columns: 1fr; }
+      .podcast-grid { grid-template-columns: 1fr; }
+      .welcome-section { grid-template-columns: 1fr; gap: 1.25rem; }
+      .welcome-stats { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .newsletter { grid-template-columns: 1fr; }
+      .newsletter__form { flex-direction: column; align-items: stretch; }
+      .newsletter__input { width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.4rem; }
+      .hero-title { font-size: 1.65rem; }
+      .hero-excerpt { font-size: 0.85rem; }
+      .section-title { font-size: 1.5rem; }
+      .article-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .sidebar-stack { display: none; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -1023,7 +1060,8 @@
         <a href="password.html">_PasswordAnalyzer</a>
         <a href="#">Writeups</a>
         <a href="phishy.html">_PhishTest</a>
-        <a href="#">Tools</a>
+        <a href="domains.html">_Domains</a>
+        <a href="carousel.html">_Tools</a>
         <a href="#">Community</a>
         <a href="#">About</a>
       </nav>

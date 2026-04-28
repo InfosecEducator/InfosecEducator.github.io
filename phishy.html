@@ -215,11 +215,11 @@
     .addressbar-label {
       font-family: var(--font-mono); font-size: 0.58rem;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--red-900); flex-shrink: 0;
+      color: #39FF14; flex-shrink: 0;
     }
     .addressbar-url {
       font-family: var(--font-mono); font-size: 0.65rem;
-      letter-spacing: 0.03em; color: var(--red-800);
+      letter-spacing: 0.03em; color: #39FF14;
       flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
@@ -448,6 +448,29 @@
       display: flex; align-items: center; justify-content: space-between;
       font-family: var(--font-mono); font-size: 0.65rem; color: var(--red-900);
     }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .challenge-grid { grid-template-columns: 1fr; }
+      .email-frame { height: 400px; }
+      .score-bar { flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+      .question-text { font-size: 1.5rem; }
+      .question-sub { display: none; }
+      .result-overlay { padding: 1rem; align-items: flex-start; padding-top: 3rem; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.3rem; }
+      .email-frame { height: 320px; }
+      .question-text { font-size: 1.2rem; }
+      .result-verdict { font-size: 3rem; }
+      .result-header { padding: 1.25rem 1.25rem 0.75rem; }
+      .result-body { padding: 1rem 1.25rem; }
+      .result-actions { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
@@ -523,7 +546,7 @@
         </div>
       </div>
       <div class="panel-addressbar">
-        <span class="addressbar-label">inbox</span>
+        <span class="addressbar-label">from:</span>
         <span class="addressbar-url" id="addrLeft">loading…</span>
       </div>
       <div class="email-frame-wrap">
@@ -555,7 +578,7 @@
         </div>
       </div>
       <div class="panel-addressbar">
-        <span class="addressbar-label">inbox</span>
+        <span class="addressbar-label">from:</span>
         <span class="addressbar-url" id="addrRight">loading…</span>
       </div>
       <div class="email-frame-wrap">
@@ -622,9 +645,9 @@
     document.getElementById('frameLeft').src  = leftSrc;
     document.getElementById('frameRight').src = rightSrc;
 
-    // Address bar flavor text
-    document.getElementById('addrLeft').textContent  = leftSrc;
-    document.getElementById('addrRight').textContent = rightSrc;
+    // Address bar sender names
+    document.getElementById('addrLeft').textContent  = legitIsLeft ? 'Jane Doe <jdoe@email.com>' : 'Jane Doe <totallylegit@notsus.com>';
+    document.getElementById('addrRight').textContent = legitIsLeft ? 'Jane Doe <totallylegit@notsus.com>' : 'Jane Doe <jdoe@email.com>';
 
     // Reset panel state
     ['panelLeft','panelRight'].forEach(id => {
@@ -654,8 +677,8 @@
     document.getElementById('btnLeft').disabled  = true;
     document.getElementById('btnRight').disabled = true;
 
-    // Correct if the chosen side has email_legit.html
-    const isCorrect = (side === 'left' && legitIsLeft) || (side === 'right' && !legitIsLeft);
+    // Correct if the chosen side has email_phish.html (user is picking the phishing email)
+    const isCorrect = (side === 'left' && !legitIsLeft) || (side === 'right' && legitIsLeft);
 
     // Reveal overlays on both panels
     revealPanels(isCorrect, side);
@@ -671,8 +694,8 @@
 
   // ─── REVEAL PANELS ────────────────────────────────────────────────────────────
   function revealPanels(isCorrect, chosenSide) {
-    // Determine which side has the phish (email_legit.html = the phish)
-    const phishSide = legitIsLeft ? 'left' : 'right';
+    // Determine which side has the phish (legit is left → phish is right)
+    const phishSide = legitIsLeft ? 'right' : 'left';
     const legitSide = legitIsLeft ? 'right' : 'left';
 
     const setReveal = (side, isPhish) => {
@@ -704,8 +727,8 @@
   function showResult(isCorrect) {
     const overlay = document.getElementById('resultOverlay');
     const box     = document.getElementById('resultBox');
-    const phishSpecimen = legitIsLeft ? 'SPECIMEN A' : 'SPECIMEN B';
-    const legitSpecimen = legitIsLeft ? 'SPECIMEN B' : 'SPECIMEN A';
+    const phishSpecimen = legitIsLeft ? 'SPECIMEN B' : 'SPECIMEN A';
+    const legitSpecimen = legitIsLeft ? 'SPECIMEN A' : 'SPECIMEN B';
 
     document.getElementById('resultEyebrow').textContent = '// Analysis complete — Round ' + round;
 

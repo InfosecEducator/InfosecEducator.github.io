@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFOSEC//EDUCATOR — Explore Tools</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 20px rgba(43,228,234,0.3);
+      --glow-yellow: 0 0 8px var(--yellow-500), 0 0 20px rgba(254,211,63,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(60,24,26,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(13,51,54,0.4) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 2rem;
+    }
+    .site-logo {
+      font-family: var(--font-display); font-size: 1.8rem;
+      letter-spacing: 0.08em; color: var(--red-500);
+      text-shadow: var(--glow-red); white-space: nowrap; flex-shrink: 0;
+    }
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .main-nav { display: flex; align-items: center; gap: 0; }
+    .main-nav a {
+      font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-300);
+      padding: 0.4rem 0.85rem; border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .main-nav a.active { color: var(--cyan-500); }
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .search-box {
+      display: flex; align-items: center; background: var(--bg-700);
+      border: 1px solid var(--red-800); border-radius: 2px;
+      padding: 0.3rem 0.6rem; gap: 0.4rem;
+    }
+    .search-box input {
+      background: none; border: none; outline: none;
+      color: var(--red-300); font-family: var(--font-mono); font-size: 0.8rem; width: 140px;
+    }
+    .search-box input::placeholder { color: var(--red-800); }
+    .search-icon { color: var(--red-700); font-size: 0.9rem; }
+    .btn-subscribe {
+      background: transparent; border: 1px solid var(--cyan-500); color: var(--cyan-500);
+      font-family: var(--font-ui); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.75rem;
+      cursor: pointer; border-radius: 2px; transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-subscribe:hover { background: rgba(43,228,234,0.1); box-shadow: var(--glow-cyan); }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--red-900); border-bottom: 1px solid var(--red-800);
+      overflow: hidden; height: 28px; display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: var(--red-500); color: #0d0a0d; font-family: var(--font-display);
+      font-size: 1rem; letter-spacing: 0.1em; padding: 0 0.75rem; height: 100%;
+      display: flex; align-items: center; flex-shrink: 0;
+    }
+    .ticker-track {
+      display: flex; align-items: center; white-space: nowrap;
+      animation: ticker 30s linear infinite;
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--red-300);
+      gap: 3rem; padding-left: 2rem;
+    }
+    .ticker-track span::before { content: "▶ "; color: var(--red-500); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== PAGE ===== */
+    .page { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 0.5rem 0 0.6rem; margin-bottom: 1.25rem;
+      border-bottom: 2px solid var(--red-500);
+      box-shadow: 0 2px 0 transparent, 0 3px 12px rgba(232,97,90,0.2);
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--red-500); text-shadow: var(--glow-red); margin: 0;
+    }
+    .section-title .overline {
+      display: block; font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.15em; color: var(--cyan-500); text-shadow: none; margin-bottom: -0.2rem;
+    }
+
+    /* ===== GLITCH ===== */
+    @keyframes glitch {
+      0%   { clip-path: inset(0 0 95% 0); transform: translateX(-2px); }
+      20%  { clip-path: inset(30% 0 50% 0); transform: translateX(2px); }
+      40%  { clip-path: inset(60% 0 20% 0); transform: translateX(-1px); }
+      60%  { clip-path: inset(80% 0 5% 0); transform: translateX(1px); }
+      80%  { clip-path: inset(10% 0 80% 0); transform: translateX(-2px); }
+      100% { clip-path: inset(0 0 95% 0); transform: translateX(0); }
+    }
+    .glitch { position: relative; }
+    .glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; }
+    .glitch::before { color: var(--cyan-500); animation: glitch 4s step-start infinite; animation-delay: 0.5s; }
+    .glitch::after  { color: var(--red-500);  animation: glitch 4s step-start infinite; animation-delay: 1s; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 1rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem;
+    }
+    .footer-logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--red-500); text-shadow: var(--glow-red); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .footer-logo span { color: var(--cyan-500); }
+    .footer-tagline { font-family: var(--font-mono); font-size: 0.72rem; color: var(--red-700); line-height: 1.6; margin-bottom: 1rem; }
+    .footer-social { display: flex; gap: 0.5rem; }
+    .social-btn {
+      background: var(--bg-700); border: 1px solid var(--red-800); color: var(--red-700);
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.3em 0.6em; border-radius: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+    .footer-col__title {
+      font-family: var(--font-display); font-size: 1rem; color: var(--red-500);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin: 0 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--red-900);
+    }
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+    .footer-links li { margin-bottom: 0.35rem; }
+    .footer-links a { font-size: 0.82rem; color: var(--red-700); letter-spacing: 0.02em; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--red-400); }
+    .footer-links a::before { content: "// "; color: var(--red-900); }
+    .footer-bottom {
+      border-top: 1px solid var(--red-900); padding: 1rem 1.5rem;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-900);
+    }
+    .footer-bottom span { color: var(--red-800); }
+
+    /* ===== CAROUSEL ===== */
+    .carousel-intro {
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--red-700);
+      letter-spacing: 0.04em; margin: 0 0 2.5rem; text-align: center;
+    }
+    .carousel-intro strong { color: var(--cyan-500); }
+
+    .carousel-wrap {
+      display: flex; flex-direction: column; align-items: center; gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Stage ── */
+    .carousel-stage {
+      position: relative;
+      width: 100%;
+      max-width: 860px;
+      height: 530px;
+      overflow: hidden;
+    }
+
+    /* ── Cards ── */
+    .c-card {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 360px;
+      background: var(--bg-600);
+      border: 1px solid var(--red-800);
+      clip-path: var(--notch-path);
+      transition:
+        transform  0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity    0.55s ease,
+        filter     0.55s ease,
+        box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* notch corner fill */
+    .c-card::after {
+      content: ""; position: absolute; bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: var(--red-800); transform: rotate(-45deg);
+      transition: background 0.3s;
+    }
+
+    .c-card--active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1; filter: none; z-index: 10;
+    }
+    .c-card--active::after { background: var(--red-700); }
+    .c-card--active:hover  { box-shadow: var(--glow-red); }
+    .c-card--active:hover::after { background: var(--red-500); }
+
+    .c-card--next {
+      transform: translate(calc(-50% + 420px), -50%) scale(0.8);
+      opacity: 0.5; filter: brightness(0.45) saturate(0.5); z-index: 5;
+    }
+    .c-card--prev {
+      transform: translate(calc(-50% - 420px), -50%) scale(0.8);
+      opacity: 0.5; filter: brightness(0.45) saturate(0.5); z-index: 5;
+    }
+    .c-card--next:hover, .c-card--prev:hover {
+      opacity: 0.72; filter: brightness(0.6) saturate(0.7);
+    }
+
+    /* ── Card image area ── */
+    .c-card__image {
+      width: 100%; aspect-ratio: 360/220; overflow: hidden;
+      background: var(--bg-900); display: block; position: relative;
+    }
+    .c-card__image svg { width: 100%; height: 100%; display: block; }
+
+    /* ── Card body ── */
+    .c-card__body {
+      padding: 1.1rem 1.1rem 1.4rem;
+    }
+
+    .c-card__tag {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.66rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.18em 0.55em; margin-bottom: 0.7rem; width: fit-content;
+    }
+    .c-card__tag::before { content: "//"; opacity: 0.6; }
+
+    .tag-red    { color: var(--red-500);    background: rgba(232,97,90,0.1);  border: 1px solid var(--red-900); }
+    .tag-cyan   { color: var(--cyan-500);   background: rgba(43,228,234,0.08); border: 1px solid var(--cyan-900); }
+    .tag-yellow { color: var(--yellow-500); background: rgba(254,211,63,0.08); border: 1px solid var(--yellow-900); }
+
+    .c-card__title {
+      font-family: var(--font-display); font-size: 2rem; line-height: 1.05;
+      letter-spacing: 0.04em; margin: 0 0 0.6rem; color: var(--red-300);
+      transition: color 0.2s;
+    }
+    .c-card--active:hover .c-card__title { color: var(--cyan-400); }
+
+    .c-card__desc {
+      font-size: 0.82rem; line-height: 1.65; color: var(--red-700); margin: 0 0 1rem;
+    }
+
+    .c-card__enter {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-500);
+      border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s;
+    }
+    .c-card--active:hover .c-card__enter {
+      color: var(--cyan-500); border-color: var(--cyan-500);
+    }
+
+    /* ── Nav ── */
+    .carousel-nav {
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+
+    .c-arrow {
+      background: transparent; border: 1px solid var(--red-800); color: var(--red-700);
+      font-family: var(--font-mono); font-size: 1.2rem; line-height: 1;
+      padding: 0.4rem 0.75rem; cursor: pointer; border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .c-arrow:hover { color: var(--red-400); border-color: var(--red-500); box-shadow: var(--glow-red); }
+
+    .c-dots { display: flex; align-items: center; gap: 0.6rem; }
+
+    .c-dot {
+      width: 28px; height: 4px; border-radius: 2px;
+      background: var(--red-900); border: none; padding: 0; cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s, width 0.3s;
+    }
+    .c-dot.active {
+      background: var(--red-500); width: 44px; box-shadow: var(--glow-red);
+    }
+
+    .carousel-hint {
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-900);
+      letter-spacing: 0.06em; text-align: center; margin: 0;
+    }
+
+    /* ── Pulse ring on active card ── */
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(232,97,90,0.35); }
+      70%  { box-shadow: 0 0 0 10px rgba(232,97,90,0); }
+      100% { box-shadow: 0 0 0 0 rgba(232,97,90,0); }
+    }
+    .c-card--active { animation: pulse-ring 3s ease-out infinite; }
+    .c-card--active:hover { animation: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-actions { display: none; }
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .carousel-stage { height: 470px; }
+      .c-card { width: 290px; }
+      .c-card--next { transform: translate(calc(-50% + 300px), -50%) scale(0.78); }
+      .c-card--prev { transform: translate(calc(-50% - 300px), -50%) scale(0.78); }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.3rem; }
+      .carousel-stage { height: 430px; }
+      .c-card { width: 260px; }
+      .c-card--next, .c-card--prev { opacity: 0 !important; pointer-events: none; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="main.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="main.html">Home</a>
+        <a href="password.html">_PasswordAnalyzer</a>
+        <a href="#">Writeups</a>
+        <a href="phishy.html">_PhishTest</a>
+        <a href="domains.html">_Domains</a>
+        <a href="carousel.html" class="active">_Tools</a>
+        <a href="#">About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+        <button class="btn-subscribe">Subscribe</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// TOOLS</div>
+    <div class="ticker-track">
+      <span>_Domains — Discover your cybersecurity career path in 5 questions</span>
+      <span>_PasswordAnalyzer — Test entropy, crack time, and breach exposure</span>
+      <span>_PhishTest — Train your eye to spot malicious emails</span>
+      <span>Click the centered card to launch &nbsp;·&nbsp; Arrows or side cards to browse</span>
+      <span>_Domains — Discover your cybersecurity career path in 5 questions</span>
+      <span>_PasswordAnalyzer — Test entropy, crack time, and breach exposure</span>
+      <span>_PhishTest — Train your eye to spot malicious emails</span>
+      <span>Click the centered card to launch &nbsp;·&nbsp; Arrows or side cards to browse</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+
+    <div class="section-header" style="margin-top:2rem;">
+      <h2 class="section-title glitch" data-text="INTERACTIVE TOOLS">
+        <span class="overline">// explore</span>
+        Interactive Tools
+      </h2>
+    </div>
+
+    <p class="carousel-intro">
+      Three tools. <strong>Click the centered card</strong> to launch it.
+      Use the arrows or click side cards to browse.
+    </p>
+
+    <div class="carousel-wrap">
+
+      <!-- ====== STAGE ====== -->
+      <div class="carousel-stage" id="carousel-stage">
+
+        <!-- ── CARD 1: domains.html ── -->
+        <div class="c-card" data-href="domains.html">
+          <div class="c-card__image">
+            <!-- Diagram: Pentagon Radar Chart — 5 Cybersecurity Domains -->
+            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <pattern id="hexD" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                  <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#3c181a" stroke-width="0.6"/>
+                </pattern>
+                <filter id="glowD" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+                <filter id="glowDsm" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="2" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <rect width="360" height="220" fill="#0d0a0d"/>
+              <rect width="360" height="220" fill="url(#hexD)"/>
+
+              <!-- Outer pentagon fill -->
+              <polygon points="180,32 256,84 228,172 132,172 104,84"
+                       fill="rgba(232,97,90,0.04)" stroke="#3c181a" stroke-width="0.8"/>
+              <!-- Mid pentagon -->
+              <polygon points="180,65 222,95 208,148 152,148 138,95"
+                       fill="none" stroke="#3c181a" stroke-width="0.6"/>
+              <!-- Inner pentagon -->
+              <polygon points="180,86 198,99 193,122 167,122 162,99"
+                       fill="none" stroke="#3c181a" stroke-width="0.4"/>
+
+              <!-- Axis lines — each domain color -->
+              <line x1="180" y1="108" x2="180" y2="32" stroke="#e8615a" stroke-width="1.2" opacity="0.55"/>
+              <line x1="180" y1="108" x2="256" y2="84" stroke="#2be4ea" stroke-width="1.2" opacity="0.55"/>
+              <line x1="180" y1="108" x2="228" y2="172" stroke="#fed33f" stroke-width="1.2" opacity="0.55"/>
+              <line x1="180" y1="108" x2="132" y2="172" stroke="#2bfea0" stroke-width="1.2" opacity="0.55"/>
+              <line x1="180" y1="108" x2="104" y2="84" stroke="#ff9a28" stroke-width="1.2" opacity="0.55"/>
+
+              <!-- Outer nodes (glowing) -->
+              <circle cx="180" cy="32"  r="5" fill="#e8615a" filter="url(#glowDsm)"/>
+              <circle cx="256" cy="84"  r="5" fill="#2be4ea" filter="url(#glowDsm)"/>
+              <circle cx="228" cy="172" r="5" fill="#fed33f" filter="url(#glowDsm)"/>
+              <circle cx="132" cy="172" r="5" fill="#2bfea0" filter="url(#glowDsm)"/>
+              <circle cx="104" cy="84"  r="5" fill="#ff9a28" filter="url(#glowDsm)"/>
+
+              <!-- Mid nodes -->
+              <circle cx="180" cy="65"  r="2.5" fill="#e8615a" opacity="0.5"/>
+              <circle cx="222" cy="95"  r="2.5" fill="#2be4ea" opacity="0.5"/>
+              <circle cx="208" cy="148" r="2.5" fill="#fed33f" opacity="0.5"/>
+              <circle cx="152" cy="148" r="2.5" fill="#2bfea0" opacity="0.5"/>
+              <circle cx="138" cy="95"  r="2.5" fill="#ff9a28" opacity="0.5"/>
+
+              <!-- Center node -->
+              <circle cx="180" cy="108" r="4" fill="#3c181a" stroke="#e8615a" stroke-width="1.5"/>
+              <circle cx="180" cy="108" r="1.5" fill="#e8615a"/>
+
+              <!-- Labels -->
+              <text x="180" y="19"  fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="middle" letter-spacing="1.5">PENTEST</text>
+              <text x="268" y="84"  fill="#2be4ea" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="start"  letter-spacing="1">BLUE TEAM</text>
+              <text x="238" y="184" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="start"  letter-spacing="1">GRC</text>
+              <text x="122" y="184" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="end"    letter-spacing="1">DFIR</text>
+              <text x="92"  y="84"  fill="#ff9a28" font-family="Share Tech Mono,monospace" font-size="7" text-anchor="end"    letter-spacing="1">THREAT INTEL</text>
+
+              <!-- Bottom label -->
+              <text x="180" y="210" fill="#3c181a" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">DOMAIN ASSESSMENT</text>
+            </svg>
+          </div>
+          <div class="c-card__body">
+            <span class="c-card__tag tag-red">Career Path</span>
+            <h3 class="c-card__title">Find Your Domain</h3>
+            <p class="c-card__desc">No experience needed. Five everyday scenarios, five gut-check choices. Discover which corner of cybersecurity fits the way you naturally think.</p>
+            <span class="c-card__enter">Launch Assessment &rarr;</span>
+          </div>
+        </div>
+
+        <!-- ── CARD 2: password.html ── -->
+        <div class="c-card" data-href="password.html">
+          <div class="c-card__image">
+            <!-- Diagram: Password analysis terminal with lock -->
+            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <pattern id="hexP" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                  <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#0d3336" stroke-width="0.6"/>
+                </pattern>
+                <filter id="glowP">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <rect width="360" height="220" fill="#0d1118"/>
+              <rect width="360" height="220" fill="url(#hexP)"/>
+
+              <!-- Terminal window -->
+              <rect x="12" y="12" width="210" height="196" rx="3" fill="#0d1118" stroke="#0d3336" stroke-width="1.2"/>
+              <!-- Terminal header -->
+              <rect x="12" y="12" width="210" height="22" rx="3" fill="#0f1820"/>
+              <rect x="12" y="23"  width="210" height="11" fill="#0f1820"/>
+              <circle cx="26" cy="23" r="4" fill="#1a4a52"/>
+              <circle cx="40" cy="23" r="4" fill="#1a4a52"/>
+              <circle cx="54" cy="23" r="4" fill="#1a4a52"/>
+              <text x="117" y="27" fill="#2be4ea" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.5">pwd_analyzer.py</text>
+
+              <!-- Prompt line -->
+              <text x="22" y="52" fill="#0d7a7e" font-family="monospace" font-size="8">$</text>
+              <text x="31" y="52" fill="#2be4ea" font-family="monospace" font-size="8">analyze</text>
+              <text x="84" y="52" fill="#1a4a52" font-family="monospace" font-size="8">••••••••••••••</text>
+
+              <!-- Bars -->
+              <text x="22" y="71"  fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Length</text>
+              <rect x="102" y="63" width="64" height="7" rx="1" fill="#0a2a2e"/>
+              <rect x="102" y="63" width="64" height="7" rx="1" fill="#2be4ea" opacity="0.8"/>
+              <text x="171" y="71"  fill="#2be4ea" font-family="monospace" font-size="7.5">16 chars</text>
+
+              <text x="22" y="87"  fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Uppercase</text>
+              <rect x="113" y="79" width="50" height="7" rx="1" fill="#0a2a2e"/>
+              <rect x="113" y="79" width="50" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
+              <text x="168" y="87"  fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
+
+              <text x="22" y="103" fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Symbols</text>
+              <rect x="106" y="95" width="55" height="7" rx="1" fill="#0a2a2e"/>
+              <rect x="106" y="95" width="55" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
+              <text x="166" y="103" fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
+
+              <text x="22" y="119" fill="#0d7a7e" font-family="monospace" font-size="7.5">[+] Numbers</text>
+              <rect x="107" y="111" width="50" height="7" rx="1" fill="#0a2a2e"/>
+              <rect x="107" y="111" width="50" height="7" rx="1" fill="#2be4ea" opacity="0.7"/>
+              <text x="162" y="119" fill="#2be4ea" font-family="monospace" font-size="7.5">YES</text>
+
+              <!-- Divider -->
+              <line x1="22" y1="127" x2="210" y2="127" stroke="#0d3336" stroke-width="0.8"/>
+
+              <text x="22" y="142" fill="#0d7a7e" font-family="monospace" font-size="7.5">Entropy: 89.2 bits</text>
+
+              <!-- Strength bar -->
+              <rect x="22" y="150" width="190" height="9" rx="2" fill="#071214"/>
+              <rect x="22" y="150" width="158" height="9" rx="2" fill="#2bfea0" filter="url(#glowP)"/>
+              <text x="22"  y="174" fill="#2be4ea"  font-family="monospace" font-size="7.5">STRONG</text>
+              <text x="120" y="174" fill="#0d7a7e"  font-family="monospace" font-size="7.5">crack: 247 years</text>
+
+              <text x="22" y="195" fill="#0d3336" font-family="monospace" font-size="7.5">▌</text>
+
+              <!-- Padlock diagram on right side -->
+              <!-- Shackle -->
+              <path d="M 272,100 L 272,72 Q 272,50 295,50 Q 318,50 318,72 L 318,100"
+                    fill="none" stroke="#1a4a52" stroke-width="14" stroke-linecap="round"/>
+              <path d="M 272,100 L 272,72 Q 272,50 295,50 Q 318,50 318,72 L 318,100"
+                    fill="none" stroke="#2be4ea" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+              <!-- Lock body -->
+              <rect x="256" y="96" width="78" height="64" rx="7" fill="#0f1820" stroke="#2be4ea" stroke-width="1.5"/>
+              <!-- Keyhole outer circle -->
+              <circle cx="295" cy="122" r="10" fill="#071214" stroke="#2be4ea" stroke-width="1"/>
+              <!-- Keyhole slot -->
+              <rect x="291" y="122" width="8" height="14" rx="2" fill="#071214"/>
+              <!-- Glow on lock body -->
+              <rect x="256" y="96" width="78" height="64" rx="7" fill="none" stroke="#2be4ea" stroke-width="0.5" filter="url(#glowP)" opacity="0.4"/>
+
+              <!-- Circuit traces around lock -->
+              <line x1="256" y1="115" x2="235" y2="115" stroke="#0d3336" stroke-width="1"/>
+              <line x1="235" y1="115" x2="235" y2="145" stroke="#0d3336" stroke-width="1"/>
+              <rect x="231" y="143" width="8" height="4" rx="1" fill="#0d3336"/>
+
+              <line x1="334" y1="125" x2="348" y2="125" stroke="#0d3336" stroke-width="1"/>
+              <line x1="348" y1="125" x2="348" y2="150" stroke="#0d3336" stroke-width="1"/>
+              <rect x="344" y="148" width="8" height="4" rx="1" fill="#0d3336"/>
+
+              <line x1="295" y1="160" x2="295" y2="178" stroke="#0d3336" stroke-width="1"/>
+              <rect x="291" y="176" width="8" height="4" rx="1" fill="#0d3336"/>
+
+              <!-- Label -->
+              <text x="295" y="200" fill="#0d3336" font-family="monospace" font-size="6.5" text-anchor="middle" letter-spacing="1.5">STRENGTH ANALYSIS</text>
+            </svg>
+          </div>
+          <div class="c-card__body">
+            <span class="c-card__tag tag-cyan">Analysis Tool</span>
+            <h3 class="c-card__title">Password Analyzer</h3>
+            <p class="c-card__desc">Drop in a password and see its entropy, estimated crack time, and real-world strength score — instant feedback on what makes it resistant or not.</p>
+            <span class="c-card__enter">Launch Analyzer &rarr;</span>
+          </div>
+        </div>
+
+        <!-- ── CARD 3: phishy.html ── -->
+        <div class="c-card" data-href="phishy.html">
+          <div class="c-card__image">
+            <!-- Diagram: Phishing inbox with suspicious email + hook -->
+            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <pattern id="hexPh" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                  <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#2e2408" stroke-width="0.6"/>
+                </pattern>
+                <filter id="glowPh">
+                  <feGaussianBlur stdDeviation="2" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <rect width="360" height="220" fill="#12100a"/>
+              <rect width="360" height="220" fill="url(#hexPh)"/>
+
+              <!-- Inbox header bar -->
+              <rect x="12" y="12" width="336" height="22" rx="2" fill="#1e1a0a" stroke="#5e4a10" stroke-width="1"/>
+              <text x="22" y="27" fill="#fed33f" font-family="monospace" font-size="9" font-weight="bold">INBOX</text>
+              <text x="70" y="27" fill="#5e4a10" font-family="monospace" font-size="8">(8 messages)</text>
+              <!-- Warning badge in header -->
+              <polygon points="330,15 344,15 337,26" fill="rgba(254,211,63,0.15)" stroke="#fed33f" stroke-width="1.2"/>
+              <text x="337" y="24" fill="#fed33f" font-family="monospace" font-size="6.5" text-anchor="middle">!</text>
+
+              <!-- Row 1 — normal -->
+              <rect x="12" y="35" width="336" height="32" fill="#0e0d08" stroke="#2e2408" stroke-width="0.5"/>
+              <rect x="12" y="35" width="3"   height="32" fill="#2e2408"/>
+              <text x="22" y="49" fill="#5e4a10" font-family="monospace" font-size="7.5">IT Support</text>
+              <text x="22" y="61" fill="#3a3010" font-family="monospace" font-size="7">Monthly patch notes — please review before Friday</text>
+
+              <!-- Row 2 — normal -->
+              <rect x="12" y="68" width="336" height="32" fill="#0d0c08" stroke="#2e2408" stroke-width="0.5"/>
+              <rect x="12" y="68" width="3"   height="32" fill="#2e2408"/>
+              <text x="22" y="82" fill="#5e4a10" font-family="monospace" font-size="7.5">hr@company.com</text>
+              <text x="22" y="94" fill="#3a3010" font-family="monospace" font-size="7">Q2 benefits enrollment deadline — action required</text>
+
+              <!-- Row 3 — PHISHING (highlighted) -->
+              <rect x="12" y="101" width="336" height="38" fill="rgba(232,97,90,0.07)" stroke="#9c3230" stroke-width="1.2"/>
+              <!-- Red left bar -->
+              <rect x="12" y="101" width="4" height="38" fill="#e8615a"/>
+              <!-- Phishing badge -->
+              <rect x="20" y="106" width="66" height="11" rx="2" fill="rgba(232,97,90,0.2)" stroke="#e8615a" stroke-width="0.75"/>
+              <text x="53"  y="115" fill="#e8615a" font-family="monospace" font-size="6" text-anchor="middle" letter-spacing="0.5">&#x26A0; PHISHING</text>
+              <!-- Fake sender -->
+              <text x="92"  y="115" fill="#f4908b" font-family="monospace" font-size="7.5">security@paypa1.com</text>
+              <!-- Subject -->
+              <text x="20"  y="131" fill="#ea6f69" font-family="monospace" font-size="7">URGENT: Your account will be suspended — verify now</text>
+
+              <!-- Fishing hook (right of phish row) -->
+              <path d="M 338,103 Q 354,103 354,116 Q 354,132 338,132"
+                    fill="none" stroke="#9c3230" stroke-width="2" opacity="0.8"/>
+              <path d="M 338,132 L 345,140 M 338,132 L 331,140"
+                    fill="none" stroke="#9c3230" stroke-width="2" opacity="0.8"/>
+              <circle cx="338" cy="103" r="3" fill="#e8615a" opacity="0.8" filter="url(#glowPh)"/>
+
+              <!-- Row 4 — normal -->
+              <rect x="12" y="140" width="336" height="32" fill="#0d0c08" stroke="#2e2408" stroke-width="0.5"/>
+              <rect x="12" y="140" width="3"   height="32" fill="#2e2408"/>
+              <text x="22" y="154" fill="#5e4a10" font-family="monospace" font-size="7.5">github@notifications.com</text>
+              <text x="22" y="166" fill="#3a3010" font-family="monospace" font-size="7">New pull request: feat/update-dependencies #247</text>
+
+              <!-- Row 5 — normal -->
+              <rect x="12" y="173" width="336" height="32" fill="#0e0d08" stroke="#2e2408" stroke-width="0.5"/>
+              <rect x="12" y="173" width="3"   height="32" fill="#2e2408"/>
+              <text x="22" y="187" fill="#5e4a10" font-family="monospace" font-size="7.5">newsletter@medium.com</text>
+              <text x="22" y="199" fill="#3a3010" font-family="monospace" font-size="7">Your weekly digest — 12 stories curated for you</text>
+
+              <!-- Bottom label -->
+              <text x="180" y="213" fill="#2e2408" font-family="monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">PHISHING DETECTION TRAINING</text>
+            </svg>
+          </div>
+          <div class="c-card__body">
+            <span class="c-card__tag tag-yellow">Phishing Sim</span>
+            <h3 class="c-card__title">PhishTest</h3>
+            <p class="c-card__desc">Train your eye to catch malicious emails before they catch you. Real phishing tactics presented as interactive challenges — no actual risk.</p>
+            <span class="c-card__enter">Launch PhishTest &rarr;</span>
+          </div>
+        </div>
+
+      </div><!-- /carousel-stage -->
+
+      <!-- ── Nav controls ── -->
+      <div class="carousel-nav">
+        <button class="c-arrow" id="c-prev">&#8592;</button>
+        <div class="c-dots" id="c-dots">
+          <button class="c-dot" data-i="0"></button>
+          <button class="c-dot" data-i="1"></button>
+          <button class="c-dot" data-i="2"></button>
+        </div>
+        <button class="c-arrow" id="c-next">&#8594;</button>
+      </div>
+
+    </div><!-- /carousel-wrap -->
+
+    <p class="carousel-hint">Click the centered card to launch &nbsp;&middot;&nbsp; Click side cards or use arrows to browse</p>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Tools</h5>
+        <ul class="footer-links">
+          <li><a href="domains.html">_Domains</a></li>
+          <li><a href="password.html">_PasswordAnalyzer</a></li>
+          <li><a href="phishy.html">_PhishTest</a></li>
+          <li><a href="carousel.html">_Tools Showcase</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 INFOSEC//EDUCATOR &mdash; All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+    const stage = document.getElementById("carousel-stage");
+    const cards = Array.from(stage.querySelectorAll(".c-card"));
+    const dots  = Array.from(document.getElementById("c-dots").querySelectorAll(".c-dot"));
+    const N = cards.length;
+    let current = 0;
+    let timer = null;
+
+    function stateFor(i) {
+      const offset = ((i - current) % N + N) % N;
+      if (offset === 0) return "c-card--active";
+      if (offset === 1) return "c-card--next";
+      return "c-card--prev";
+    }
+
+    function update() {
+      cards.forEach(function(card, i) {
+        card.className = "c-card " + stateFor(i);
+      });
+      dots.forEach(function(dot, i) {
+        dot.className = "c-dot" + (i === current ? " active" : "");
+      });
+    }
+
+    function go(dir) {
+      current = ((current + dir) % N + N) % N;
+      update();
+      resetTimer();
+    }
+
+    function goTo(i) {
+      current = i;
+      update();
+      resetTimer();
+    }
+
+    function startTimer() {
+      timer = setInterval(function() { go(1); }, 4500);
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      startTimer();
+    }
+
+    cards.forEach(function(card, i) {
+      card.addEventListener("click", function() {
+        if (card.classList.contains("c-card--active")) {
+          window.location.href = card.dataset.href;
+        } else {
+          goTo(i);
+        }
+      });
+    });
+
+    document.getElementById("c-prev").addEventListener("click", function() { go(-1); });
+    document.getElementById("c-next").addEventListener("click", function() { go(1);  });
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener("click", function() { goTo(i); });
+    });
+
+    stage.addEventListener("mouseenter", function() { clearInterval(timer); });
+    stage.addEventListener("mouseleave", function() { startTimer(); });
+
+    // Ticker pause
+    var track = document.querySelector(".ticker-track");
+    if (track) {
+      track.addEventListener("mouseenter", function() { track.style.animationPlayState = "paused"; });
+      track.addEventListener("mouseleave", function() { track.style.animationPlayState = "running"; });
+    }
+
+    update();
+    startTimer();
+  </script>
+</body>
+</html>

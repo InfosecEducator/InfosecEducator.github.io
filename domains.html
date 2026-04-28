@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFOSEC//EDUCATOR — Find Your Domain</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 20px rgba(43,228,234,0.3);
+      --glow-green:  0 0 8px var(--green-500),  0 0 20px rgba(43,254,160,0.3);
+      --glow-yellow: 0 0 8px var(--yellow-500), 0 0 20px rgba(254,211,63,0.3);
+      --glow-orange: 0 0 8px var(--orange-500), 0 0 20px rgba(255,154,40,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(60,24,26,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(13,51,54,0.4) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 2rem;
+    }
+    .site-logo {
+      font-family: var(--font-display); font-size: 1.8rem;
+      letter-spacing: 0.08em; color: var(--red-500);
+      text-shadow: var(--glow-red); white-space: nowrap; flex-shrink: 0;
+    }
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .main-nav { display: flex; align-items: center; gap: 0; }
+    .main-nav a {
+      font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-300);
+      padding: 0.4rem 0.85rem; border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .main-nav a.active { color: var(--cyan-500); }
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .search-box {
+      display: flex; align-items: center; background: var(--bg-700);
+      border: 1px solid var(--red-800); border-radius: 2px;
+      padding: 0.3rem 0.6rem; gap: 0.4rem;
+    }
+    .search-box input {
+      background: none; border: none; outline: none;
+      color: var(--red-300); font-family: var(--font-mono); font-size: 0.8rem; width: 140px;
+    }
+    .search-box input::placeholder { color: var(--red-800); }
+    .search-icon { color: var(--red-700); font-size: 0.9rem; }
+    .btn-subscribe {
+      background: transparent; border: 1px solid var(--cyan-500); color: var(--cyan-500);
+      font-family: var(--font-ui); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.75rem;
+      cursor: pointer; border-radius: 2px; transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-subscribe:hover { background: rgba(43,228,234,0.1); box-shadow: var(--glow-cyan); }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--red-900); border-bottom: 1px solid var(--red-800);
+      overflow: hidden; height: 28px; display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: var(--red-500); color: #0d0a0d; font-family: var(--font-display);
+      font-size: 1rem; letter-spacing: 0.1em; padding: 0 0.75rem; height: 100%;
+      display: flex; align-items: center; flex-shrink: 0;
+    }
+    .ticker-track {
+      display: flex; align-items: center; white-space: nowrap;
+      animation: ticker 30s linear infinite;
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--red-300);
+      gap: 3rem; padding-left: 2rem;
+    }
+    .ticker-track span::before { content: "▶ "; color: var(--red-500); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== PAGE ===== */
+    .page { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* ===== GLITCH ===== */
+    @keyframes glitch {
+      0%   { clip-path: inset(0 0 95% 0); transform: translateX(-2px); }
+      20%  { clip-path: inset(30% 0 50% 0); transform: translateX(2px); }
+      40%  { clip-path: inset(60% 0 20% 0); transform: translateX(-1px); }
+      60%  { clip-path: inset(80% 0 5% 0); transform: translateX(1px); }
+      80%  { clip-path: inset(10% 0 80% 0); transform: translateX(-2px); }
+      100% { clip-path: inset(0 0 95% 0); transform: translateX(0); }
+    }
+    .glitch { position: relative; }
+    .glitch::before, .glitch::after {
+      content: attr(data-text); position: absolute; inset: 0; pointer-events: none;
+    }
+    .glitch::before { color: var(--cyan-500); animation: glitch 4s step-start infinite; animation-delay: 0.5s; }
+    .glitch::after  { color: var(--red-500);  animation: glitch 4s step-start infinite; animation-delay: 1s; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 1rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display); font-size: 1.6rem; color: var(--red-500);
+      text-shadow: var(--glow-red); letter-spacing: 0.08em; margin-bottom: 0.75rem;
+    }
+    .footer-logo span { color: var(--cyan-500); }
+    .footer-tagline { font-family: var(--font-mono); font-size: 0.72rem; color: var(--red-700); line-height: 1.6; margin-bottom: 1rem; }
+    .footer-social { display: flex; gap: 0.5rem; }
+    .social-btn {
+      background: var(--bg-700); border: 1px solid var(--red-800); color: var(--red-700);
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 0.3em 0.6em; border-radius: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+    .footer-col__title {
+      font-family: var(--font-display); font-size: 1rem; color: var(--red-500);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin: 0 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--red-900);
+    }
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+    .footer-links li { margin-bottom: 0.35rem; }
+    .footer-links a { font-size: 0.82rem; color: var(--red-700); letter-spacing: 0.02em; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--red-400); }
+    .footer-links a::before { content: "// "; color: var(--red-900); }
+    .footer-bottom {
+      border-top: 1px solid var(--red-900); padding: 1rem 1.5rem;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-900);
+    }
+    .footer-bottom span { color: var(--red-800); }
+
+    /* ===== QUIZ LAYOUT ===== */
+    .quiz-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 3rem 0 2rem;
+    }
+
+    .screen { display: none; width: 100%; max-width: 820px; }
+    .screen.active { display: block; }
+
+    /* ===== INTRO ===== */
+    #screen-intro { text-align: center; }
+
+    .intro-eyebrow {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--cyan-500); margin: 0 0 0.75rem;
+    }
+    .intro-title {
+      font-family: var(--font-display); font-size: 4.5rem; line-height: 1;
+      letter-spacing: 0.04em; color: var(--red-300); text-shadow: var(--glow-red); margin: 0 0 0.5rem;
+    }
+    .intro-subtitle {
+      font-family: var(--font-mono); font-size: 1rem; color: var(--cyan-500);
+      letter-spacing: 0.1em; margin: 0 0 1.5rem;
+    }
+    .intro-desc {
+      font-size: 0.95rem; line-height: 1.7; color: var(--red-400);
+      max-width: 52ch; margin: 0 auto 2rem;
+    }
+    .intro-desc strong { color: var(--cyan-500); }
+
+    /* terminal decoration */
+    .intro-terminal {
+      background: var(--bg-900); border: 1px solid var(--red-800); border-radius: 3px;
+      margin: 0 0 2.5rem; text-align: left; overflow: hidden;
+    }
+    .terminal-bar {
+      background: var(--bg-600); border-bottom: 1px solid var(--red-800);
+      padding: 0.5rem 0.75rem; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .terminal-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red-800); }
+    .terminal-title { font-family: var(--font-mono); font-size: 0.7rem; color: var(--red-700); letter-spacing: 0.08em; margin-left: 0.25rem; }
+    .terminal-body { padding: 1rem 1.25rem; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.9; }
+    .term-line { display: block; }
+    .term-prompt { color: var(--red-500); }
+    .term-cmd    { color: var(--red-300); }
+    .term-out    { color: var(--cyan-500); }
+    .term-ok     { color: var(--green-500); }
+    .term-warn   { color: var(--yellow-500); }
+    .term-cursor {
+      display: inline-block; width: 8px; height: 14px; background: var(--red-500);
+      vertical-align: middle; animation: blink 1s step-start infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .btn-start {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: transparent; border: 2px solid var(--red-500); color: var(--red-500);
+      font-family: var(--font-display); font-size: 1.6rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.5rem 2rem 0.6rem 1.5rem; cursor: pointer;
+      clip-path: var(--notch-path); position: relative;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-start::after {
+      content: ""; position: absolute; bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px; background: var(--red-500); transform: rotate(-45deg);
+    }
+    .btn-start:hover { background: var(--red-900); box-shadow: var(--glow-red); }
+
+    /* ===== PROGRESS ===== */
+    .progress-bar { display: flex; gap: 4px; margin-bottom: 2rem; }
+    .progress-seg { flex: 1; height: 4px; background: var(--red-900); border-radius: 2px; transition: background 0.3s; }
+    .progress-seg.done   { background: var(--red-500); }
+    .progress-seg.active { background: var(--cyan-500); box-shadow: var(--glow-cyan); }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--bg-600); border: 1px solid var(--red-800);
+      clip-path: var(--notch-path); position: relative; margin-bottom: 1.5rem;
+    }
+    .q-card::after {
+      content: ""; position: absolute; bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px; background: var(--red-800); transform: rotate(-45deg);
+    }
+    .q-header {
+      background: var(--bg-500); border-bottom: 1px solid var(--red-800);
+      padding: 0.6rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
+    }
+    .q-scenario { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan-500); }
+    .q-counter  { font-family: var(--font-mono); font-size: 0.7rem; color: var(--red-700); }
+    .q-body { padding: 1.5rem 1.25rem; }
+    .q-prompt-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red-700); margin: 0 0 0.5rem; }
+    .q-prompt { font-family: var(--font-display); font-size: 1.65rem; line-height: 1.2; color: var(--red-300); letter-spacing: 0.02em; margin: 0; }
+
+    /* ===== ANSWER BUTTONS ===== */
+    .answers { display: flex; flex-direction: column; gap: 0.6rem; }
+    .answer-btn {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg-700); border: 1px solid var(--red-900);
+      padding: 0.85rem 1rem; cursor: pointer; text-align: left; width: 100%;
+      clip-path: var(--notch-path); position: relative;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .answer-btn::after {
+      content: ""; position: absolute; bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px; background: var(--red-900); transform: rotate(-45deg);
+      transition: background 0.2s;
+    }
+    .answer-btn:hover { border-color: var(--red-700); background: var(--red-900); box-shadow: 0 0 12px rgba(232,97,90,0.15); }
+    .answer-btn:hover::after { background: var(--red-700); }
+    .answer-btn.selected { border-color: var(--cyan-500); background: rgba(43,228,234,0.08); box-shadow: var(--glow-cyan); pointer-events: none; }
+    .answer-key {
+      font-family: var(--font-display); font-size: 1.4rem; line-height: 1;
+      color: var(--red-700); flex-shrink: 0; padding-top: 0.1rem; transition: color 0.2s;
+    }
+    .answer-btn:hover .answer-key { color: var(--red-500); }
+    .answer-btn.selected .answer-key { color: var(--cyan-500); }
+    .answer-text {
+      font-family: var(--font-ui); font-size: 0.92rem; font-weight: 500;
+      line-height: 1.5; color: var(--red-400); transition: color 0.2s;
+    }
+    .answer-btn:hover .answer-text { color: var(--red-300); }
+    .answer-btn.selected .answer-text { color: var(--cyan-400); }
+
+    /* ===== RESULT SCREEN ===== */
+    .result-card {
+      background: var(--bg-600); border: 1px solid var(--red-800);
+      border-left: 3px solid var(--red-500); padding: 2rem; margin-bottom: 1.5rem;
+    }
+    .result-desc { font-size: 0.95rem; line-height: 1.75; color: var(--red-400); margin: 0 0 1.5rem; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .result-block { background: var(--bg-700); border: 1px solid var(--red-900); padding: 1rem; }
+    .result-block__title { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan-500); margin: 0 0 0.5rem; }
+    .result-block__list { list-style: none; margin: 0; padding: 0; }
+    .result-block__list li { font-size: 0.82rem; color: var(--red-400); padding: 0.2rem 0; border-bottom: 1px solid var(--red-900); }
+    .result-block__list li:last-child { border-bottom: none; }
+    .result-block__list li::before { content: "▸ "; color: var(--red-700); }
+    .result-start-path {
+      background: var(--bg-700); border: 1px solid var(--red-900);
+      border-left: 2px solid var(--yellow-500); padding: 1rem;
+    }
+    .result-start-path__title { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--yellow-500); margin: 0 0 0.4rem; }
+    .result-start-path__text { font-size: 0.85rem; line-height: 1.65; color: var(--red-400); margin: 0; }
+
+    .result-jobs-block {
+      background: var(--bg-700); border: 1px solid var(--red-900); padding: 1rem; margin-bottom: 1.5rem;
+    }
+    .job-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .job-tag {
+      font-family: var(--font-mono); font-size: 0.73rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--red-400);
+      border: 1px solid var(--red-800); background: var(--bg-600);
+      padding: 0.3em 0.8em; transition: color 0.2s, border-color 0.2s;
+    }
+    .job-tag:hover { color: var(--cyan-500); border-color: var(--cyan-900); }
+
+    /* score bars */
+    .score-breakdown { margin-bottom: 1.5rem; }
+    .score-breakdown__label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-700); margin: 0 0 0.75rem; }
+    .score-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem; }
+    .score-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red-700); width: 110px; flex-shrink: 0; }
+    .score-track { flex: 1; height: 6px; background: var(--bg-900); border-radius: 2px; overflow: hidden; }
+    .score-fill { height: 100%; border-radius: 2px; width: 0%; transition: width 0.8s ease; }
+    .score-val { font-family: var(--font-mono); font-size: 0.65rem; color: var(--red-800); width: 14px; text-align: right; }
+
+    /* result actions */
+    .result-actions { display: flex; gap: 1rem; justify-content: center; }
+    .btn-retake {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 2px solid var(--red-500); color: var(--red-500);
+      font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.5rem 1.25rem 0.55rem; cursor: pointer;
+      clip-path: var(--notch-path); position: relative;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-retake::after {
+      content: ""; position: absolute; bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px; background: var(--red-500); transform: rotate(-45deg);
+    }
+    .btn-retake:hover { background: var(--red-900); box-shadow: var(--glow-red); }
+    .btn-explore {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 1px solid var(--cyan-500); color: var(--cyan-500);
+      font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.5rem 1.25rem 0.55rem; cursor: pointer; border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-explore:hover { background: rgba(43,228,234,0.1); box-shadow: var(--glow-cyan); }
+
+    /* domain accent overrides */
+    .accent-red    { border-left-color: var(--red-500)    !important; }
+    .accent-cyan   { border-left-color: var(--cyan-500)   !important; }
+    .accent-green  { border-left-color: var(--green-500)  !important; }
+    .accent-yellow { border-left-color: var(--yellow-500) !important; }
+    .accent-orange { border-left-color: var(--orange-500) !important; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-actions { display: none; }
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .quiz-wrap { padding: 1.5rem 0 2rem; }
+      .intro-title { font-size: 3rem; }
+      .result-card { padding: 1.25rem; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.3rem; }
+      .intro-title { font-size: 2.2rem; }
+      .q-prompt { font-size: 1.3rem; }
+      .answer-text { font-size: 0.85rem; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="main.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="main.html">Home</a>
+        <a href="password.html">_PasswordAnalyzer</a>
+        <a href="#">Writeups</a>
+        <a href="phishy.html">_PhishTest</a>
+        <a href="domains.html" class="active">_Domains</a>
+        <a href="carousel.html">_Tools</a>
+        <a href="#">About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+        <button class="btn-subscribe">Subscribe</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// INTEL</div>
+    <div class="ticker-track">
+      <span>Which cyber domain matches your instincts? Take the quiz below.</span>
+      <span>5 scenarios — 5 domains — 1 result</span>
+      <span>Domains: Pentest · Blue Team · GRC · DFIR · Threat Intel</span>
+      <span>Answer instinctively — there are no wrong responses</span>
+      <span>Which cyber domain matches your instincts? Take the quiz below.</span>
+      <span>5 scenarios — 5 domains — 1 result</span>
+      <span>Domains: Pentest · Blue Team · GRC · DFIR · Threat Intel</span>
+      <span>Answer instinctively — there are no wrong responses</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+    <div class="quiz-wrap">
+
+      <!-- ======= INTRO SCREEN ======= -->
+      <div id="screen-intro" class="screen active">
+        <p class="intro-eyebrow">// career path assessment</p>
+        <h1 class="intro-title glitch" data-text="FIND YOUR DOMAIN">FIND YOUR DOMAIN</h1>
+        <p class="intro-subtitle">5 Scenarios &nbsp;&middot;&nbsp; Your Instincts &nbsp;&middot;&nbsp; One Domain</p>
+        <p class="intro-desc">
+          No technical knowledge needed. Five everyday situations, five gut-check choices.
+          Pick the response that sounds most like <strong>you</strong> — and we'll show you
+          which corner of cybersecurity matches the way you naturally think.
+        </p>
+
+        <div class="intro-terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <span class="terminal-title">domain_finder.py &mdash; assessment v2.4</span>
+          </div>
+          <div class="terminal-body">
+            <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">python3 domain_finder.py --mode interactive</span></span>
+            <span class="term-line"><span class="term-out">[*] Loading threat scenarios...</span></span>
+            <span class="term-line"><span class="term-ok">[+] 5 incidents queued</span></span>
+            <span class="term-line"><span class="term-out">[*] Domain profiles loaded: pentest, blueteam, grc, dfir, threatintel</span></span>
+            <span class="term-line"><span class="term-warn">[!] Your responses will be analyzed in real-time</span></span>
+            <span class="term-line"><span class="term-out">[*] Ready. Awaiting operator input...</span></span>
+            <span class="term-line">&nbsp;<span class="term-cursor"></span></span>
+          </div>
+        </div>
+
+        <button class="btn-start" onclick="startQuiz()">&#x2B21; BEGIN ASSESSMENT</button>
+      </div>
+
+      <!-- ======= QUESTION SCREEN ======= -->
+      <div id="screen-question" class="screen">
+        <div class="progress-bar">
+          <div class="progress-seg" id="seg-0"></div>
+          <div class="progress-seg" id="seg-1"></div>
+          <div class="progress-seg" id="seg-2"></div>
+          <div class="progress-seg" id="seg-3"></div>
+          <div class="progress-seg" id="seg-4"></div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header">
+            <span class="q-scenario" id="q-scenario"></span>
+            <span class="q-counter"  id="q-counter"></span>
+          </div>
+          <div class="q-body">
+            <p class="q-prompt-label">// The Situation</p>
+            <p class="q-prompt" id="q-prompt"></p>
+          </div>
+        </div>
+
+        <div class="answers" id="answers-container"></div>
+      </div>
+
+      <!-- ======= RESULT SCREEN ======= -->
+      <div id="screen-result" class="screen">
+        <div style="text-align:center; margin-bottom:2rem;">
+          <p style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--cyan-500);margin:0 0 0.5rem;">// analysis complete &mdash; domain identified</p>
+          <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--red-700);margin:0 0 0.75rem;">Your instincts point to&hellip;</p>
+          <h2 id="result-name" class="intro-title glitch" style="margin:0 0 0.3rem;" data-text=""></h2>
+          <p id="result-sub" style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;color:var(--red-700);margin:0;"></p>
+        </div>
+
+        <div class="result-card accent-red" id="result-card">
+          <div class="score-breakdown" id="score-breakdown">
+            <p class="score-breakdown__label">// response distribution</p>
+          </div>
+          <p id="result-desc" class="result-desc"></p>
+          <div class="result-grid">
+            <div class="result-block">
+              <p class="result-block__title">// Core Skills</p>
+              <ul class="result-block__list" id="result-skills"></ul>
+            </div>
+            <div class="result-block">
+              <p class="result-block__title">// Key Tools</p>
+              <ul class="result-block__list" id="result-tools"></ul>
+            </div>
+          </div>
+          <div class="result-jobs-block">
+            <p class="result-block__title">// Job Titles in This Domain</p>
+            <div id="result-jobs" class="job-tags"></div>
+          </div>
+          <div class="result-start-path">
+            <p class="result-start-path__title">// How to Break In</p>
+            <p class="result-start-path__text" id="result-start"></p>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn-retake" onclick="retakeQuiz()">&#x21BA; Retake</button>
+          <a href="main.html" class="btn-explore">Explore Content &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Content</h5>
+        <ul class="footer-links">
+          <li><a href="#">Writeups</a></li>
+          <li><a href="password.html">_PasswordAnalyzer</a></li>
+          <li><a href="phishy.html">_PhishTest</a></li>
+          <li><a href="domains.html">_Domains</a></li>
+          <li><a href="#">Tool Reviews</a></li>
+          <li><a href="#">Research</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 INFOSEC//EDUCATOR &mdash; All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+    const QUESTIONS = [
+      {
+        scenario: "SCENARIO 01",
+        prompt: "Someone figured out your friend's bank password and quietly drained their savings. You find out a week later. What sounds most like something you'd want to do about it?",
+        answers: [
+          { text: "Figure out exactly how the password was stolen — try the same methods safely yourself to expose the weakness before it happens to someone else.", domain: "pentest" },
+          { text: "Lock down every account right away, set up fraud alerts, and build a system that flags any suspicious login the moment it happens.", domain: "blueteam" },
+          { text: "Go through every transaction and login record to piece together a precise timeline of what the attacker did, when, and in what order.", domain: "dfir" },
+          { text: "Make sure your friend reports everything to the bank and the right authorities the proper way, with all the paperwork documented correctly.", domain: "grc" },
+          { text: "Research who might be behind it — dig through any available clues to figure out if this person is running the same scam on others.", domain: "threatintel" }
+        ]
+      },
+      {
+        scenario: "SCENARIO 02",
+        prompt: "A scammer called your elderly neighbor, pretended to be tech support, and talked them into letting a stranger take control of their computer remotely. Which role sounds most like you?",
+        answers: [
+          { text: "Pose as a potential victim yourself — safely — to experience the scam firsthand, understand exactly why it works, and find its weak points.", domain: "pentest" },
+          { text: "Immediately lock down every account connected to the computer, set up activity alerts, and make sure it can never happen through the same method again.", domain: "blueteam" },
+          { text: "Go through the computer file by file to find out exactly what the stranger looked at, copied, or installed while they were in control.", domain: "dfir" },
+          { text: "Help your neighbor file a formal complaint with the right agencies and draft a clear warning to share with others in the neighborhood.", domain: "grc" },
+          { text: "Trace the phone number back to its source and dig into who is running the operation — figure out how wide it goes and who else they've hit.", domain: "threatintel" }
+        ]
+      },
+      {
+        scenario: "SCENARIO 03",
+        prompt: "Someone has been sneaking into your office building after hours using a fake ID badge. You want to help deal with it. Which role sounds most appealing?",
+        answers: [
+          { text: "Try getting into the building yourself using other methods no one has thought of yet — find every gap before someone worse takes advantage of it.", domain: "pentest" },
+          { text: "Set up a real-time alert system so the next time an unrecognized badge is swiped after hours, someone is notified within seconds.", domain: "blueteam" },
+          { text: "Pull all the badge logs and camera footage and reconstruct every single visit this person made — build a complete, timestamped picture.", domain: "dfir" },
+          { text: "Rewrite the visitor access policy, tighten the ID requirements, and create an official process so staff know exactly how to report suspicious people.", domain: "grc" },
+          { text: "Research whether the same fake badge scheme has been used at other nearby buildings — find the pattern and figure out who is behind it.", domain: "threatintel" }
+        ]
+      },
+      {
+        scenario: "SCENARIO 04",
+        prompt: "A local hospital announces that private patient records may have been accessed by someone who shouldn't have had access. If you could pick any role in the response, which would it be?",
+        answers: [
+          { text: "Test the hospital's systems — with full permission — to find every other weak spot before a real attacker discovers them first.", domain: "pentest" },
+          { text: "Watch the hospital's systems around the clock and immediately shut off access to anything that looks out of place.", domain: "blueteam" },
+          { text: "Dig through access logs to figure out exactly which records were opened, by whom, for how long, and what could have been copied.", domain: "dfir" },
+          { text: "Make sure the hospital follows every legal step for notifying patients and regulators — no deadlines missed, no steps skipped.", domain: "grc" },
+          { text: "Find out who is behind the breach, whether they're trying to sell the data somewhere, and whether other hospitals might be next.", domain: "threatintel" }
+        ]
+      },
+      {
+        scenario: "SCENARIO 05",
+        prompt: "Thieves have figured out how to wirelessly copy the signal from car key fobs to steal cars without breaking a single window. You want to help stop it. What's your instinct?",
+        answers: [
+          { text: "Get a test car and actually try the attack yourself — confirm it works, map every variant of it, and document exactly how to defend against it.", domain: "pentest" },
+          { text: "Set up sensors in parking lots that can detect signal-copying devices in real time and alert nearby car owners the moment one appears.", domain: "blueteam" },
+          { text: "Collect reports from every theft in the area, map the locations and times, and find the patterns that point to who is doing it.", domain: "dfir" },
+          { text: "Work with lawmakers to pressure car manufacturers into fixing the vulnerability and legally require stronger security standards going forward.", domain: "grc" },
+          { text: "Track down where the signal-copying devices are being sold and research who is manufacturing and distributing them.", domain: "threatintel" }
+        ]
+      }
+    ];
+
+    const DOMAINS = {
+      pentest: {
+        name: "Penetration Tester",
+        sub: "Red Team / Ethical Hacker",
+        accentClass: "accent-red",
+        fillColor: "#e8615a",
+        desc: "You're drawn to understanding how things break — and using that knowledge to fix them. Penetration testers, also called ethical hackers, are paid to try to break into their employer's own systems before real attackers get the chance. It's one of the most hands-on, creative paths in cybersecurity. Think of it as being a locksmith who tests locks for a living — except the locks are computer systems, and you have permission.",
+        skills: ["Finding weaknesses in systems & websites", "Thinking like an attacker to stay one step ahead", "Social engineering & physical security testing", "Writing clear reports for technical and non-technical audiences", "Building and using hacking tools responsibly"],
+        tools: ["Metasploit / Sliver / Cobalt Strike", "Burp Suite (web app testing)", "BloodHound (network mapping)", "Nmap (port & service scanning)", "Kali Linux / ParrotOS"],
+        start: "No experience needed to start. TryHackMe and Hack The Box have guided beginner paths that cost nothing. The PNPT from TCM Security is a great first certification — affordable, practical, and respected. From there, OSCP is the gold standard. Pick up basic Python scripting early; it will accelerate everything else.",
+        jobs: ["Penetration Tester", "Ethical Hacker", "Red Team Operator", "Vulnerability Researcher", "Bug Bounty Hunter", "Offensive Security Engineer", "Red Team Consultant", "Application Security Tester"]
+      },
+      blueteam: {
+        name: "SOC Analyst",
+        sub: "Blue Team / Detection Engineer",
+        accentClass: "accent-cyan",
+        fillColor: "#2be4ea",
+        desc: "You want to be the one standing guard. SOC (Security Operations Center) Analysts watch over an organization's digital environment around the clock — spotting threats early, responding when alarms go off, and building smarter defenses over time. If you like the idea of being the person whose job it is to make sure the attack never succeeds, this is your domain.",
+        skills: ["Spotting suspicious activity in logs and network traffic", "Setting up and tuning alert systems", "Responding quickly when something looks wrong", "Building tools that catch threats automatically", "Communicating clearly under pressure"],
+        tools: ["Elastic Stack / Splunk (log analysis)", "Wireshark (network traffic inspection)", "MISP / OpenCTI (threat sharing)", "Velociraptor (live system investigation)", "Sigma / Yara (detection rules)"],
+        start: "CompTIA Security+ is the standard entry certification and widely recognized by employers. Blue Team Labs Online is a great free platform to practice real scenarios. Build a basic home lab — even a single cheap laptop can run a virtual SIEM. The BTL1 cert from Security Blue Team is practical and beginner-friendly.",
+        jobs: ["SOC Analyst (Tier 1 / 2 / 3)", "Detection Engineer", "Security Operations Engineer", "Blue Team Analyst", "Incident Responder", "Cyber Defense Analyst", "Security Monitoring Analyst"]
+      },
+      grc: {
+        name: "GRC Analyst",
+        sub: "Governance, Risk & Compliance",
+        accentClass: "accent-yellow",
+        fillColor: "#fed33f",
+        desc: "You're the one who makes sure everyone is protected and playing by the rules — and that they actually understand why those rules exist. GRC (Governance, Risk, and Compliance) professionals write the policies, assess the risks, and keep organizations legally protected. This path leads to some of the highest-seniority roles in cybersecurity, and it values clear thinking and communication over technical know-how.",
+        skills: ["Identifying and documenting risks in plain language", "Writing policies and procedures people will actually follow", "Keeping track of legal and regulatory requirements", "Preparing for and supporting security audits", "Translating complex problems into clear, actionable plans"],
+        tools: ["NIST CSF / RMF (security frameworks)", "ISO 27001 / SOC 2 / PCI-DSS (compliance standards)", "GRC platforms like Archer or ServiceNow", "Risk registers and assessment templates", "Policy management systems"],
+        start: "A background in business, law, or communications is genuinely useful here. CompTIA Security+ gives you enough technical grounding. From there, CISM (ISACA) or the CISSP are respected management-level certifications. Many GRC professionals got their start in audit, legal, or project management and crossed over — it's one of the most accessible entry points into cybersecurity.",
+        jobs: ["GRC Analyst", "Compliance Analyst", "Risk Analyst", "IT Risk Manager", "Security Auditor", "Information Security Manager", "Privacy Analyst / DPO", "Chief Information Security Officer (CISO)"]
+      },
+      dfir: {
+        name: "DFIR Analyst",
+        sub: "Digital Forensics & Incident Response",
+        accentClass: "accent-green",
+        fillColor: "#2bfea0",
+        desc: "You want to solve the crime after it happens. DFIR (Digital Forensics and Incident Response) analysts are the investigators of cybersecurity — collecting digital evidence, rebuilding exactly what an attacker did step by step, and uncovering the full story from scattered clues. Think of it as being a detective, except your crime scenes live inside computers and networks.",
+        skills: ["Collecting and preserving digital evidence without disturbing it", "Rebuilding a timeline of events from logs and system artifacts", "Figuring out what an attacker accessed, moved, or copied", "Staying methodical and thorough under pressure", "Documenting findings clearly for legal or executive audiences"],
+        tools: ["Volatility (memory analysis)", "FTK Imager / Autopsy (disk forensics)", "Velociraptor / KAPE (live investigation)", "Plaso / Timesketch (timeline building)", "Eric Zimmerman's toolset (Windows artifacts)"],
+        start: "Attention to detail is more important here than deep coding skills. Blue Team Labs Online and HTB Sherlocks have free investigation challenges. FOR508 from SANS is the industry-standard course when you're ready to invest. Start by learning how Windows stores activity logs — that knowledge alone opens a lot of doors. CySA+ is a solid first certification.",
+        jobs: ["DFIR Analyst", "Digital Forensics Examiner", "Incident Responder", "Malware Analyst", "Forensic Analyst", "Cybercrime Investigator", "Security Incident Manager", "eDiscovery Analyst"]
+      },
+      threatintel: {
+        name: "Threat Intel Analyst",
+        sub: "Cyber Threat Intelligence",
+        accentClass: "accent-orange",
+        fillColor: "#ff9a28",
+        desc: "You want to know who is out there, what they want, and what they're planning before they strike. Threat Intelligence Analysts study hacking groups and criminal organizations, track their methods, and warn organizations ahead of time. It's equal parts research, detective work, and strategy — if you're endlessly curious about how people and organizations operate, especially the ones operating in the shadows, this path fits.",
+        skills: ["Researching people and organizations from public information", "Recognizing patterns across seemingly unrelated events", "Writing clear, structured reports for decision-makers", "Tracking criminal and hacker groups over time", "Connecting dots between data points others miss"],
+        tools: ["MISP / OpenCTI (intelligence sharing)", "Maltego / SpiderFoot (connection mapping)", "VirusTotal / Any.run (malware analysis)", "Shodan / Censys (internet exposure)", "Dark web monitoring platforms"],
+        start: "Curiosity and writing ability matter more here than technical depth. Start by reading public threat reports from Mandiant, CrowdStrike, and Microsoft — they're free and fascinating. Practice OSINT techniques using tools like Maltego and resources from Bellingcat. FOR578 (SANS) is the career-defining course. The CPTIA from EC-Council is an accessible starting certification.",
+        jobs: ["Threat Intelligence Analyst", "Cyber Threat Analyst", "OSINT Analyst", "Intelligence Researcher", "Security Researcher", "Threat Hunter", "APT Analyst", "Strategic Intelligence Analyst"]
+      }
+    };
+
+    const DOMAIN_KEYS = ["pentest", "blueteam", "grc", "dfir", "threatintel"];
+    const DOMAIN_LABELS = { pentest: "Pentest", blueteam: "Blue Team", grc: "GRC", dfir: "DFIR", threatintel: "Threat Intel" };
+    const LETTERS = ["A", "B", "C", "D", "E"];
+
+    let currentQ = 0;
+    let scores = {};
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function startQuiz() {
+      currentQ = 0;
+      scores = { pentest: 0, blueteam: 0, grc: 0, dfir: 0, threatintel: 0 };
+      renderQuestion();
+      showScreen("screen-question");
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[currentQ];
+
+      // Update progress bar
+      for (let i = 0; i < 5; i++) {
+        const seg = document.getElementById("seg-" + i);
+        seg.className = "progress-seg";
+        if (i < currentQ) seg.classList.add("done");
+        else if (i === currentQ) seg.classList.add("active");
+      }
+
+      document.getElementById("q-scenario").textContent = q.scenario;
+      document.getElementById("q-counter").textContent = "QUESTION " + (currentQ + 1) + " / " + QUESTIONS.length;
+      document.getElementById("q-prompt").textContent = q.prompt;
+
+      // Shuffle answers so domain order isn't learnable
+      const shuffled = [...q.answers].sort(() => Math.random() - 0.5);
+      const container = document.getElementById("answers-container");
+      container.innerHTML = "";
+
+      shuffled.forEach(function(ans, i) {
+        const btn = document.createElement("button");
+        btn.className = "answer-btn";
+        btn.innerHTML =
+          '<span class="answer-key">[' + LETTERS[i] + ']</span>' +
+          '<span class="answer-text">' + ans.text + '</span>';
+        btn.addEventListener("click", function() { selectAnswer(ans.domain, btn); });
+        container.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(domain, btn) {
+      btn.classList.add("selected");
+      scores[domain]++;
+      setTimeout(function() {
+        currentQ++;
+        if (currentQ >= QUESTIONS.length) showResults();
+        else renderQuestion();
+      }, 380);
+    }
+
+    function showResults() {
+      // Find winning domain
+      const winner = DOMAIN_KEYS.reduce(function(a, b) { return scores[a] >= scores[b] ? a : b; });
+      const d = DOMAINS[winner];
+
+      // Name / sub
+      const nameEl = document.getElementById("result-name");
+      nameEl.textContent = d.name;
+      nameEl.setAttribute("data-text", d.name);
+      document.getElementById("result-sub").textContent = d.sub;
+      document.getElementById("result-desc").textContent = d.desc;
+
+      // Score bars
+      const bd = document.getElementById("score-breakdown");
+      bd.innerHTML = '<p class="score-breakdown__label">// response distribution</p>';
+      DOMAIN_KEYS.forEach(function(key) {
+        const row = document.createElement("div");
+        row.className = "score-row";
+        row.innerHTML =
+          '<span class="score-label">' + DOMAIN_LABELS[key] + '</span>' +
+          '<div class="score-track"><div class="score-fill" style="background:' + DOMAINS[key].fillColor + ';"></div></div>' +
+          '<span class="score-val">' + scores[key] + '</span>';
+        bd.appendChild(row);
+      });
+      // Animate fills after paint
+      setTimeout(function() {
+        DOMAIN_KEYS.forEach(function(key, i) {
+          const pct = Math.round((scores[key] / QUESTIONS.length) * 100);
+          bd.querySelectorAll(".score-fill")[i].style.width = pct + "%";
+        });
+      }, 60);
+
+      // Skills & tools
+      document.getElementById("result-skills").innerHTML =
+        d.skills.map(function(s) { return "<li>" + s + "</li>"; }).join("");
+      document.getElementById("result-tools").innerHTML =
+        d.tools.map(function(t) { return "<li>" + t + "</li>"; }).join("");
+      document.getElementById("result-jobs").innerHTML =
+        d.jobs.map(function(j) { return '<span class="job-tag">' + j + '</span>'; }).join("");
+      document.getElementById("result-start").textContent = d.start;
+
+      // Accent color
+      document.getElementById("result-card").className = "result-card " + d.accentClass;
+
+      showScreen("screen-result");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function retakeQuiz() {
+      showScreen("screen-intro");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Ticker pause on hover
+    var track = document.querySelector(".ticker-track");
+    if (track) {
+      track.addEventListener("mouseenter", function() { track.style.animationPlayState = "paused"; });
+      track.addEventListener("mouseleave", function() { track.style.animationPlayState = "running"; });
+    }
+  </script>
+</body>
+</html>
