@@ -496,9 +496,13 @@
 
 <!-- ── CANVAS ────────────────────────────────────────────────── -->
 <div id="canvas"><div class="bwrap" data-i="0"><div><div class="bio-photo-wrap al-center">
-        <div class="bio-photo w-sm br-none"><img src="../../assets/profile.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bio-img-missing" style="display:none">// image not found: assets/p.png</div></div>
+        <div class="bio-photo w-sm br-none"><img src="../../assets/profile.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bio-img-missing" style="display:none">// image not found: ../../assets/profile.png</div></div>
         
-      </div></div></div><div class="bwrap" data-i="1"><div><h1 class="bio-title clr-red sz-xl" data-field="content" data-ph="Title text">WhoAmI?</h1></div></div><div class="bwrap" data-i="2"><div><p class="bio-text" data-field="content" data-ph="Your text...">My name is Gabe. I discovered at an early age that I love computers and making them go beep boop in ways people have never beep booped them, so that's why I became a Computer Scientist. But then I figured out how to beep boop computers in ways you're not supposed to beep boop them, so then I became an Information Security Analyst to identify and stop the bad beep boopers from boop beeping the good beep boopers.  </p></div></div><div class="bwrap" data-i="3"><div><hr class="bio-divider sty-solid"></div></div><div class="bwrap" data-i="4"><div><h2 class="bio-subtitle clr-cyan" data-field="content" data-ph="Subtitle text">Early Life</h2></div></div><div class="bwrap" data-i="5"><div><div class="bio-label clr-cyan" data-field="content" data-ph="// section label">// Circa 2010</div></div></div><div class="bwrap" data-i="6"><div><p class="bio-text" data-field="content" data-ph="Your text...">I was about 12 and I was starting to mess with computers. My parents knew that excessive screen and internet time were not good for the developing mind. My father had set a limit of up to 2 hours of being on the internet per day. After the 2 hours lapsed, my internet access was cut off.<br><br>I didn't like that.<br><br>There had to be a way to get around the restriction, so I spent my 2 hours of internet time researching how to bypass internet restrictions. The first thing that</p></div></div><div class="bwrap" data-i="7"><div><h2 class="bio-subtitle clr-cyan" data-field="content" data-ph="Subtitle text">Security Researcher</h2></div></div></div>
+      </div></div></div><div class="bwrap" data-i="1"><div><h1 class="bio-title clr-red sz-xl" data-field="content" data-ph="Title text">_WhoAmI?</h1></div></div><div class="bwrap" data-i="2"><div><p class="bio-text" data-field="content" data-ph="Your text...">My name is Gabe. I discovered at an early age that I love computers and making them go beep boop in ways people have never beep booped them, so that's why I became a Computer Scientist. But then I figured out how to beep boop computers in ways you're not supposed to beep boop them, so then I became an Information Security Analyst to identify and stop the bad beep boopers from boop beeping the good beep boopers.  </p></div></div><div class="bwrap" data-i="3"><div><hr class="bio-divider sty-solid"></div></div><div class="bwrap" data-i="4"><div><h2 class="bio-subtitle clr-cyan" data-field="content" data-ph="Subtitle text">Early Life</h2></div></div><div class="bwrap" data-i="5"><div><div class="bio-label clr-cyan" data-field="content" data-ph="// section label">// Circa 2010</div></div></div><div class="bwrap" data-i="6"><div><p class="bio-text" data-field="content" data-ph="Your text...">I was about 12 and I was starting to mess with computers. My parents knew that excessive screen and internet time were not good for the developing mind. My dad had set a limit of up to 2 hours of being on the internet per day. After the 2 hours lapsed, my internet access was cut off.<br><br>I didn't like that.<br><br>There had to be a way to get around the restriction, so I spent my 2 hours of internet time researching how to bypass internet restrictions. After a few weeks, I stumbled across an article concerning MAC addresses. I read that every device had a MAC address assigned to them, kind of like an ID number. The assumption I made was that the way that my dad was blocking my phone or laptop from connecting to the internet had to be related to my MAC address.<br><br>The next logical question was "is it possible to change it to something else?"<br><br>Turns out, what I was asking for was called spoofing. I found some terminal commands and ran it on my laptop.</p></div></div><div class="bwrap" data-i="7"><div><div class="bio-code"><span class="code-lang">bash</span>$ ip link show interface
+link/ether 00:1d:98:5a:d1:3a
+$ ip link set dev interface down
+$ ip link set dev interface address 00:1A:2B:3C:4D:5E
+$ ip link set dev interface up</div></div></div><div class="bwrap" data-i="8"><div><p class="bio-text" data-field="content" data-ph="Your text...">It worked!<br><br>Oh man, learning how to MAC spoof was my first thrill of hacking. This simple temporary address change allowed me to hop back on the network. My dad kept blocking me, but it didn't matter -- I'd just spoof a different MAC and make "new devices" as I pleased.<br><br>Still, having to change my address all the time -- while trivial -- was very time consuming and constant irritant. <br><br>One day, when my dad was out in the garden, I happened to walk by the router and noticed the label on side...<br><br>THE ADMIN PASSWORD WAS RIGHT THERE.<br><br>I went to my computer, logged into the portal, and made myself admin. I was the captain now. The network was mine now, and it was my turn to kick my dad off the internet!<br><br>From that moment on, I got the bug for a field of computers that I would later come to know as<br><br>CYBER SECURITY.</p></div></div><div class="bwrap" data-i="9"><div><h2 class="bio-subtitle clr-cyan" data-field="content" data-ph="Subtitle text">College</h2></div></div><div class="bwrap" data-i="10"><div><div class="bio-label clr-cyan" data-field="content" data-ph="// section label">// 2015 - 2019</div></div></div></div>
 
 <!-- ── FLOATING EDIT BUTTON ──────────────────────────────────── -->
 <button id="edit-toggle" onclick="toggleEdit()">// EDIT</button>
@@ -570,7 +574,7 @@
   {
     "id": "bx0km1qk",
     "type": "title",
-    "content": "WhoAmI?",
+    "content": "_WhoAmI?",
     "color": "red",
     "size": "xl"
   },
@@ -600,13 +604,31 @@
   {
     "id": "b9asrf2q",
     "type": "text",
-    "content": "I was about 12 and I was starting to mess with computers. My parents knew that excessive screen and internet time were not good for the developing mind. My father had set a limit of up to 2 hours of being on the internet per day. After the 2 hours lapsed, my internet access was cut off.\n\nI didn't like that.\n\nThere had to be a way to get around the restriction, so I spent my 2 hours of internet time researching how to bypass internet restrictions. The first thing that",
+    "content": "I was about 12 and I was starting to mess with computers. My parents knew that excessive screen and internet time were not good for the developing mind. My dad had set a limit of up to 2 hours of being on the internet per day. After the 2 hours lapsed, my internet access was cut off.\n\nI didn't like that.\n\nThere had to be a way to get around the restriction, so I spent my 2 hours of internet time researching how to bypass internet restrictions. After a few weeks, I stumbled across an article concerning MAC addresses. I read that every device had a MAC address assigned to them, kind of like an ID number. The assumption I made was that the way that my dad was blocking my phone or laptop from connecting to the internet had to be related to my MAC address.\n\nThe next logical question was \"is it possible to change it to something else?\"\n\nTurns out, what I was asking for was called spoofing. I found some terminal commands and ran it on my laptop.",
+    "mono": false
+  },
+  {
+    "id": "brej6iwi",
+    "type": "code",
+    "content": "$ ip link show interface\nlink/ether 00:1d:98:5a:d1:3a\n$ ip link set dev interface down\n$ ip link set dev interface address 00:1A:2B:3C:4D:5E\n$ ip link set dev interface up",
+    "lang": "bash"
+  },
+  {
+    "id": "bpjkpyt2",
+    "type": "text",
+    "content": "It worked!\n\nOh man, learning how to MAC spoof was my first thrill of hacking. This simple temporary address change allowed me to hop back on the network. My dad kept blocking me, but it didn't matter -- I'd just spoof a different MAC and make \"new devices\" as I pleased.\n\nStill, having to change my address all the time -- while trivial -- was very time consuming and constant irritant. \n\nOne day, when my dad was out in the garden, I happened to walk by the router and noticed the label on side...\n\nTHE ADMIN PASSWORD WAS RIGHT THERE.\n\nI went to my computer, logged into the portal, and made myself admin. I was the captain now. The network was mine now, and it was my turn to kick my dad off the internet!\n\nFrom that moment on, I got the bug for a field of computers that I would later come to know as\n\nCYBER SECURITY.",
     "mono": false
   },
   {
     "id": "bsl931da",
     "type": "subtitle",
-    "content": "Security Researcher",
+    "content": "College",
+    "color": "cyan"
+  },
+  {
+    "id": "b1k063s7",
+    "type": "label",
+    "content": "// 2015 - 2019",
     "color": "cyan"
   }
 ]

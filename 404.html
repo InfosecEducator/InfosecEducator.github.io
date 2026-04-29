@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — NOT FOUND</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    :root {
+      --bg-800: #12101a;
+      --red-400: #ea6f69;
+      --red-500: #e8615a;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-400: #5eeef3;
+      --cyan-500: #2be4ea;
+      --text-secondary: #b09090;
+      --text-muted: #907878;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --notch: 12px;
+      --notch-path: polygon(0 0,100% 0,100% calc(100% - var(--notch)),calc(100% - var(--notch)) 100%,0 100%);
+    }
+
+    body {
+      background: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse 55% 45% at 20% 10%, rgba(60,24,26,0.6) 0%, transparent 100%),
+        radial-gradient(ellipse 45% 40% at 80% 90%, rgba(13,51,54,0.35) 0%, transparent 100%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* scanlines */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 100; pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.035) 1px, transparent 1px, transparent 3px);
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    /* big 404 */
+    .code {
+      font-family: var(--font-display);
+      font-size: clamp(7rem, 25vw, 14rem);
+      line-height: 1;
+      color: var(--red-500);
+      filter: drop-shadow(0 0 18px rgba(232,97,90,0.45));
+      letter-spacing: 0.04em;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* glitch layers */
+    .code::before,
+    .code::after {
+      content: "404";
+      position: absolute; inset: 0;
+      font-family: inherit; font-size: inherit;
+      letter-spacing: inherit;
+    }
+    .code::before {
+      color: var(--cyan-500);
+      animation: glitch-a 4.5s step-end infinite;
+      opacity: 0.7;
+    }
+    .code::after {
+      color: var(--red-700);
+      animation: glitch-b 4.5s step-end infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes glitch-a {
+      0%,90%,100% { clip-path: none;  transform: none; }
+      91% { clip-path: polygon(0 15%,100% 15%,100% 28%,0 28%); transform: translateX(-4px); }
+      93% { clip-path: polygon(0 62%,100% 62%,100% 74%,0 74%); transform: translateX(3px); }
+      95% { clip-path: none; transform: none; }
+    }
+    @keyframes glitch-b {
+      0%,90%,100% { clip-path: none; transform: none; }
+      92% { clip-path: polygon(0 40%,100% 40%,100% 55%,0 55%); transform: translateX(4px); }
+      94% { clip-path: polygon(0 80%,100% 80%,100% 90%,0 90%); transform: translateX(-3px); }
+      96% { clip-path: none; transform: none; }
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--red-800);
+      margin-bottom: 0.6rem;
+    }
+    .eyebrow::before { content: "// "; }
+
+    .title {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      letter-spacing: 0.06em;
+      color: var(--red-300, #f4908b);
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    .desc {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red-800), transparent);
+      margin: 1.5rem auto;
+    }
+
+    .btn-home {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent;
+      border: 1px solid var(--red-800);
+      color: var(--text-secondary);
+      font-family: var(--font-ui); font-size: 0.88rem;
+      font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.6rem 1.5rem;
+      clip-path: var(--notch-path);
+      text-decoration: none;
+      transition: color .2s, border-color .2s, box-shadow .2s;
+    }
+    .btn-home:hover {
+      color: var(--cyan-400);
+      border-color: var(--cyan-500);
+      box-shadow: 0 0 8px var(--cyan-500), 0 0 24px rgba(43,228,234,0.3);
+    }
+
+    .status-line {
+      margin-top: 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: var(--red-900);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="eyebrow">error — resource not found</div>
+    <div class="code">404</div>
+    <div class="divider"></div>
+    <div class="title">PAGE NOT FOUND</div>
+    <p class="desc">The resource you requested doesn't exist or has been moved.<br>No packet captured. No trace left behind.</p>
+    <a href="./main.html" class="btn-home">&#8592; Return Home</a>
+    <div class="status-line">HTTP 404 &nbsp;·&nbsp; INFOSEC//EDUCATOR &nbsp;·&nbsp; REQUEST TERMINATED</div>
+  </div>
+</body>
+</html>

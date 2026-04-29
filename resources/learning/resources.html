@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFOSEC//RESOURCES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-300: #f4908b;
+      --red-400: #ea6f69;
+      --red-500: #e8615a;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-400: #5eeef3;
+      --cyan-500: #2be4ea;
+      --cyan-900: #0d3336;
+      --green-400: #5afeba;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --orange-900: #2e1a06;
+      --purple-500: #c084fc;
+      --purple-900: #1e0a3c;
+      --text-primary: #e8e0f0;
+      --text-secondary: #b09090;
+      --text-muted: #907878;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 24px rgba(232,97,90,0.3);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 24px rgba(43,228,234,0.3);
+      --glow-green:  0 0 8px var(--green-500),  0 0 24px rgba(43,254,160,0.3);
+      --glow-orange: 0 0 8px var(--orange-500), 0 0 24px rgba(255,154,40,0.3);
+      --notch: 12px;
+      --notch-path: polygon(0 0,100% 0,100% calc(100% - var(--notch)),calc(100% - var(--notch)) 100%,0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse 60% 50% at 10% 0%, rgba(60,24,26,0.5) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(13,51,54,0.4) 0%, transparent 100%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 3px);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ── HEADER ── */
+    #hdr {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,10,13,0.95);
+      border-bottom: 1px solid var(--red-900);
+      box-shadow: 0 2px 40px rgba(232,97,90,0.08);
+      padding: 0 2rem;
+      height: 58px;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    #hdr-title {
+      font-family: var(--font-display); font-size: 2rem;
+      color: var(--red-500); text-shadow: var(--glow-red);
+      letter-spacing: 0.04em; flex: 1;
+    }
+    #hdr-title span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    #hdr-sub {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--text-muted); letter-spacing: 0.1em;
+    }
+    .hdr-nav {
+      display: flex; gap: 0.5rem;
+    }
+    .hdr-navbtn {
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+      color: var(--text-muted); background: transparent;
+      border: 1px solid var(--red-900); padding: 0.3rem 0.75rem;
+      cursor: pointer; clip-path: var(--notch-path);
+      transition: color .15s, border-color .15s, box-shadow .15s;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .hdr-navbtn:hover { color: var(--cyan-500); border-color: var(--cyan-500); box-shadow: var(--glow-cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--red-900);
+    }
+    #hero-eyebrow {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.22em; color: var(--red-700);
+      margin-bottom: 0.75rem;
+    }
+    #hero-eyebrow::before { content: "// "; }
+    #hero-title {
+      font-family: var(--font-display); font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1; letter-spacing: 0.05em;
+      color: var(--red-300); margin-bottom: 1rem;
+    }
+    #hero-title span { color: var(--cyan-400); }
+    #hero-desc {
+      font-family: var(--font-mono); font-size: 0.9rem;
+      line-height: 1.8; color: var(--text-secondary);
+      max-width: 640px; margin: 0 auto 2rem;
+    }
+    .section-links {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .section-link {
+      font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.12em;
+      padding: 0.45rem 1.2rem;
+      clip-path: var(--notch-path);
+      border: 1px solid; cursor: pointer; text-decoration: none;
+      transition: box-shadow .2s, filter .2s;
+    }
+    .section-link:hover { filter: brightness(1.2); }
+    .sl-red    { color: var(--red-400);    border-color: var(--red-800);    background: rgba(232,97,90,0.07); }
+    .sl-red:hover    { box-shadow: var(--glow-red); }
+    .sl-cyan   { color: var(--cyan-400);   border-color: var(--cyan-900);   background: rgba(43,228,234,0.06); }
+    .sl-cyan:hover   { box-shadow: var(--glow-cyan); }
+    .sl-green  { color: var(--green-400);  border-color: var(--green-900);  background: rgba(43,254,160,0.06); }
+    .sl-green:hover  { box-shadow: var(--glow-green); }
+
+    /* ── SECTION LAYOUT ── */
+    .section {
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--red-900);
+    }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-header {
+      display: flex; align-items: flex-end; gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid;
+    }
+    .sh-num {
+      font-family: var(--font-display); font-size: 5rem; line-height: 1;
+      opacity: 0.18; letter-spacing: 0.02em;
+    }
+    .sh-text {}
+    .sh-label {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 0.3rem; opacity: 0.7;
+    }
+    .sh-label::before { content: "// "; }
+    .sh-title {
+      font-family: var(--font-display); font-size: 3.2rem;
+      line-height: 1; letter-spacing: 0.05em;
+    }
+    .sh-desc {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      line-height: 1.7; color: var(--text-secondary);
+      max-width: 620px; margin-top: 0.5rem;
+    }
+
+    /* section color theming */
+    .sec-red  .section-header { border-color: var(--red-900); }
+    .sec-red  .sh-num, .sec-red  .sh-title { color: var(--red-400); }
+    .sec-red  .sh-label { color: var(--red-700); }
+
+    .sec-cyan .section-header { border-color: var(--cyan-900); }
+    .sec-cyan .sh-num, .sec-cyan .sh-title { color: var(--cyan-400); }
+    .sec-cyan .sh-label { color: var(--cyan-500); }
+
+    .sec-green .section-header { border-color: var(--green-900); }
+    .sec-green .sh-num, .sec-green .sh-title { color: var(--green-400); }
+    .sec-green .sh-label { color: var(--green-500); }
+
+    /* ── TOOL CARDS GRID ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .tool-card {
+      background: var(--bg-600);
+      border: 1px solid;
+      clip-path: var(--notch-path);
+      padding: 1.25rem 1.4rem 1.4rem;
+      position: relative;
+      transition: box-shadow .25s, border-color .25s;
+    }
+    .tool-card::after {
+      content: ""; position: absolute; bottom: 5px; right: -5px;
+      width: 20px; height: 2px; transform: rotate(-45deg);
+      transition: background .25s;
+    }
+
+    /* red cards */
+    .sec-red .tool-card { border-color: var(--red-900); }
+    .sec-red .tool-card::after { background: var(--red-900); }
+    .sec-red .tool-card:hover { border-color: var(--red-700); box-shadow: var(--glow-red); }
+    .sec-red .tool-card:hover::after { background: var(--red-500); }
+    .sec-red .tc-badge { background: rgba(232,97,90,0.12); border-color: var(--red-800); color: var(--red-500); }
+    .sec-red .tc-name { color: var(--red-300); }
+    .sec-red .tc-link { color: var(--red-700); }
+    .sec-red .tc-link:hover { color: var(--red-400); }
+
+    /* cyan cards */
+    .sec-cyan .tool-card { border-color: var(--cyan-900); }
+    .sec-cyan .tool-card::after { background: var(--cyan-900); }
+    .sec-cyan .tool-card:hover { border-color: var(--cyan-500); box-shadow: var(--glow-cyan); }
+    .sec-cyan .tool-card:hover::after { background: var(--cyan-500); }
+    .sec-cyan .tc-badge { background: rgba(43,228,234,0.08); border-color: var(--cyan-900); color: var(--cyan-500); }
+    .sec-cyan .tc-name { color: var(--cyan-400); }
+    .sec-cyan .tc-link { color: var(--cyan-900); }
+    .sec-cyan .tc-link:hover { color: var(--cyan-500); }
+
+    /* green cards */
+    .sec-green .tool-card { border-color: var(--green-900); }
+    .sec-green .tool-card::after { background: var(--green-900); }
+    .sec-green .tool-card:hover { border-color: var(--green-500); box-shadow: var(--glow-green); }
+    .sec-green .tool-card:hover::after { background: var(--green-500); }
+    .sec-green .tc-badge { background: rgba(43,254,160,0.07); border-color: var(--green-900); color: var(--green-500); }
+    .sec-green .tc-name { color: var(--green-400); }
+    .sec-green .tc-link { color: var(--green-900); }
+    .sec-green .tc-link:hover { color: var(--green-400); }
+
+    .tc-header {
+      display: flex; align-items: flex-start; gap: 0.9rem; margin-bottom: 0.75rem;
+    }
+    .tc-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.5rem;
+      border: 1px solid; clip-path: var(--notch-path);
+    }
+    .sec-red  .tc-icon { border-color: var(--red-800);   background: rgba(232,97,90,0.08);  color: var(--red-400); }
+    .sec-cyan .tc-icon { border-color: var(--cyan-900);  background: rgba(43,228,234,0.07); color: var(--cyan-400); }
+    .sec-green .tc-icon { border-color: var(--green-900); background: rgba(43,254,160,0.06); color: var(--green-400); }
+
+    .tc-meta { flex: 1; min-width: 0; }
+    .tc-badge {
+      display: inline-block;
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.1em 0.5em; border: 1px solid;
+      margin-bottom: 0.3rem;
+    }
+    .tc-name {
+      font-family: var(--font-ui); font-size: 1.2rem; font-weight: 700;
+      letter-spacing: 0.05em; line-height: 1.1;
+    }
+    .tc-desc {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      line-height: 1.65; color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+    .tc-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.4rem;
+    }
+    .tc-tags {
+      display: flex; gap: 0.35rem; flex-wrap: wrap;
+    }
+    .tc-tag {
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 0.08em; padding: 0.1em 0.4em;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+    }
+    .tc-link {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color .15s; text-decoration: none;
+    }
+    .tc-link::after { content: " ↗"; }
+
+    /* ── SD SPOTLIGHT CARD ── */
+    .sd-card {
+      background: linear-gradient(135deg, rgba(43,254,160,0.04) 0%, rgba(43,228,234,0.03) 100%);
+      border: 1px solid var(--green-900);
+      clip-path: var(--notch-path);
+      padding: 1.25rem 1.4rem 1.4rem;
+      position: relative;
+    }
+    .sd-card::before {
+      content: "// SAN DIEGO";
+      position: absolute; top: 0.6rem; right: 1rem;
+      font-family: var(--font-mono); font-size: 0.6rem;
+      letter-spacing: 0.15em; color: var(--green-500);
+      opacity: 0.6;
+    }
+    .sd-card::after {
+      content: ""; position: absolute; bottom: 5px; right: -5px;
+      width: 20px; height: 2px; transform: rotate(-45deg);
+      background: var(--green-500); opacity: 0.4;
+    }
+
+    /* ── FOOTER ── */
+    #ftr {
+      padding: 2.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      border-top: 1px solid var(--red-900);
+    }
+    #ftr-left {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--text-muted); letter-spacing: 0.08em;
+    }
+    .btn-home {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 1px solid var(--red-800); color: var(--text-secondary);
+      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 1.2rem;
+      cursor: pointer; clip-path: var(--notch-path);
+      transition: color .2s, border-color .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    .btn-home:hover { color: var(--red-400); border-color: var(--red-500); box-shadow: var(--glow-red); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #hdr-sub { display: none; }
+      .hdr-nav { display: none; }
+      #hero { padding: 2.5rem 1.25rem 2rem; }
+      .section { padding: 3rem 1.25rem; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes glitch {
+      0%,100% { clip-path: none; transform: none; }
+      93% { clip-path: polygon(0 20%,100% 20%,100% 35%,0 35%); transform: translateX(-2px); }
+      94% { clip-path: polygon(0 65%,100% 65%,100% 78%,0 78%); transform: translateX(2px); }
+      95% { clip-path: none; transform: none; }
+    }
+    #hdr-title { animation: glitch 9s step-end infinite; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="hdr">
+  <div id="hdr-title">INFOSEC<span>//</span>RESOURCES</div>
+  <div id="hdr-sub">TOOLS · EDUCATION · COMMUNITY</div>
+  <nav class="hdr-nav">
+    <a href="#tools"     class="hdr-navbtn">Tools</a>
+    <a href="#education" class="hdr-navbtn">Education</a>
+    <a href="#community" class="hdr-navbtn">Community</a>
+    <a href="main.html"  class="hdr-navbtn">← Home</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <div id="hero-eyebrow">infosec field guide — resources</div>
+  <h1 id="hero-title">YOUR <span>ARSENAL</span></h1>
+  <p id="hero-desc">The tools, platforms, and communities that define the cybersecurity field. Whether you're just getting started or sharpening an existing practice — this is where the work gets done.</p>
+  <div class="section-links">
+    <a href="#tools"     class="section-link sl-red">01 // Tools</a>
+    <a href="#education" class="section-link sl-cyan">02 // Education</a>
+    <a href="#community" class="section-link sl-green">03 // Community</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SECTION 1: TOOLS -->
+<section class="section sec-red" id="tools">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="sh-num">01</div>
+      <div class="sh-text">
+        <div class="sh-label">Practitioner Toolkit</div>
+        <div class="sh-title">TOOLS</div>
+        <div class="sh-desc">The software and hardware used daily by penetration testers, reverse engineers, analysts, and defenders. Open source, commercial, and everything in between.</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- Kali Linux -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">K</div>
+          <div class="tc-meta">
+            <div class="tc-badge">OS / Distro</div>
+            <div class="tc-name">Kali Linux</div>
+          </div>
+        </div>
+        <div class="tc-desc">The industry-standard penetration testing distribution. Ships with 600+ pre-installed security tools — from Nmap to Metasploit. Built and maintained by Offensive Security. The first OS anyone hands you when you ask how to get started.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">pentest</span><span class="tc-tag">linux</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://www.kali.org" target="_blank" rel="noopener">kali.org</a>
+        </div>
+      </div>
+
+      <!-- Metasploit -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">M</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Exploitation</div>
+            <div class="tc-name">Metasploit</div>
+          </div>
+        </div>
+        <div class="tc-desc">The world's most widely used penetration testing framework. Provides a library of exploits, payloads, and post-exploitation modules. The community edition is free; the Pro version is a commercial product by Rapid7. Standard in every red team toolkit.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">red team</span><span class="tc-tag">exploits</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://www.metasploit.com" target="_blank" rel="noopener">metasploit.com</a>
+        </div>
+      </div>
+
+      <!-- Ghidra -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">G</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Reverse Engineering</div>
+            <div class="tc-name">Ghidra</div>
+          </div>
+        </div>
+        <div class="tc-desc">NSA's open-source reverse engineering suite, released publicly in 2019. Disassembles and decompiles binaries across dozens of architectures. A legitimate competitor to the commercial IDA Pro — and it's completely free. Essential for malware analysis and vulnerability research.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">RE</span><span class="tc-tag">malware</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://ghidra-sre.org" target="_blank" rel="noopener">ghidra-sre.org</a>
+        </div>
+      </div>
+
+      <!-- Hak5 -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">H</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Hardware</div>
+            <div class="tc-name">Hak5</div>
+          </div>
+        </div>
+        <div class="tc-desc">Makers of purpose-built pentest hardware: the WiFi Pineapple (rogue AP attacks), USB Rubber Ducky (keystroke injection), LAN Turtle (covert network implant), and more. Also produces long-running educational content. The go-to vendor for physical and wireless attack simulation.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">hardware</span><span class="tc-tag">wireless</span><span class="tc-tag">commercial</span></div>
+          <a class="tc-link" href="https://hak5.org" target="_blank" rel="noopener">hak5.org</a>
+        </div>
+      </div>
+
+      <!-- Hashcat -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">HC</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Password Cracking</div>
+            <div class="tc-name">Hashcat</div>
+          </div>
+        </div>
+        <div class="tc-desc">The world's fastest GPU-accelerated password recovery tool. Supports 300+ hash types including MD5, SHA, bcrypt, NTLM, and WPA. Used in penetration tests to crack captured credential hashes and assess password policy strength. A staple of every red team engagement.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">passwords</span><span class="tc-tag">GPU</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://hashcat.net" target="_blank" rel="noopener">hashcat.net</a>
+        </div>
+      </div>
+
+      <!-- Wireshark -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">W</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Network Analysis</div>
+            <div class="tc-name">Wireshark</div>
+          </div>
+        </div>
+        <div class="tc-desc">The definitive network protocol analyzer. Captures and dissects live traffic or reads pcap files, supporting thousands of protocols. Used by security analysts, network engineers, and incident responders worldwide. If you want to know what's on the wire — this is the tool.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">blue team</span><span class="tc-tag">network</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://www.wireshark.org" target="_blank" rel="noopener">wireshark.org</a>
+        </div>
+      </div>
+
+      <!-- Burp Suite -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">B</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Web Security</div>
+            <div class="tc-name">Burp Suite</div>
+          </div>
+        </div>
+        <div class="tc-desc">PortSwigger's web application security testing platform. The proxy, scanner, intruder, repeater, and decoder tools make it the standard for web app pentesting. The Community edition is free; Pro unlocks the automated scanner. Ubiquitous in bug bounty and web assessment work.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">web</span><span class="tc-tag">proxy</span><span class="tc-tag">free/paid</span></div>
+          <a class="tc-link" href="https://portswigger.net/burp" target="_blank" rel="noopener">portswigger.net</a>
+        </div>
+      </div>
+
+      <!-- Nmap -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">N</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Reconnaissance</div>
+            <div class="tc-name">Nmap</div>
+          </div>
+        </div>
+        <div class="tc-desc">The original network mapper. Discovers hosts, open ports, running services, OS fingerprints, and more with the NSE scripting engine. Been in continuous development since 1997. Whether you're scanning your own lab or performing authorized network audits, Nmap is always the first tool you run.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">scanning</span><span class="tc-tag">OSINT</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://nmap.org" target="_blank" rel="noopener">nmap.org</a>
+        </div>
+      </div>
+
+      <!-- Autopsy -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">A</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Digital Forensics</div>
+            <div class="tc-name">Autopsy / Sleuth Kit</div>
+          </div>
+        </div>
+        <div class="tc-desc">Open-source digital forensics platform used by law enforcement, military, and incident responders to analyze disk images, recover deleted files, extract artifacts, and build case timelines. Autopsy is the GUI front-end for The Sleuth Kit's command-line framework. The standard free DFIR toolkit.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">DFIR</span><span class="tc-tag">forensics</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://www.autopsy.com" target="_blank" rel="noopener">autopsy.com</a>
+        </div>
+      </div>
+
+      <!-- BloodHound -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">BH</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Active Directory</div>
+            <div class="tc-name">BloodHound</div>
+          </div>
+        </div>
+        <div class="tc-desc">Graph-based Active Directory attack path analyzer. Maps AD relationships to reveal paths from a low-privileged user to Domain Admin that would take weeks to find manually. Invaluable for both red teams (finding attack paths) and blue teams (understanding and eliminating them). A paradigm shift in AD security assessment.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">AD</span><span class="tc-tag">red team</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://bloodhoundad.com" target="_blank" rel="noopener">bloodhoundad.com</a>
+        </div>
+      </div>
+
+      <!-- OWASP ZAP -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">Z</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Web Scanner</div>
+            <div class="tc-name">OWASP ZAP</div>
+          </div>
+        </div>
+        <div class="tc-desc">OWASP's Zed Attack Proxy — a free, open-source web application scanner and intercepting proxy. Great for developers learning security testing and for CI/CD pipeline integration. Lower barrier to entry than Burp Suite. Actively maintained by a global community and completely free for any use.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">web</span><span class="tc-tag">OWASP</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://www.zaproxy.org" target="_blank" rel="noopener">zaproxy.org</a>
+        </div>
+      </div>
+
+      <!-- Velociraptor -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">VR</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Endpoint Forensics</div>
+            <div class="tc-name">Velociraptor</div>
+          </div>
+        </div>
+        <div class="tc-desc">Open-source endpoint visibility and digital forensics platform. Deploys agents to collect forensic artifacts, run queries, and hunt for threats across thousands of endpoints simultaneously using the VQL query language. Rapidly gaining adoption in enterprise DFIR as a free alternative to costly commercial EDR platforms.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">DFIR</span><span class="tc-tag">endpoint</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://docs.velociraptor.app" target="_blank" rel="noopener">velociraptor.app</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ SECTION 2: EDUCATION -->
+<section class="section sec-cyan" id="education">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="sh-num">02</div>
+      <div class="sh-text">
+        <div class="sh-label">Learning Pathways</div>
+        <div class="sh-title">EDUCATION</div>
+        <div class="sh-desc">Platforms, certifications, and training programs that build real skills. From beginner-friendly labs to elite professional certifications — the structured path into the field.</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- HackTheBox -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">HTB</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Hands-On Labs</div>
+            <div class="tc-name">Hack The Box</div>
+          </div>
+        </div>
+        <div class="tc-desc">The premier competitive hacking platform. Offers hundreds of intentionally vulnerable machines, realistic Active Directory lab environments, and ranked challenges. Used by professionals to sharpen skills and by hiring managers to assess candidates. Completing machines is a recognized signal in the industry.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">labs</span><span class="tc-tag">CTF</span><span class="tc-tag">free/paid</span></div>
+          <a class="tc-link" href="https://www.hackthebox.com" target="_blank" rel="noopener">hackthebox.com</a>
+        </div>
+      </div>
+
+      <!-- TryHackMe -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">THM</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Guided Learning</div>
+            <div class="tc-name">TryHackMe</div>
+          </div>
+        </div>
+        <div class="tc-desc">Browser-based, beginner-friendly cybersecurity training with guided learning paths and in-browser virtual machines — no local setup required. Structured paths for SOC analysts, pentesters, and cloud security. The most accessible on-ramp into hands-on security practice for those starting from zero.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">beginner</span><span class="tc-tag">guided</span><span class="tc-tag">free/paid</span></div>
+          <a class="tc-link" href="https://tryhackme.com" target="_blank" rel="noopener">tryhackme.com</a>
+        </div>
+      </div>
+
+      <!-- CompTIA -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">CT</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Certification</div>
+            <div class="tc-name">CompTIA</div>
+          </div>
+        </div>
+        <div class="tc-desc">The foundational certification body. Security+ is the most widely recognized entry-level security cert and a DoD baseline requirement. Network+ establishes the networking foundation. CySA+ targets blue team analysts. PenTest+ covers offensive skills. The logical starting point for anyone entering the field without prior credentials.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">cert</span><span class="tc-tag">entry-level</span><span class="tc-tag">DoD baseline</span></div>
+          <a class="tc-link" href="https://www.comptia.org" target="_blank" rel="noopener">comptia.org</a>
+        </div>
+      </div>
+
+      <!-- SANS -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">SANS</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Professional Training</div>
+            <div class="tc-name">SANS Institute</div>
+          </div>
+        </div>
+        <div class="tc-desc">The most respected technical security training organization in the world. GIAC certifications (GCIH, GPEN, GREM, etc.) are elite credentials. Courses are taught by active practitioners. Expensive — but employers pay for it, and courses regularly define the standard for their domains. If budget allows, SANS is the best training money can buy.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">elite</span><span class="tc-tag">GIAC</span><span class="tc-tag">paid</span></div>
+          <a class="tc-link" href="https://www.sans.org" target="_blank" rel="noopener">sans.org</a>
+        </div>
+      </div>
+
+      <!-- OffSec / OSCP -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">OS</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Certification</div>
+            <div class="tc-name">Offensive Security (OSCP)</div>
+          </div>
+        </div>
+        <div class="tc-desc">Makers of Kali Linux and the OSCP certification — the gold standard for penetration testers. The 24-hour exam requires exploiting real machines, not answering multiple choice questions. Holding an OSCP signals to employers that you can actually hack, not just study about it. Also offers OSWP (wireless) and OSED (exploit dev).</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">pentest</span><span class="tc-tag">hands-on exam</span><span class="tc-tag">paid</span></div>
+          <a class="tc-link" href="https://www.offsec.com" target="_blank" rel="noopener">offsec.com</a>
+        </div>
+      </div>
+
+      <!-- PortSwigger Web Security Academy -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">PSW</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Web Security</div>
+            <div class="tc-name">Web Security Academy</div>
+          </div>
+        </div>
+        <div class="tc-desc">PortSwigger's completely free, comprehensive web security training platform. Covers every OWASP category with detailed labs, explanations, and real exploitation scenarios. Built by the same team that makes Burp Suite. Arguably the best free web security resource that exists — no subscription, no ads, no paywalls.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">web</span><span class="tc-tag">OWASP</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://portswigger.net/web-security" target="_blank" rel="noopener">portswigger.net</a>
+        </div>
+      </div>
+
+      <!-- (ISC)² / CISSP -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">ISC</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Certification</div>
+            <div class="tc-name">(ISC)² — CISSP</div>
+          </div>
+        </div>
+        <div class="tc-desc">The Certified Information Systems Security Professional is the most recognized senior-level security credential globally. Required or preferred for leadership roles, government contracts, and CISO positions. (ISC)² also offers CC (free entry cert), SSCP, and CCSP for cloud. CISSP signals strategic security management depth.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">cert</span><span class="tc-tag">senior level</span><span class="tc-tag">paid</span></div>
+          <a class="tc-link" href="https://www.isc2.org" target="_blank" rel="noopener">isc2.org</a>
+        </div>
+      </div>
+
+      <!-- MITRE ATT&CK -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">ATT</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Framework</div>
+            <div class="tc-name">MITRE ATT&amp;CK</div>
+          </div>
+        </div>
+        <div class="tc-desc">The globally adopted adversary tactics, techniques, and procedures (TTP) knowledge base. Used by blue teams to build detection coverage, red teams to structure engagements, and threat intel teams to map actor behavior. Understanding ATT&CK is table stakes for any defensive or offensive security role today.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">framework</span><span class="tc-tag">threat intel</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://attack.mitre.org" target="_blank" rel="noopener">attack.mitre.org</a>
+        </div>
+      </div>
+
+      <!-- Cybrary -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">CY</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Online Courses</div>
+            <div class="tc-name">Cybrary</div>
+          </div>
+        </div>
+        <div class="tc-desc">Online platform offering structured cybersecurity courses aligned to specific job roles and certifications. Good library of SOC analyst, incident response, and cert-prep content. Career path features and assessments help learners gauge readiness. The free tier covers substantial content, with Pro unlocking labs and more advanced material.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">courses</span><span class="tc-tag">cert prep</span><span class="tc-tag">free/paid</span></div>
+          <a class="tc-link" href="https://www.cybrary.it" target="_blank" rel="noopener">cybrary.it</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ SECTION 3: COMMUNITY -->
+<section class="section sec-green" id="community">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="sh-num">03</div>
+      <div class="sh-text">
+        <div class="sh-label">People & Networks</div>
+        <div class="sh-title">COMMUNITY</div>
+        <div class="sh-desc">The conferences, organizations, and information channels where the field meets, debates, and evolves. Strong community presence in San Diego — a city with deep military, defense, and tech security roots.</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- DEF CON -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">DC</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Conference</div>
+            <div class="tc-name">DEF CON</div>
+          </div>
+        </div>
+        <div class="tc-desc">The world's largest underground hacking conference, held annually in Las Vegas. 30,000+ attendees. Villages for every specialty — hardware, social engineering, ICS/SCADA, AI security. Where researchers publish findings that reshape the field. Born in 1993 from a farewell party and still the heartbeat of the hacker community.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">Las Vegas</span><span class="tc-tag">annual</span><span class="tc-tag">paid</span></div>
+          <a class="tc-link" href="https://defcon.org" target="_blank" rel="noopener">defcon.org</a>
+        </div>
+      </div>
+
+      <!-- BSides San Diego -->
+      <div class="sd-card tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">BSD</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Conference — San Diego</div>
+            <div class="tc-name">BSides San Diego</div>
+          </div>
+        </div>
+        <div class="tc-desc">Part of the global Security BSides movement — community-driven, practitioner-focused security conferences that run as an alternative track to larger events. BSides San Diego brings together the local security community for talks, workshops, and networking at an accessible price. A genuine grassroots conference by and for the San Diego security scene.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">San Diego</span><span class="tc-tag">community</span><span class="tc-tag">affordable</span></div>
+          <a class="tc-link" href="https://www.bsidessd.org" target="_blank" rel="noopener">bsidessd.org</a>
+        </div>
+      </div>
+
+      <!-- ISSA San Diego -->
+      <div class="sd-card tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">ISSA</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Professional Org — San Diego</div>
+            <div class="tc-name">ISSA San Diego</div>
+          </div>
+        </div>
+        <div class="tc-desc">The Information Systems Security Association's San Diego chapter — one of the most active in the country, given the region's defense industry concentration. Monthly chapter meetings, speaker events, and networking with practitioners from defense contractors, government agencies, and the private sector. A professional development anchor for SD-based security careers.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">San Diego</span><span class="tc-tag">professional</span><span class="tc-tag">membership</span></div>
+          <a class="tc-link" href="https://www.issa-sd.org" target="_blank" rel="noopener">issa-sd.org</a>
+        </div>
+      </div>
+
+      <!-- CCOE San Diego -->
+      <div class="sd-card tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">CCOE</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Initiative — San Diego</div>
+            <div class="tc-name">Cyber Center of Excellence</div>
+          </div>
+        </div>
+        <div class="tc-desc">San Diego's nonprofit hub for cybersecurity workforce development, industry collaboration, and public-private partnership. Bridges academia, defense, and private sector to grow the regional cyber ecosystem. Hosts the annual Cyber Summit San Diego, workforce programs, and K-12 outreach. San Diego's anchor institution for developing the next generation of cyber talent.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">San Diego</span><span class="tc-tag">workforce</span><span class="tc-tag">nonprofit</span></div>
+          <a class="tc-link" href="https://www.sdccoe.org" target="_blank" rel="noopener">sdccoe.org</a>
+        </div>
+      </div>
+
+      <!-- OWASP San Diego -->
+      <div class="sd-card tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">OW</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Chapter — San Diego</div>
+            <div class="tc-name">OWASP San Diego</div>
+          </div>
+        </div>
+        <div class="tc-desc">Local chapter of the Open Worldwide Application Security Project. Regular meetups with talks on application security, secure development, and web vulnerability research. Free to attend. OWASP's globally recognized resources — the Top 10, WSTG, SAMM — form the vocabulary of application security. The chapter connects SD devs and security engineers around shared application security practice.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">San Diego</span><span class="tc-tag">AppSec</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://owasp.org/www-chapter-san-diego" target="_blank" rel="noopener">owasp.org</a>
+        </div>
+      </div>
+
+      <!-- InfraGard San Diego -->
+      <div class="sd-card tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">IG</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Public-Private — San Diego</div>
+            <div class="tc-name">InfraGard San Diego</div>
+          </div>
+        </div>
+        <div class="tc-desc">FBI-partnered public-private partnership focused on protecting US critical infrastructure. San Diego's chapter benefits from the city's strong military and defense contractor presence. Members receive threat intelligence briefings and access to FBI resources. Particularly relevant for professionals working in defense, energy, transportation, or healthcare sectors in the region.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">San Diego</span><span class="tc-tag">FBI</span><span class="tc-tag">critical infra</span></div>
+          <a class="tc-link" href="https://www.infragard.org" target="_blank" rel="noopener">infragard.org</a>
+        </div>
+      </div>
+
+      <!-- The Hacker News -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">THN</div>
+          <div class="tc-meta">
+            <div class="tc-badge">News</div>
+            <div class="tc-name">The Hacker News</div>
+          </div>
+        </div>
+        <div class="tc-desc">The most widely read cybersecurity news publication. Covers breaches, vulnerabilities, malware, APT activity, and policy in accessible, timely articles. A daily read for practitioners across every specialty. Following THN is one of the easiest ways to maintain situational awareness of the current threat landscape without spending hours sifting through raw feeds.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">news</span><span class="tc-tag">daily</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://thehackernews.com" target="_blank" rel="noopener">thehackernews.com</a>
+        </div>
+      </div>
+
+      <!-- Krebs on Security -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">KOS</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Blog / Journalism</div>
+            <div class="tc-name">Krebs on Security</div>
+          </div>
+        </div>
+        <div class="tc-desc">Brian Krebs's independent investigative security journalism — deep, sourced, often breaking major breach stories before any mainstream outlet. Former Washington Post reporter turned independent researcher. Krebs has broken or substantially advanced stories on Target, Home Depot, Yahoo, and dozens of cybercriminal operations. Required reading for anyone who wants to understand how breaches actually work.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">journalism</span><span class="tc-tag">breaches</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://krebsonsecurity.com" target="_blank" rel="noopener">krebsonsecurity.com</a>
+        </div>
+      </div>
+
+      <!-- Black Hat -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">BH</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Conference</div>
+            <div class="tc-name">Black Hat USA</div>
+          </div>
+        </div>
+        <div class="tc-desc">The world's premier security research conference, held annually in Las Vegas alongside DEF CON. Briefings present cutting-edge offensive and defensive research reviewed by an independent board. Trainings run the week before. Vendor floor, government presence, and senior practitioners. Where the industry's most consequential disclosures go on the record.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">Las Vegas</span><span class="tc-tag">research</span><span class="tc-tag">paid</span></div>
+          <a class="tc-link" href="https://www.blackhat.com" target="_blank" rel="noopener">blackhat.com</a>
+        </div>
+      </div>
+
+      <!-- r/netsec -->
+      <div class="tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">R/</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Online Community</div>
+            <div class="tc-name">r/netsec</div>
+          </div>
+        </div>
+        <div class="tc-desc">Reddit's technical information security community — high signal-to-noise ratio, strict rules against low-quality posts. Where researchers share new tools, vulnerability writeups, and threat intelligence. Complements THN by surfacing practitioner-written technical content. Also check r/homelab, r/AskNetsec, and r/cybersecurity for adjacent communities with different depth levels.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">Reddit</span><span class="tc-tag">community</span><span class="tc-tag">free</span></div>
+          <a class="tc-link" href="https://reddit.com/r/netsec" target="_blank" rel="noopener">reddit.com/r/netsec</a>
+        </div>
+      </div>
+
+      <!-- ISACA San Diego -->
+      <div class="sd-card tool-card">
+        <div class="tc-header">
+          <div class="tc-icon">ISA</div>
+          <div class="tc-meta">
+            <div class="tc-badge">Professional Org — San Diego</div>
+            <div class="tc-name">ISACA San Diego</div>
+          </div>
+        </div>
+        <div class="tc-desc">San Diego chapter of ISACA — the global association focused on IT governance, audit, risk, and security. Home of the CISA, CISM, and CRISC certifications prized in compliance, audit, and GRC roles. The SD chapter holds events and CPE opportunities tailored to the region's blend of defense, healthcare, and biotech industries. Essential for GRC-track professionals in the area.</div>
+        <div class="tc-footer">
+          <div class="tc-tags"><span class="tc-tag">San Diego</span><span class="tc-tag">GRC</span><span class="tc-tag">membership</span></div>
+          <a class="tc-link" href="https://engage.isaca.org/sandiegochapter/home" target="_blank" rel="noopener">isaca.org</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div id="ftr">
+  <div id="ftr-left">INFOSEC//RESOURCES &nbsp;·&nbsp; 3 SECTIONS &nbsp;·&nbsp; 30+ ENTRIES</div>
+  <a href="main.html" class="btn-home">&#8592; Home</a>
+</div>
+
+</body>
+</html>
