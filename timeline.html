@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFOSEC EVENTS TIMELINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --red-300: #f4908b;
+      --red-400: #ea6f69;
+      --red-500: #e8615a;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-400: #5eeef3;
+      --cyan-500: #2be4ea;
+      --cyan-900: #0d3336;
+      --green-400: #5afeba;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --purple-500: #c084fc;
+      --text-secondary: #b09090;
+      --text-muted:     #907878;
+      --font-display: "VT323", monospace;
+      --font-ui:      "Rajdhani", sans-serif;
+      --font-mono:    "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 24px rgba(232,97,90,0.35);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 24px rgba(43,228,234,0.35);
+      --glow-green:  0 0 8px var(--green-500),  0 0 24px rgba(43,254,160,0.35);
+      --glow-yellow: 0 0 8px var(--yellow-500), 0 0 24px rgba(254,211,63,0.35);
+      --glow-orange: 0 0 8px var(--orange-500), 0 0 24px rgba(255,154,40,0.35);
+      --glow-purple: 0 0 8px var(--purple-500), 0 0 24px rgba(192,132,252,0.35);
+      --notch: 12px;
+      --notch-path: polygon(0 0,100% 0,100% calc(100% - var(--notch)),calc(100% - var(--notch)) 100%,0 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      display: flex; flex-direction: column;
+      background: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse 60% 40% at 15% 0%, rgba(60,24,26,0.55) 0%, transparent 100%),
+        radial-gradient(ellipse 60% 40% at 85% 100%, rgba(13,51,54,0.4) 0%, transparent 100%);
+      color: var(--red-300);
+      font-family: var(--font-ui);
+      user-select: none;
+    }
+
+    /* scanlines */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.045) 0px, rgba(0,0,0,0.045) 1px,
+        transparent 1px, transparent 3px
+      );
+    }
+
+    ::-webkit-scrollbar { display: none; }
+
+    /* ── HEADER ────────────────────────────────────────────────── */
+    #hdr {
+      flex-shrink: 0; height: 52px;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 1.5rem;
+      background: rgba(13,10,13,0.9);
+      border-bottom: 1px solid var(--red-900);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 30px rgba(232,97,90,0.1);
+      z-index: 10;
+    }
+    #hdr-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--red-500); text-shadow: var(--glow-red);
+      letter-spacing: 0.04em; flex: 1;
+    }
+    #hdr-title span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    #hdr-sub {
+      font-family: var(--font-mono); font-size: 0.74rem;
+      color: var(--text-muted); letter-spacing: 0.1em;
+    }
+
+    .nav-btn {
+      font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em;
+      color: var(--text-secondary); background: transparent;
+      border: 1px solid var(--red-800); padding: 0.3rem 0.85rem;
+      cursor: pointer; clip-path: var(--notch-path);
+      transition: color .15s, border-color .15s, box-shadow .15s;
+    }
+    .nav-btn:hover, .nav-btn:active {
+      color: var(--cyan-500); border-color: var(--cyan-500);
+      box-shadow: var(--glow-cyan);
+    }
+    #pause-btn {
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
+      color: var(--red-800); background: transparent; border: none;
+      cursor: pointer; padding: 0.2rem 0.4rem;
+      transition: color .15s;
+    }
+    #pause-btn:hover { color: var(--yellow-500); }
+
+    /* ── STAGE (card + timeline) ───────────────────────────────── */
+    #stage {
+      flex: 1; display: flex; flex-direction: column;
+      min-height: 0; position: relative;
+      opacity: 1; transition: opacity 0.5s;
+    }
+    #stage.fade { opacity: 0; }
+
+    /* ── EVENT CARD AREA ───────────────────────────────────────── */
+    #card-area {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem 2rem 1rem; min-height: 0;
+      position: relative;
+    }
+
+    #event-card {
+      width: 100%; max-width: 900px;
+      background: rgba(25,26,30,0.92);
+      border: 1px solid var(--card-color, var(--red-800));
+      clip-path: var(--notch-path);
+      box-shadow: 0 0 30px rgba(0,0,0,0.5),
+                  inset 0 1px 0 rgba(255,255,255,0.03);
+      padding: 1.4rem 1.6rem 1rem;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease,
+                  border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    #event-card.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    #ev-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.6rem; }
+    #ev-badge {
+      font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.14em;
+      padding: 0.22rem 0.65rem; border: 1px solid;
+      color: var(--card-color, var(--red-500));
+      border-color: var(--card-color, var(--red-700));
+      background: rgba(0,0,0,0.3);
+      clip-path: var(--notch-path);
+      flex-shrink: 0; margin-top: 0.3rem;
+    }
+    #ev-year {
+      font-family: var(--font-display); font-size: 5.5rem; line-height: 1;
+      color: var(--card-color, var(--red-500));
+      filter: drop-shadow(0 0 16px var(--card-color, var(--red-500)));
+    }
+    #ev-title {
+      font-family: var(--font-ui); font-size: 1.9rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #e8e0f0; margin-bottom: 0.5rem;
+      line-height: 1.15;
+    }
+    #ev-rule {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, var(--card-color, var(--red-800)), transparent);
+      margin-bottom: 0.85rem;
+    }
+    #ev-blurb {
+      font-family: var(--font-mono); font-size: 0.98rem; line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    /* dwell progress bar */
+    #dwell-wrap {
+      margin-top: 1rem; height: 2px;
+      background: rgba(255,255,255,0.05);
+    }
+    #dwell-fill {
+      height: 100%; width: 0%;
+      background: var(--card-color, var(--red-500));
+      box-shadow: 0 0 6px var(--card-color, var(--red-500));
+      transition: width 0.1s linear;
+    }
+
+    /* connector line from card to timeline */
+    #connector {
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-0.5px);
+      width: 1px; height: 1.2rem;
+      background: linear-gradient(to bottom, var(--card-color, var(--red-700)), transparent);
+      pointer-events: none; z-index: 2;
+    }
+
+    /* ── TIMELINE AREA ─────────────────────────────────────────── */
+    #timeline-area {
+      flex-shrink: 0; height: 50vh;
+      position: relative; overflow: hidden;
+      border-top: 1px solid var(--red-900);
+    }
+
+    /* spotlight in center */
+    #spotlight {
+      position: absolute; top: 0; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 300px; pointer-events: none; z-index: 6;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(43,228,234,0.04) 25%,
+        rgba(43,228,234,0.07) 50%,
+        rgba(43,228,234,0.04) 75%,
+        transparent 100%);
+      border-left: 1px solid rgba(43,228,234,0.15);
+      border-right: 1px solid rgba(43,228,234,0.15);
+    }
+    /* vertical center line */
+    #spotlight::after {
+      content: '▼';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.55rem; color: rgba(43,228,234,0.4);
+      line-height: 1;
+    }
+
+    /* fades at edges */
+    #timeline-area::before,
+    #timeline-area::after {
+      content: ''; position: absolute; top: 0; bottom: 0; z-index: 7; pointer-events: none;
+      width: 120px;
+    }
+    #timeline-area::before { left: 0; background: linear-gradient(90deg, var(--bg-800), transparent); }
+    #timeline-area::after  { right: 0; background: linear-gradient(270deg, var(--bg-800), transparent); }
+
+    /* the scrolling track */
+    #tl-track {
+      position: absolute; top: 0; bottom: 0; left: 0;
+      will-change: transform;
+    }
+
+    /* horizontal line — positioned at 38% of timeline area height */
+    #tl-line {
+      position: absolute; top: 38%; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0,
+        var(--red-800) 60px,
+        var(--red-800) calc(100% - 60px),
+        transparent 100%);
+    }
+
+    /* era label */
+    .era-label {
+      position: absolute; top: 8%;
+      font-family: var(--font-display); font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      transform: translateX(-50%);
+      pointer-events: none; z-index: 2;
+    }
+
+    /* event node */
+    .enode {
+      position: absolute; top: 0; bottom: 0;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      width: 100px; z-index: 4;
+      transition: opacity 0.4s;
+    }
+    .enode-dot {
+      position: absolute; top: 38%;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: var(--node-color, var(--red-800));
+      border: 1px solid var(--node-color, var(--red-700));
+      transform: translateY(-50%);
+      transition: all 0.3s;
+    }
+    .enode-year {
+      position: absolute; top: calc(38% + 20px);
+      font-family: var(--font-mono); font-size: 0.9rem;
+      color: var(--text-muted); letter-spacing: 0.07em;
+      white-space: nowrap; font-weight: 600;
+    }
+    .enode-title {
+      position: absolute; top: calc(38% + 40px);
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: transparent; letter-spacing: 0.04em;
+      white-space: nowrap; max-width: 140px;
+      text-align: center; overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.3s;
+    }
+
+    /* active node */
+    .enode.active .enode-dot {
+      width: 22px; height: 22px;
+      box-shadow: 0 0 0 4px rgba(43,228,234,0.15),
+                  0 0 16px var(--node-color, var(--cyan-500)),
+                  0 0 40px var(--node-color, var(--cyan-500));
+      border-color: var(--node-color, var(--cyan-500));
+      background: var(--node-color, var(--cyan-500));
+    }
+    .enode.active .enode-year { color: var(--cyan-400); font-weight: 700; font-size: 1rem; }
+    .enode.active .enode-title { color: var(--cyan-500); font-size: 0.78rem; }
+
+    /* past/near/future node styles */
+    .enode.past   { opacity: 0.3; }
+    .enode.near   { opacity: 0.75; }
+    .enode.near .enode-dot { width: 16px; height: 16px; }
+    .enode.future { opacity: 0.45; }
+
+    /* pulse on active node */
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 3px rgba(43,228,234,0.15), 0 0 0 0 rgba(43,228,234,0.4); }
+      70%  { box-shadow: 0 0 0 3px rgba(43,228,234,0.15), 0 0 0 12px rgba(43,228,234,0); }
+      100% { box-shadow: 0 0 0 3px rgba(43,228,234,0.15), 0 0 0 0 rgba(43,228,234,0); }
+    }
+    .enode.active .enode-dot { animation: pulse-ring 2s ease-out infinite; }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    #ftr {
+      flex-shrink: 0; height: 42px;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 1.5rem;
+      background: rgba(13,10,13,0.85);
+      border-top: 1px solid var(--red-900);
+      z-index: 10;
+    }
+    #ftr-counter {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--text-muted); letter-spacing: 0.08em;
+      flex-shrink: 0;
+    }
+    #ftr-counter span { color: var(--red-400); }
+    #ftr-bar-wrap {
+      flex: 1; height: 3px; background: var(--red-900);
+      position: relative; overflow: visible;
+    }
+    #ftr-bar {
+      height: 100%; background: var(--red-700);
+      transition: width 0.4s ease;
+    }
+    #ftr-bar-dot {
+      position: absolute; right: 0; top: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--red-500);
+      transform: translate(50%, -50%);
+      box-shadow: var(--glow-red);
+    }
+    #loop-badge {
+      font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.1em;
+      color: var(--red-800); flex-shrink: 0;
+    }
+    #loop-badge.active { color: var(--cyan-500); }
+    #speed-btn {
+      font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em;
+      color: var(--text-muted); background: transparent; border: none;
+      cursor: pointer; padding: 0.15rem 0.4rem;
+      transition: color .15s;
+    }
+    #speed-btn:hover { color: var(--yellow-500); }
+
+    /* ── GLITCH ANIM (title) ───────────────────────────────────── */
+    @keyframes glitch {
+      0%,100% { clip-path: none; transform: none; }
+      92%     { clip-path: none; transform: none; }
+      93%     { clip-path: polygon(0 20%,100% 20%,100% 35%,0 35%); transform: translateX(-3px); }
+      94%     { clip-path: polygon(0 60%,100% 60%,100% 75%,0 75%); transform: translateX(3px); }
+      95%     { clip-path: none; transform: none; }
+    }
+    #hdr-title { animation: glitch 8s step-end infinite; }
+
+    /* ── TOUCH HINT ────────────────────────────────────────────── */
+    #touch-hint {
+      position: fixed; bottom: 42px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono); font-size: 0.6rem;
+      color: var(--red-800); letter-spacing: 0.1em;
+      pointer-events: none; z-index: 20;
+      opacity: 1; transition: opacity 1s;
+    }
+    #touch-hint.gone { opacity: 0; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="hdr">
+  <div id="hdr-title">INFOSEC<span>//</span>TIMELINE</div>
+  <div id="hdr-sub">MAJOR HACKING &amp; SECURITY EVENTS · 1971–PRESENT</div>
+  <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">◄ PREV</button>
+  <button id="pause-btn" onclick="togglePause()" title="Pause/Resume">⏸</button>
+  <button class="nav-btn" id="next-btn" onclick="navigate(1)">NEXT ►</button>
+</div>
+
+<!-- STAGE -->
+<div id="stage">
+
+  <!-- EVENT CARD -->
+  <div id="card-area">
+    <div id="event-card">
+      <div id="ev-header">
+        <div id="ev-badge">LOADING</div>
+        <div>
+          <div id="ev-year">----</div>
+          <div id="ev-title">INITIALIZING…</div>
+        </div>
+      </div>
+      <hr id="ev-rule">
+      <div id="ev-blurb"></div>
+      <div id="dwell-wrap"><div id="dwell-fill"></div></div>
+    </div>
+    <div id="connector"></div>
+  </div>
+
+  <!-- TIMELINE STRIP -->
+  <div id="timeline-area">
+    <div id="spotlight"></div>
+    <div id="tl-track">
+      <div id="tl-line"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div id="ftr">
+  <div id="ftr-counter">EVENT <span id="ev-num">1</span> / <span id="ev-total">--</span></div>
+  <div id="ftr-bar-wrap">
+    <div id="ftr-bar" style="width:0%"></div>
+    <div id="ftr-bar-dot"></div>
+  </div>
+  <button id="speed-btn" onclick="cycleSpeed()">1× SPEED</button>
+  <div id="loop-badge">↺ LOOP</div>
+</div>
+
+<div id="touch-hint">⟵ SWIPE TO NAVIGATE ⟶</div>
+
+<script>
+// ── EVENTS ────────────────────────────────────────────────────
+const EVENTS = [
+  { year:1971, title:"CREEPER WORM", cat:"WORM", clr:"cyan",
+    blurb:"Bob Thomas at BBN Technologies writes Creeper, an experimental self-replicating program that moves across ARPANET printing \"I'M THE CREEPER: CATCH ME IF YOU CAN!\" Ray Tomlinson later writes Reaper to hunt and delete it — making Reaper history's first antivirus program. The era of malware quietly begins." },
+  { year:1973, title:"PHONE PHREAKING", cat:"HACK", clr:"yellow",
+    blurb:"John Draper — alias 'Captain Crunch' — discovers a toy whistle in Cap'n Crunch cereal emits a precise 2600Hz tone that seizes AT&T long-distance lines for free calls. Phreakers build 'blue boxes' to exploit telephone switching tones, pioneering the hacker ethos of exploring and subverting systems for the thrill of access." },
+  { year:1983, title:"WARGAMES FILM", cat:"CULTURE", clr:"purple",
+    blurb:"The film WarGames depicts a teenager hacking into NORAD and nearly triggering World War III. President Reagan watches it and asks his senior advisors: \"Could something like this actually happen?\" The answer is yes. Within three years Congress passes the Computer Fraud and Abuse Act, and cybersecurity becomes a national policy concern for the first time." },
+  { year:1984, title:"2600 MAGAZINE", cat:"CULTURE", clr:"purple",
+    blurb:"Emmanuel Goldstein launches 2600: The Hacker Quarterly, named after the phreaking tone. For decades the magazine serves as the voice of the hacker underground — covering exploits, civil liberties, and the philosophy that information wants to be free. Still published today, it has outlasted nearly every institution that tried to suppress it." },
+  { year:1984, title:"CHAOS COMPUTER CLUB STUNT", cat:"HACK", clr:"yellow",
+    blurb:"The Chaos Computer Club in Hamburg exploits Germany's Bildschirmtext network to transfer 134,000 DM from a bank to the CCC's account. They return the funds and call a press conference — pioneering the tradition of responsible, publicity-driven disclosure. The CCC becomes Europe's most influential hacker collective and remains so 40 years later." },
+  { year:1986, title:"BRAIN VIRUS", cat:"MALWARE", clr:"red",
+    blurb:"Pakistani brothers Basit and Amjad Alvi release Brain, widely considered the first PC virus spread in the wild. Built as copy protection for medical software, Brain infects IBM PC boot sectors and propagates via floppy disk. Within months it spreads globally — the unwitting opening shot of the computer virus era." },
+  { year:1986, title:"COMPUTER FRAUD & ABUSE ACT", cat:"LEGISLATION", clr:"green",
+    blurb:"Spurred by WarGames and growing computer crime, Congress passes the CFAA. The law criminalizes unauthorized access to computers and networks, and has been used to prosecute everyone from hackers to security researchers. Critics argue its vague language over-criminalizes legitimate research. It remains the primary US federal cybercrime statute nearly 40 years later." },
+  { year:1986, title:"THE HANNOVER HACKERS", cat:"ESPIONAGE", clr:"orange",
+    blurb:"Astronomer Cliff Stoll tracks a $0.75 accounting discrepancy at Lawrence Berkeley Lab to a West German hacker selling US military secrets to the KGB. Documented in his book The Cuckoo's Egg, it's the first documented case of cyber espionage — and the first time a nation-state is caught using computer intrusion to gather intelligence." },
+  { year:1988, title:"MORRIS WORM", cat:"WORM", clr:"cyan",
+    blurb:"Cornell grad student Robert Tappan Morris releases the first worm to gain widespread attention, infecting ~6,000 UNIX machines — roughly 10% of the internet at the time. Morris is convicted under the CFAA, the first person ever prosecuted under the law. The incident directly triggers the creation of CERT/CC, the world's first computer emergency response team." },
+  { year:1989, title:"AIDS TROJAN", cat:"RANSOMWARE", clr:"yellow",
+    blurb:"Biologist Joseph Popp mails 20,000 floppy disks labeled 'AIDS Information – Introductory Diskettes' to WHO conference attendees worldwide. After 90 reboots the disk encrypts filenames and demands $189 sent to a Panama P.O. box. It is the world's first ransomware attack — 28 years before ransomware becomes a billion-dollar criminal industry." },
+  { year:1990, title:"OPERATION SUNDEVIL", cat:"LAW ENFORCEMENT", clr:"green",
+    blurb:"The US Secret Service executes raids in 14 cities, seizing computers from hackers suspected of phone fraud and credit card theft. The crackdown — and its perceived heavy-handedness toward innocent bystanders — directly inspires Mitch Kapor and John Perry Barlow to co-found the Electronic Frontier Foundation (EFF), which becomes the leading digital civil liberties organization." },
+  { year:1993, title:"DEFCON FOUNDED", cat:"CULTURE", clr:"purple",
+    blurb:"Dark Tangent (Jeff Moss) organizes the first DEF CON in Las Vegas as a one-time farewell party for a hacker BBS community. It becomes the world's largest underground hacking conference, eventually drawing 30,000+ annual attendees. For decades it serves as the proving ground where researchers publish findings that force the security industry to confront its most uncomfortable truths." },
+  { year:1994, title:"CITIBANK HACK", cat:"BREACH", clr:"red",
+    blurb:"Russian programmer Vladimir Levin leads a gang that compromises Citibank's fund transfer system, diverting $10 million to accounts across the globe. One of the first major online bank heists, it shocks the financial industry into taking network security seriously. Citibank recovers most funds; Levin is extradited to the US and sentenced to three years in prison." },
+  { year:1995, title:"KEVIN MITNICK ARRESTED", cat:"HACK", clr:"cyan",
+    blurb:"The FBI arrests Kevin Mitnick — branded 'the most wanted computer criminal in US history' — after a dramatic cat-and-mouse pursuit involving hacker Tsutomu Shimomura. Mitnick had broken into Motorola, Nokia, Sun, and a dozen other companies. He serves five years before emerging as a celebrated security consultant and author, redefining what a 'reformed hacker' could be." },
+  { year:1997, title:"BLACK HAT FOUNDED", cat:"CULTURE", clr:"purple",
+    blurb:"Jeff Moss launches Black Hat Briefings as a more corporate companion to DEF CON. It evolves into the world's premier security research conference — where researchers, government agencies, and vendors converge annually. Black Hat Las Vegas has been the venue for some of the most consequential public vulnerability disclosures in history, from Cisco IOS to iPhone baseband." },
+  { year:1998, title:"BACK ORIFICE RELEASED", cat:"MALWARE", clr:"red",
+    blurb:"Cult of the Dead Cow releases Back Orifice at DEF CON, a remote administration tool that exposes Windows' systemic security failures to widespread ridicule of Microsoft. The tool demonstrates that remote control of Windows machines is trivially achievable. Its successor BO2k popularizes RATs as an attack category and forces Microsoft to begin taking operating system security seriously." },
+  { year:1999, title:"MELISSA VIRUS", cat:"WORM", clr:"yellow",
+    blurb:"David Smith releases Melissa, a macro virus spreading via infected Word documents emailed to the first 50 contacts in the victim's Outlook address book. Within three days it overwhelms email servers at hundreds of corporations worldwide, causing an estimated $80 million in damage. Smith is sentenced to 20 months in federal prison — the first significant prison sentence for malware authorship." },
+  { year:2000, title:"ILOVEYOU WORM", cat:"WORM", clr:"red",
+    blurb:"The 'Love Bug' erupts from the Philippines as an email attachment, infecting 10 million Windows PCs in a single day and overwriting files with copies of itself. Estimated damages reach $10 billion — the costliest worm to that point. Creators Onel de Guzman and Reonel Ramones are never charged; the Philippines had no cybercrime law. Congress immediately begins drafting one for the US." },
+  { year:2000, title:"MAFIABOY DDOS ATTACKS", cat:"ATTACK", clr:"orange",
+    blurb:"15-year-old Michael Calce (MafiaBoy) takes down Yahoo, Amazon, Dell, CNN, and eBay with coordinated DDoS attacks, causing an estimated $1.7 billion in disruption. The attacks shock corporate America: a Canadian teenager with a home internet connection had taken down the most-visited sites on the web. It forces the industry to confront the threat of volumetric denial-of-service attacks." },
+  { year:2001, title:"CODE RED WORM", cat:"WORM", clr:"cyan",
+    blurb:"Code Red exploits a buffer overflow in Microsoft IIS, infecting 360,000 machines in just 14 hours and defacing websites with 'HACKED BY CHINESE.' It launches a DDoS against the White House IP address. Its rapid spread makes it the most damaging worm to date — and demonstrates that the window between patch release and widespread exploitation had collapsed to near-zero." },
+  { year:2003, title:"SQL SLAMMER", cat:"WORM", clr:"red",
+    blurb:"At just 376 bytes — small enough to fit in a single UDP packet — SQL Slammer is the smallest worm ever written. In under 10 minutes it infects 75,000 unpatched SQL Server systems and doubles in size every 8.5 seconds, consuming half the internet's backbone bandwidth. It knocks out 911 call centers, ATMs, and airline check-in systems, all from a vulnerability patched six months prior." },
+  { year:2004, title:"MYDOOM WORM", cat:"WORM", clr:"cyan",
+    blurb:"MyDoom becomes the fastest-spreading email worm in history at its release, infecting 1–2 million PCs and generating a flood of infected emails representing 25% of all email traffic. It creates a massive botnet used to DDoS SCO Group and Microsoft and installs backdoors on every infected machine. Its author is never identified — MyDoom remains one of the most expensive pieces of malware ever." },
+  { year:2007, title:"ESTONIA CYBERATTACKS", cat:"NATION-STATE", clr:"orange",
+    blurb:"Following the relocation of a Soviet war memorial, a three-week cyberattack attributed to Russia knocks out Estonian government, media, and banking websites — the first major demonstration of a nation using cyber operations to punish a smaller neighbor. NATO establishes the Cooperative Cyber Defence Centre of Excellence in Tallinn. It's the first recognized act of state-level cyberwarfare in history." },
+  { year:2007, title:"TJX DATA BREACH", cat:"BREACH", clr:"red",
+    blurb:"Hacker Albert Gonzalez and associates breach TJX Companies (T.J. Maxx and Marshalls) via unsecured in-store Wi-Fi, stealing data from 45+ million credit cards over 18 months. The largest retail breach to that point, it forces the retail and banking industries to adopt PCI-DSS compliance as standard practice and results in tens of millions in settlements." },
+  { year:2008, title:"CONFICKER WORM", cat:"WORM", clr:"yellow",
+    blurb:"Conficker infects an estimated 15 million Windows machines using multiple propagation methods — exploiting a Windows vulnerability, weak passwords, and USB AutoRun. Despite creating the largest known botnet of its era, its ultimate purpose is never established. It mostly watches and waits. The Conficker Working Group — an unprecedented cross-industry response — becomes a model for coordinated threat response." },
+  { year:2008, title:"ANONYMOUS EMERGES", cat:"HACKTIVISM", clr:"purple",
+    blurb:"Project Chanology — Anonymous's coordinated campaign against the Church of Scientology — marks the collective's transition from 4chan trolls to a recognizable hacktivist force. DDoS attacks, prank calls, and street protests reveal that loosely coordinated online groups can take on established institutions with real-world consequence. Anonymous goes on to become the defining hacktivist entity of the early internet era." },
+  { year:2009, title:"OPERATION AURORA", cat:"NATION-STATE", clr:"orange",
+    blurb:"A sophisticated cyberattack attributed to China's APT1 group targets Google, Adobe, Morgan Stanley, and 30+ other companies, stealing intellectual property and source code. Google's unprecedented public attribution of the attack to China — and its announcement that it may exit the Chinese market — reshapes norms around corporate disclosure of nation-state intrusions, starting a debate that continues today." },
+  { year:2010, title:"STUXNET", cat:"NATION-STATE", clr:"red",
+    blurb:"Stuxnet is discovered quietly destroying centrifuges in Iranian nuclear facilities — a joint US-Israeli cyber weapon that issued malicious commands to industrial control systems while reporting normal operation. The first malware to cause real-world physical destruction, Stuxnet establishes cyberweapons as tools of statecraft and opens the Pandora's box of offensive cyber operations against physical infrastructure. Nothing is the same after." },
+  { year:2011, title:"RSA SECURID BREACH", cat:"BREACH", clr:"cyan",
+    blurb:"Chinese state-sponsored hackers breach RSA Security and steal seed values for 40 million SecurID two-factor authentication tokens. The stolen seeds are later used to compromise Lockheed Martin, Northrop Grumman, and other defense contractors. The breach demonstrates that security infrastructure companies are the highest-value targets — compromising the protector compromises every client downstream." },
+  { year:2011, title:"PLAYSTATION NETWORK BREACH", cat:"BREACH", clr:"red",
+    blurb:"Attackers compromise Sony's PlayStation Network, exposing personal data for 77 million accounts including encrypted credit card numbers. Sony keeps the network offline for 23 days. The incident results in a $15 million class action settlement — and a congressional investigation into Sony's security practices. It's a landmark moment establishing that game companies must be taken seriously as custodians of sensitive personal data." },
+  { year:2011, title:"ANONYMOUS / LULZSEC", cat:"HACKTIVISM", clr:"purple",
+    blurb:"Anonymous and splinter group LulzSec conduct a 50-day operation targeting Sony, HBGary Federal, PBS, Stratfor, and CIA.gov. Their communiqués — written with irreverent bravado — bring hacking back into mainstream consciousness globally. The party ends when FBI informant Sabu secretly cooperates, leading to mass arrests. Their arrests become one of the first major cautionary tales of law enforcement infiltrating hacktivist communities online." },
+  { year:2012, title:"SHAMOON WIPES SAUDI ARAMCO", cat:"NATION-STATE", clr:"orange",
+    blurb:"The Shamoon wiper malware — attributed to Iran — destroys the master boot records and data of 35,000 Saudi Aramco computers in a matter of hours, replacing files with a burning American flag image. Saudi Aramco replaces virtually its entire PC fleet with a near-global purchase of hard drives, briefly spiking drive prices worldwide. It is one of the most destructive cyberattacks ever conducted against a private company." },
+  { year:2013, title:"EDWARD SNOWDEN LEAKS", cat:"ESPIONAGE", clr:"cyan",
+    blurb:"NSA contractor Edward Snowden leaks classified documents revealing PRISM, XKeyscore, MUSCULAR, and other mass surveillance programs collecting metadata on billions of people. The disclosures trigger a global reckoning over government surveillance, mass adoption of encryption and VPNs, and sweeping reforms of intelligence laws in multiple countries. Snowden flees to Russia. The debate over privacy versus security is fundamentally reshaped." },
+  { year:2013, title:"TARGET DATA BREACH", cat:"BREACH", clr:"red",
+    blurb:"Attackers compromise a third-party HVAC contractor's credentials to pivot into Target's network and install malware on 1,800 point-of-sale terminals during the holiday shopping season. 40 million card numbers and 70 million customer records are stolen. Target's CEO and CIO resign. The breach makes third-party vendor risk and supply chain security a boardroom-level priority across retail and finance for years to come." },
+  { year:2014, title:"HEARTBLEED", cat:"VULNERABILITY", clr:"cyan",
+    blurb:"Researchers at Codenomicon and Google discover CVE-2014-0160 — a flaw in OpenSSL's heartbeat extension leaking up to 64KB of server memory per malformed request, potentially exposing private keys, session tokens, and passwords. The bug has existed for two years; two-thirds of active websites are vulnerable. Heartbleed is among the first vulnerabilities to receive a logo and name, establishing the modern era of branded, PR-managed vulnerability disclosure." },
+  { year:2014, title:"SHELLSHOCK", cat:"VULNERABILITY", clr:"yellow",
+    blurb:"Shellshock (CVE-2014-6271) allows attackers to execute arbitrary commands through Bash environment variables, affecting millions of Unix, Linux, macOS, and embedded systems. Exploitation begins within hours of disclosure. The vulnerability dates back to 1989 — meaning it existed in countless production systems for 25 years before anyone noticed. Shellshock triggers a broad reassessment of embedded device security and legacy code maintenance." },
+  { year:2014, title:"SONY PICTURES HACK", cat:"NATION-STATE", clr:"red",
+    blurb:"North Korean APT group Guardians of Peace breaches Sony Pictures, leaking unreleased films, embarrassing executive emails, and employee Social Security numbers. The attack — intended to stop release of the comedy 'The Interview' — destroys 70% of Sony's computers and forces executives onto pen and paper for weeks. The US publicly attributes the attack to North Korea and imposes new sanctions, marking a new era of public attribution of state-level intrusions." },
+  { year:2015, title:"OPM BREACH", cat:"ESPIONAGE", clr:"orange",
+    blurb:"Chinese APT group Deep Panda infiltrates the US Office of Personnel Management and exfiltrates security clearance files for 21.5 million current and former federal employees — including SF-86 forms detailing foreign contacts, psychological vulnerabilities, and family members. Intelligence officials call it the most damaging breach of US government data in history: a perfect manual for targeting and blackmailing America's intelligence apparatus." },
+  { year:2015, title:"ASHLEY MADISON BREACH", cat:"BREACH", clr:"purple",
+    blurb:"The Impact Team hacks Ashley Madison, demanding it shut down or they'll leak 37 million user records. Avid Life Media refuses. The group publishes everything — real names, home addresses, sexual preferences, and credit card transactions. The breach leads to suicides, divorces, extortion campaigns, and widespread public shaming. It forces a fundamental reckoning about what happens when the most intimate personal data becomes a weapon." },
+  { year:2016, title:"BANGLADESH BANK HEIST", cat:"BREACH", clr:"yellow",
+    blurb:"North Korea's Lazarus Group exploits the SWIFT interbank messaging network to fraudulently transfer nearly $1 billion from Bangladesh's central bank. A spelling mistake in a transfer instruction alerts a routing bank in New York, limiting losses to $81 million. The attack reveals SWIFT as a systemic financial attack surface. Lazarus Group would go on to steal over $3 billion in cryptocurrency and bank funds to fund North Korean state programs." },
+  { year:2016, title:"MIRAI BOTNET", cat:"ATTACK", clr:"cyan",
+    blurb:"Mirai malware hijacks hundreds of thousands of consumer IoT devices using factory-default credentials, then launches a 1.2 Tbps DDoS against DNS provider Dyn — taking Twitter, Reddit, Netflix, CNN, and dozens of major sites offline for hours across the US East Coast. The source code is released publicly, spawning dozens of copycat botnets. Mirai establishes IoT as a systemic and largely unaddressed global security crisis." },
+  { year:2016, title:"DNC HACK", cat:"NATION-STATE", clr:"orange",
+    blurb:"Russian GRU hackers (APT28/Fancy Bear and APT29/Cozy Bear) breach the Democratic National Committee and John Podesta's email account. Stolen emails are strategically released through WikiLeaks throughout the US election cycle. Combined with coordinated social media influence campaigns, the operation is assessed by US intelligence as the most sophisticated election interference campaign in history, fundamentally altering cybersecurity's relationship to democratic governance." },
+  { year:2016, title:"YAHOO BREACH REVEALED", cat:"BREACH", clr:"red",
+    blurb:"Yahoo discloses a 2014 breach of 500 million accounts, then weeks later reveals a separate 2013 breach affecting one billion accounts — later revised to all 3 billion Yahoo accounts. The largest breach in history. It nearly unravels Yahoo's $4.8 billion acquisition by Verizon, ultimately reducing the price by $350 million. Yahoo's CISO becomes a symbol of executive accountability failures in corporate security governance." },
+  { year:2017, title:"SHADOW BROKERS LEAK", cat:"ESPIONAGE", clr:"orange",
+    blurb:"The Shadow Brokers release a cache of NSA offensive hacking tools including EternalBlue, which exploits a critical Windows SMB vulnerability. Microsoft had patched it weeks earlier — but patching rates are poor. Within months, EternalBlue powers both WannaCry and NotPetya into history's most destructive worm campaigns. Years later EternalBlue is still among the most actively exploited vulnerabilities on the internet." },
+  { year:2017, title:"WANNACRY RANSOMWARE", cat:"RANSOMWARE", clr:"yellow",
+    blurb:"North Korea's Lazarus Group deploys WannaCry using EternalBlue, encrypting 230,000+ computers across 150 countries in a single day. The UK's NHS is paralyzed — operations cancelled, patients turned away. Losses exceed $4 billion. Security researcher Marcus Hutchins accidentally halts the outbreak by registering a kill-switch domain — and is later arrested in Las Vegas for unrelated prior malware work, in one of cybersecurity's most bittersweet moments." },
+  { year:2017, title:"NOTPETYA", cat:"NATION-STATE", clr:"red",
+    blurb:"Russia's Sandworm unit deploys NotPetya disguised as ransomware against Ukraine via a poisoned update to popular accounting software MeDoc. It spreads globally, wiping data rather than encrypting it. Maersk, FedEx, Merck, and Mondelez suffer combined losses exceeding $10 billion. Widely called the most destructive cyberattack in history, NotPetya permanently elevates critical infrastructure cyber defense as a core national security imperative." },
+  { year:2017, title:"EQUIFAX BREACH", cat:"BREACH", clr:"red",
+    blurb:"Chinese state-affiliated hackers exploit a known Apache Struts vulnerability (CVE-2017-5638) that Equifax failed to patch despite multiple warnings — exfiltrating Social Security numbers, birth dates, and home addresses for 147 million Americans. Equifax's CEO testifies before Congress and is excoriated. The FTC eventually levies a $575 million settlement. The breach becomes the definitive case study in organizational failure to execute basic patch management." },
+  { year:2018, title:"MARRIOTT / STARWOOD BREACH", cat:"BREACH", clr:"orange",
+    blurb:"Marriott discloses that hackers — attributed to China's Ministry of State Security — have resided in Starwood Hotels' network since 2014, predating Marriott's acquisition. The breach exposes passport numbers, credit cards, and travel histories for up to 500 million guests. Intelligence analysts note its primary value is enabling China to track the movements and vulnerabilities of foreign diplomats, intelligence officers, and government officials worldwide." },
+  { year:2019, title:"CAPITAL ONE BREACH", cat:"BREACH", clr:"cyan",
+    blurb:"Former AWS engineer Paige Thompson exploits a misconfigured web application firewall to access Capital One data stored in AWS S3 buckets, stealing records on 100 million US and Canadian customers. The breach spotlights cloud misconfiguration as a leading cause of data exposure — not sophisticated exploitation. Thompson is arrested after boasting about the breach on Slack. Capital One pays an $80 million OCC fine." },
+  { year:2020, title:"SOLARWINDS SUNBURST", cat:"NATION-STATE", clr:"orange",
+    blurb:"Russian SVR hackers compromise SolarWinds' software build pipeline, inserting the SUNBURST backdoor into Orion updates pushed to 18,000 customers including Treasury, State, DoD, DHS, and 425 Fortune 500 companies. Active for nine months before discovery, the operation represents the most consequential software supply chain attack in history — and forces a wholesale rethinking of trust in software update mechanisms globally." },
+  { year:2020, title:"TWITTER BITCOIN HACK", cat:"HACK", clr:"purple",
+    blurb:"Teenagers use social engineering and SIM swapping to compromise Twitter's internal administrative tools, seizing the accounts of Obama, Biden, Musk, Gates, Apple, and Uber to promote a Bitcoin scam. Despite breathtaking audacity — briefly controlling the most powerful megaphones on social media — they earn only $120,000. The incident exposes alarming weaknesses in Twitter's internal access controls that a teenager could exploit with a phone call." },
+  { year:2021, title:"PROXYLOGON", cat:"VULNERABILITY", clr:"cyan",
+    blurb:"Chinese APT group Hafnium exploits four zero-days in Microsoft Exchange Server (ProxyLogon), compromising hundreds of thousands of on-premises mail servers globally before patches arrive. CISA issues an emergency directive. Within days, at least 10 separate APT groups from multiple countries pile onto the same exploits simultaneously — the most chaotic case of parallel nation-state exploitation of a single vulnerability ever recorded." },
+  { year:2021, title:"COLONIAL PIPELINE RANSOMWARE", cat:"RANSOMWARE", clr:"red",
+    blurb:"DarkSide ransomware encrypts Colonial Pipeline's IT systems, prompting the operator to proactively shut down 5,500 miles of pipeline supplying 45% of the US East Coast's fuel. Panic buying and fuel shortages spread; Biden declares a national emergency. Colonial pays $4.4 million ransom. The DOJ later recovers $2.3 million. The attack catalyzes mandatory cybersecurity reporting for critical infrastructure operators and reshapes how the US government responds to ransomware." },
+  { year:2021, title:"LOG4SHELL", cat:"VULNERABILITY", clr:"red",
+    blurb:"CVE-2021-44228 (Log4Shell) in Apache Log4j — embedded in billions of enterprise applications, cloud services, and connected devices — allows trivially exploitable remote code execution. CISA's director calls it \"the most serious vulnerability I have seen in my decades-long career.\" Exploitation begins within hours of disclosure. Hunting Log4j across sprawling software dependencies forces organizations to confront the opacity and fragility of their software supply chains." },
+  { year:2022, title:"LAPSUS$ BREACH SPREE", cat:"HACK", clr:"purple",
+    blurb:"A teenage hacker collective named Lapsus$ breaches Nvidia, Samsung, Microsoft, Okta, Uber, and Rockstar Games using social engineering, SIM swapping, and bribery of insiders — not sophisticated exploits. They leak GPU source code, GTA VI footage, and Microsoft source repositories. Their methods demonstrate that in an era of zero-trust architecture, the weakest link remains a call-center employee with admin access and an easily guessed password." },
+  { year:2022, title:"LASTPASS BREACH", cat:"BREACH", clr:"orange",
+    blurb:"Password manager LastPass is breached in two linked incidents, ultimately resulting in theft of encrypted password vault data for all customers. Though vaults are encrypted, weak master passwords expose millions of stored credentials. The breach triggers mass user migration to competing services and raises foundational questions: should any single company be trusted as the custodian of every password its customers own? The architecture of centralized credential storage is fundamentally questioned." },
+  { year:2023, title:"MOVEIT ZERO-DAY", cat:"BREACH", clr:"red",
+    blurb:"Cl0p ransomware gang exploits a critical SQL injection zero-day in Progress Software's MOVEit Transfer, compromising 2,700+ organizations in weeks — including US federal agencies, Shell, British Airways, BBC, and pension funds affecting 90+ million people. No ransom is demanded in most cases: data is simply stolen and leaked. The attack demonstrates that a single widely-used file transfer tool represents a systemic single point of failure for global organizational data security." },
+  { year:2023, title:"MGM RESORTS RANSOMWARE", cat:"RANSOMWARE", clr:"yellow",
+    blurb:"Scattered Spider — a young English-speaking threat actor — social engineers MGM's IT help desk via a 10-minute LinkedIn impersonation call, gaining credential access to deploy ALPHV/BlackCat ransomware. Slot machines go dark. Hotel key cards stop working. Reservations crash. MGM suffers $100+ million in losses over 10 days across its Las Vegas properties. It is the most public and viscerally disruptive ransomware attack in history for ordinary consumers." },
+  { year:2024, title:"CHANGE HEALTHCARE RANSOMWARE", cat:"RANSOMWARE", clr:"red",
+    blurb:"ALPHV/BlackCat ransomware cripples Change Healthcare, which processes 15 billion+ medical transactions annually for hospitals and pharmacies across the US. Prescriptions cannot be filled; hospitals cannot verify insurance; patient care is directly threatened. UnitedHealth Group pays a $22 million ransom. The attack is the most consequential cyberattack ever against US healthcare infrastructure — a clarifying moment for the real cost of inadequate security in critical systems." },
+  { year:2024, title:"CROWDSTRIKE GLOBAL OUTAGE", cat:"INCIDENT", clr:"cyan",
+    blurb:"A faulty CrowdStrike Falcon content update crashes 8.5 million Windows systems globally in a blue screen loop — the largest IT outage in recorded history. Airlines, hospitals, banks, and emergency services are paralyzed for hours. Delta Air Lines cancels 7,000 flights over five days. The incident reveals that the security tools we rely on have themselves become critical single points of failure — and that our collective infrastructure is more fragile than anyone acknowledged." },
+  { year:2024, title:"SALT TYPHOON TELECOM BREACH", cat:"NATION-STATE", clr:"orange",
+    blurb:"Chinese APT group Salt Typhoon is discovered deeply embedded in the networks of AT&T, Verizon, Lumen, and other major US telecom carriers — with access to lawful intercept infrastructure originally designed for court-ordered surveillance. Calls and texts of senior government officials and political campaign staff may have been intercepted for months. CISA calls it 'historically significant and deeply concerning.' Congress holds emergency classified briefings." },
+  { year:2025, title:"POWERSCHOOL BREACH", cat:"BREACH", clr:"purple",
+    blurb:"K-12 education software giant PowerSchool is breached via stolen credentials, exposing sensitive data — grades, medical records, Social Security numbers, and disciplinary files — for tens of millions of students and educators across North America. Despite paying a ransom, stolen data begins appearing publicly. The breach spotlights the education sector's chronic under-investment in cybersecurity and the profound, lasting harm of minors' sensitive records being weaponized for extortion." },
+];
+
+// ── CONFIG ────────────────────────────────────────────────────
+const SPACING    = 340;  // px between event nodes
+const DWELL_MS   = 10000; // 10s dwell per event
+const AUTO_SPEED = 55;   // px/s crawl speed
+const FAST_SPEED = 600;  // px/s for manual navigation
+const N          = EVENTS.length;
+
+// Category color map
+const CAT_COLOR = {
+  worm:'cyan', breach:'red', ransomware:'yellow', 'nation-state':'orange',
+  vulnerability:'cyan', hacktivism:'purple', espionage:'orange',
+  hack:'cyan', attack:'red', malware:'red', legislation:'green',
+  culture:'purple', incident:'cyan', 'law enforcement':'green',
+};
+function nodeColor(e) {
+  return {
+    red:    'var(--red-500)',
+    cyan:   'var(--cyan-500)',
+    green:  'var(--green-500)',
+    yellow: 'var(--yellow-500)',
+    orange: 'var(--orange-500)',
+    purple: 'var(--purple-500)',
+  }[e.clr] || 'var(--red-500)';
+}
+
+// ── STATE ─────────────────────────────────────────────────────
+let currentTx   = 0;    // actual translateX of track
+let targetIdx   = 0;    // event we're moving toward
+let activeIdx   = -1;   // event currently displayed (-1 = init)
+let travelSpeed = AUTO_SPEED;
+let isPlaying   = true;
+let dwellElapsed = 0;
+let state       = 'traveling'; // 'traveling' | 'dwelling'
+let prevTs      = null;
+let loopCount   = 0;
+
+// Track width: event[i] at left = i * SPACING, initial tx centers event 0
+function txForEvent(i) { return window.innerWidth / 2 - i * SPACING; }
+
+// ── BUILD TIMELINE ─────────────────────────────────────────────
+const track = document.getElementById('tl-track');
+const W = () => window.innerWidth;
+
+function buildTrack() {
+  // Remove old nodes / era labels
+  track.querySelectorAll('.enode, .era-label').forEach(e => e.remove());
+
+  // Set track width
+  const tw = N * SPACING + W() * 2;
+  track.style.width = tw + 'px';
+
+  // Era labels
+  const ERAS = [
+    {year:1970,label:'1970s',clr:'#2a9aa0'},
+    {year:1980,label:'1980s',clr:'#9c3230'},
+    {year:1990,label:'1990s',clr:'#b89430'},
+    {year:2000,label:'2000s',clr:'#2bfea0'},
+    {year:2010,label:'2010s',clr:'#c084fc'},
+    {year:2020,label:'2020s',clr:'#e8615a'},
+  ];
+  ERAS.forEach(era => {
+    // find first event in this decade
+    const firstInEra = EVENTS.findIndex(e => e.year >= era.year);
+    if (firstInEra < 0) return;
+    const x = firstInEra * SPACING - 30;
+    const el = document.createElement('div');
+    el.className = 'era-label';
+    el.textContent = era.label;
+    el.style.left = x + 'px';
+    el.style.color = era.clr;
+    track.appendChild(el);
+  });
+
+  // Event nodes
+  EVENTS.forEach((ev, i) => {
+    const node = document.createElement('div');
+    node.className = 'enode future';
+    node.dataset.i = i;
+    node.style.left = (i * SPACING) + 'px';
+    node.style.setProperty('--node-color', nodeColor(ev));
+
+    const dot = document.createElement('div'); dot.className = 'enode-dot'; node.appendChild(dot);
+    const yr  = document.createElement('div'); yr.className  = 'enode-year'; yr.textContent = ev.year; node.appendChild(yr);
+    const ttl = document.createElement('div'); ttl.className = 'enode-title'; ttl.textContent = ev.title; node.appendChild(ttl);
+
+    track.appendChild(node);
+  });
+}
+
+function getNode(i) { return track.querySelector(`.enode[data-i="${i}"]`); }
+
+function updateNodeClasses() {
+  EVENTS.forEach((_, i) => {
+    const n = getNode(i);
+    if (!n) return;
+    const diff = i - activeIdx;
+    n.classList.remove('active','past','near','future');
+    if      (i === activeIdx)         n.classList.add('active');
+    else if (diff < -1)               n.classList.add('past');
+    else if (diff === -1 || diff === 1) n.classList.add('near');
+    else                              n.classList.add('future');
+  });
+}
+
+// ── CARD UPDATE ────────────────────────────────────────────────
+const card      = document.getElementById('event-card');
+const evBadge   = document.getElementById('ev-badge');
+const evYear    = document.getElementById('ev-year');
+const evTitle   = document.getElementById('ev-title');
+const evBlurb   = document.getElementById('ev-blurb');
+const dwellFill = document.getElementById('dwell-fill');
+const connector = document.getElementById('connector');
+const evCounter = document.getElementById('ev-num');
+const ftrBar    = document.getElementById('ftr-bar');
+
+function showEvent(i) {
+  const ev = EVENTS[i];
+  card.classList.remove('visible');
+
+  setTimeout(() => {
+    // Update content
+    evBadge.textContent = ev.cat.toUpperCase();
+    evYear.textContent  = ev.year;
+    evTitle.textContent = ev.title;
+    evBlurb.textContent = ev.blurb;
+    evCounter.textContent = i + 1;
+    ftrBar.style.width = ((i / (N - 1)) * 100).toFixed(1) + '%';
+
+    // Card color
+    const c = nodeColor(ev);
+    card.style.setProperty('--card-color', c);
+    connector.style.background = `linear-gradient(to bottom, ${c}, transparent)`;
+
+    dwellFill.style.width = '0%';
+    card.classList.add('visible');
+  }, activeIdx === -1 ? 0 : 120);
+}
+
+function updateDwellBar(frac) {
+  dwellFill.style.width = Math.min(frac * 100, 100).toFixed(1) + '%';
+}
+
+// ── ANIMATION LOOP ─────────────────────────────────────────────
+function frame(ts) {
+  requestAnimationFrame(frame);
+
+  const dt = prevTs ? Math.min((ts - prevTs) / 1000, 0.1) : 0;
+  prevTs = ts;
+
+  if (!isPlaying) return;
+
+  if (state === 'traveling') {
+    const targetTx = txForEvent(targetIdx);
+    const dist = targetTx - currentTx;
+    const step = travelSpeed * dt;
+
+    if (Math.abs(dist) <= step + 0.5) {
+      currentTx = targetTx;
+      setActive(targetIdx);
+    } else {
+      currentTx += Math.sign(dist) * step;
+    }
+  } else { // dwelling
+    dwellElapsed += dt * 1000;
+    updateDwellBar(dwellElapsed / DWELL_MS);
+
+    if (dwellElapsed >= DWELL_MS) {
+      if (activeIdx >= N - 1) {
+        triggerLoop();
+      } else {
+        startTravel(activeIdx + 1, AUTO_SPEED);
+      }
+    }
+  }
+
+  track.style.transform = `translateX(${currentTx}px)`;
+}
+
+function setActive(i) {
+  activeIdx = i;
+  targetIdx = i;
+  state = 'dwelling';
+  dwellElapsed = 0;
+  travelSpeed = AUTO_SPEED;
+  showEvent(i);
+  updateNodeClasses();
+}
+
+function startTravel(toIdx, speed) {
+  targetIdx = toIdx;
+  travelSpeed = speed;
+  state = 'traveling';
+}
+
+function triggerLoop() {
+  isPlaying = false;
+  loopCount++;
+  document.getElementById('loop-badge').classList.add('active');
+
+  const stage = document.getElementById('stage');
+  stage.classList.add('fade');
+
+  setTimeout(() => {
+    currentTx = txForEvent(0);
+    track.style.transform = `translateX(${currentTx}px)`;
+    prevTs = null;
+    EVENTS.forEach((_, i) => { const n = getNode(i); if (n) n.classList.remove('active','past','near'); n && n.classList.add('future'); });
+    ftrBar.style.width = '0%';
+    stage.classList.remove('fade');
+    isPlaying = true;
+    setTimeout(() => document.getElementById('loop-badge').classList.remove('active'), 1500);
+    setActive(0);
+  }, 550);
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function navigate(dir) {
+  const newIdx = Math.max(0, Math.min(N - 1, activeIdx + dir));
+  if (state === 'dwelling' && newIdx === activeIdx) return;
+
+  // If jumping backwards past a loop point or beyond traveling, just set
+  startTravel(newIdx, FAST_SPEED);
+  isPlaying = true;
+  hideTouchHint();
+}
+
+function togglePause() {
+  isPlaying = !isPlaying;
+  document.getElementById('pause-btn').textContent = isPlaying ? '⏸' : '▶';
+  prevTs = null;
+}
+
+let speedIdx = 0;
+const SPEEDS = [[AUTO_SPEED,'1×'],[AUTO_SPEED*2,'2×'],[AUTO_SPEED*4,'4×']];
+function cycleSpeed() {
+  speedIdx = (speedIdx + 1) % SPEEDS.length;
+  const [s, lbl] = SPEEDS[speedIdx];
+  document.getElementById('speed-btn').textContent = lbl + ' SPEED';
+  if (state === 'traveling') travelSpeed = s;
+  // Store for when next travel starts
+  window._currentSpeed = s;
+}
+// Patch startTravel to use selected speed for auto advances
+const _origStartTravel = startTravel;
+function startTravel(toIdx, speed) {
+  const useSpeed = speed === AUTO_SPEED ? (window._currentSpeed || AUTO_SPEED) : speed;
+  targetIdx = toIdx;
+  travelSpeed = useSpeed;
+  state = 'traveling';
+}
+
+// ── TOUCH / SWIPE ─────────────────────────────────────────────
+let touchStartX = 0, touchStartY = 0, touchMoved = false;
+const stage = document.getElementById('stage');
+
+stage.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchMoved = false;
+}, { passive: true });
+
+stage.addEventListener('touchmove', e => { touchMoved = true; }, { passive: true });
+
+stage.addEventListener('touchend', e => {
+  if (!touchMoved) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+  navigate(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+// Mouse drag on desktop
+let mouseDown = false, mouseStartX = 0;
+stage.addEventListener('mousedown', e => { mouseDown = true; mouseStartX = e.clientX; });
+window.addEventListener('mouseup', e => {
+  if (!mouseDown) return;
+  const dx = e.clientX - mouseStartX;
+  mouseDown = false;
+  if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+});
+
+// Keyboard
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') navigate(1);
+  else if (e.key === 'ArrowLeft')  navigate(-1);
+  else if (e.key === ' ') { e.preventDefault(); togglePause(); }
+});
+
+// ── TOUCH HINT ────────────────────────────────────────────────
+let touchHintHidden = false;
+function hideTouchHint() {
+  if (touchHintHidden) return;
+  touchHintHidden = true;
+  document.getElementById('touch-hint').classList.add('gone');
+}
+setTimeout(hideTouchHint, 5000);
+
+// ── INIT ──────────────────────────────────────────────────────
+document.getElementById('ev-total').textContent = N;
+
+buildTrack();
+currentTx = txForEvent(0);
+track.style.transform = `translateX(${currentTx}px)`;
+
+// Init card
+document.getElementById('event-card').style.opacity = '0';
+
+requestAnimationFrame(frame);
+
+// Start at first event after brief pause
+setTimeout(() => {
+  prevTs = null;
+  setActive(0);
+}, 400);
+
+// Resize handler
+window.addEventListener('resize', () => {
+  buildTrack();
+  currentTx = txForEvent(activeIdx >= 0 ? activeIdx : 0);
+  track.style.transform = `translateX(${currentTx}px)`;
+  updateNodeClasses();
+});
+</script>
+</body>
+</html>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&amp;family=VT323&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
   <style>
     /* ── VARIABLES ────────────────────────────────────────────── */
     :root {
@@ -429,7 +428,7 @@
     #toast.off { opacity: 0; }
   </style>
 </head>
-<body>
+<body class="">
 
 <!-- ── EDITOR TOOLBAR ────────────────────────────────────────── -->
 <div id="editor-bar" class="hidden">
@@ -440,13 +439,16 @@
 </div>
 
 <!-- ── CANVAS ────────────────────────────────────────────────── -->
-<div id="canvas"></div>
+<div id="canvas"><div class="bwrap" data-i="0"><div><div class="bio-photo-wrap al-center">
+        <div class="bio-photo w-sm br-none"><img src="assets/p.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bio-img-missing" style="display:none">// image not found: assets/p.png</div></div>
+        
+      </div></div></div><div class="bwrap" data-i="1"><div><h1 class="bio-title clr-red sz-xl" data-field="content" data-ph="Title text">WhoAmI?</h1></div></div><div class="bwrap" data-i="2"><div><p class="bio-text" data-field="content" data-ph="Your text...">My name is Gabe. I discovered at an early age that I love computers and making them go beep boop in ways people have never beep booped them, so that's why I became a Computer Scientist. But then I figured out how to beep boop computers in ways you're not supposed to beep boop them, so then I became an Information Security Analyst to identify and stop the bad beep boopers from boop beeping the good beep boopers.  </p></div></div><div class="bwrap" data-i="3"><div><hr class="bio-divider sty-solid"></div></div><div class="bwrap" data-i="4"><div><h2 class="bio-subtitle clr-cyan" data-field="content" data-ph="Subtitle text">Early Life</h2></div></div><div class="bwrap" data-i="5"><div><div class="bio-label clr-cyan" data-field="content" data-ph="// section label">// Circa 2010</div></div></div><div class="bwrap" data-i="6"><div><p class="bio-text" data-field="content" data-ph="Your text...">I was about 12 and I was starting to mess with computers. My parents knew that excessive screen and internet time were not good for the developing mind. My father had set a limit of up to 2 hours of being on the internet per day. After the 2 hours lapsed, my internet access was cut off.<br><br>I didn't like that.<br><br>There had to be a way to get around the restriction, so I spent my 2 hours of internet time researching how to bypass internet restrictions. The first thing that</p></div></div><div class="bwrap" data-i="7"><div><h2 class="bio-subtitle clr-cyan" data-field="content" data-ph="Subtitle text">Security Researcher</h2></div></div></div>
 
 <!-- ── FLOATING EDIT BUTTON ──────────────────────────────────── -->
 <button id="edit-toggle" onclick="toggleEdit()">// EDIT</button>
 
 <!-- ── TOAST ─────────────────────────────────────────────────── -->
-<div id="toast" class="off"></div>
+<div id="toast" class="ok off">DOWNLOADED ✓</div>
 
 <!-- ── ADD BLOCK MODAL ───────────────────────────────────────── -->
 <div id="add-modal" class="modal-ov hidden" onclick="if(event.target===this)closeAddModal()">
@@ -480,8 +482,13 @@
 <!-- ── EDIT BLOCK MODAL ──────────────────────────────────────── -->
 <div id="edit-modal" class="modal-ov hidden" onclick="if(event.target===this)closeEditModal()">
   <div class="modal-box">
-    <div class="modal-head" id="em-head">// EDIT BLOCK</div>
-    <div id="em-body"></div>
+    <div class="modal-head" id="em-head">// EDIT: TEXT</div>
+    <div id="em-body">
+      <div class="frow"><label class="flabel">CONTENT</label>
+        <textarea class="ftarea" id="ef-content">Write something here.</textarea></div>
+      <div class="frow"><label class="fcheck">
+        <input type="checkbox" id="ef-mono"> MONOSPACE FONT
+      </label></div></div>
     <div class="modal-actions">
       <button class="mbtn mbtn-cancel" onclick="closeEditModal()">CANCEL</button>
       <button class="mbtn mbtn-apply" onclick="applyEdit()">APPLY</button>
@@ -491,7 +498,60 @@
 
 <!-- ── BLOCK DATA (edited by SAVE) ───────────────────────────── -->
 <script id="bio-data" type="application/json">
-[]
+[
+  {
+    "id": "bypo6oop",
+    "type": "photo",
+    "src": "assets/p.png",
+    "alt": "",
+    "caption": "",
+    "align": "center",
+    "width": "sm",
+    "border": "none"
+  },
+  {
+    "id": "bx0km1qk",
+    "type": "title",
+    "content": "WhoAmI?",
+    "color": "red",
+    "size": "xl"
+  },
+  {
+    "id": "bb4ig9d7",
+    "type": "text",
+    "content": "My name is Gabe. I discovered at an early age that I love computers and making them go beep boop in ways people have never beep booped them, so that's why I became a Computer Scientist. But then I figured out how to beep boop computers in ways you're not supposed to beep boop them, so then I became an Information Security Analyst to identify and stop the bad beep boopers from boop beeping the good beep boopers.  ",
+    "mono": false
+  },
+  {
+    "id": "b8goymji",
+    "type": "divider",
+    "style": "solid"
+  },
+  {
+    "id": "bxel8egp",
+    "type": "subtitle",
+    "content": "Early Life",
+    "color": "cyan"
+  },
+  {
+    "id": "bpr84l2s",
+    "type": "label",
+    "content": "// Circa 2010",
+    "color": "cyan"
+  },
+  {
+    "id": "b9asrf2q",
+    "type": "text",
+    "content": "I was about 12 and I was starting to mess with computers. My parents knew that excessive screen and internet time were not good for the developing mind. My father had set a limit of up to 2 hours of being on the internet per day. After the 2 hours lapsed, my internet access was cut off.\n\nI didn't like that.\n\nThere had to be a way to get around the restriction, so I spent my 2 hours of internet time researching how to bypass internet restrictions. The first thing that",
+    "mono": false
+  },
+  {
+    "id": "bsl931da",
+    "type": "subtitle",
+    "content": "Security Researcher",
+    "color": "cyan"
+  }
+]
 </script>
 
 <script>
@@ -969,5 +1029,6 @@ function showToast(msg, type) {
 // ── INIT ───────────────────────────────────────────────────────
 render();
 </script>
-</body>
-</html>
+
+
+</body></html>
