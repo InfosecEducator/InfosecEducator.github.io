@@ -480,12 +480,12 @@
 <!-- ===== HEADER ===== -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="dev.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+    <a href="../../dev.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
     <nav class="main-nav">
-      <a href="main.html">Home</a>
-      <a href="main.html">Courses</a>
-      <a href="main.html">Writeups</a>
-      <a href="main.html">Tools</a>
+      <a href="../../main.html">Home</a>
+      <a href="../../main.html">Courses</a>
+      <a href="../../main.html">Writeups</a>
+      <a href="../../main.html">Tools</a>
     </nav>
   </div>
 </header>
@@ -641,8 +641,8 @@
     answered    = false;
     legitIsLeft = Math.random() > 0.5;
 
-    const leftSrc  = legitIsLeft ? 'email_legit.html' : 'email_phish.html';
-    const rightSrc = legitIsLeft ? 'email_phish.html' : 'email_legit.html';
+    const leftSrc  = legitIsLeft ? '../phish/email_legit.html' : '../phish/email_phish.html';
+    const rightSrc = legitIsLeft ? '../phish/email_phish.html' : '../phish/email_legit.html';
 
     document.getElementById('frameLeft').src  = leftSrc;
     document.getElementById('frameRight').src = rightSrc;
