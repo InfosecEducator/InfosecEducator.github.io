@@ -1,0 +1,91 @@
+/* ===== LIGHT MODE — variable overrides ===== */
+html.light {
+  --bg-900: #f5f5f5;
+  --bg-800: #ffffff;
+  --bg-700: #f0f0f0;
+  --bg-600: #e8e8e8;
+  --bg-500: #dcdcdc;
+  --red-500:   #c0392b;
+  --red-400:   #c0392b;
+  --red-300:   #922b21;
+  --red-700:   #e0b8b6;
+  --red-800:   #f2dedd;
+  --red-900:   #faeaea;
+  --cyan-500:  #00838f;
+  --cyan-400:  #006978;
+  --cyan-900:  #e0f7fa;
+  --green-500: #1b7a4e;
+  --green-400: #1b9960;
+  --green-900: #e8f5e9;
+  --yellow-500: #b8860b;
+  --yellow-900: #fff8e1;
+  --orange-500: #c84b00;
+  --blue-500:   #1565c0;
+  --blue-900:   #e3f2fd;
+  --purple-500: #6a1b9a;
+  --purple-900: #f3e5f5;
+  --text-secondary: #555555;
+  --text-muted:     #777777;
+  --glow-red:    none;
+  --glow-cyan:   none;
+  --glow-green:  none;
+  --glow-yellow: none;
+  --glow-orange: none;
+  --glow-blue:   none;
+  --glow-purple: none;
+}
+
+/* Strip dark body gradients + scanlines */
+html.light body {
+  background-image: none !important;
+}
+
+html.light body::before {
+  display: none !important;
+}
+
+/* Hardcoded dark header backgrounds */
+html.light .site-header {
+  background-color: rgba(245, 245, 245, 0.96) !important;
+  border-bottom-color: var(--red-700) !important;
+  box-shadow: 0 1px 0 var(--red-700), 0 2px 12px rgba(192,57,43,0.12) !important;
+}
+
+html.light #hdr {
+  background: rgba(245, 245, 245, 0.96) !important;
+  border-bottom-color: var(--red-700) !important;
+  box-shadow: none !important;
+}
+
+/* Hardcoded nav bg on carousel */
+html.light .c-nav {
+  background: rgba(245, 245, 245, 0.96) !important;
+  border-bottom-color: var(--red-700) !important;
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
+#theme-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 99999;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--red-700);
+  background: var(--bg-700);
+  color: var(--red-400);
+  cursor: pointer;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 10px rgba(232, 97, 90, 0.25);
+  line-height: 1;
+}
+
+#theme-toggle:hover {
+  background: var(--red-800);
+  box-shadow: 0 0 18px rgba(232, 97, 90, 0.5);
+}
