@@ -471,6 +471,32 @@
     }
     .tl-nav-btn:hover { color: var(--cyan-500); border-color: var(--cyan-500); }
 
+    /* ── HOME BUTTON ─────────────────────────────────────────── */
+    .home-btn-bar {
+      display: flex; justify-content: flex-start;
+      padding: 0.65rem 1.25rem;
+      background: rgba(13,10,13,0.85);
+      border-bottom: 1px solid var(--red-900);
+    }
+    .home-btn-bar.bottom {
+      border-bottom: none; border-top: 1px solid var(--red-900);
+    }
+    .btn-home {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: transparent; border: 1px solid var(--red-800);
+      color: var(--text-muted);
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      clip-path: var(--notch-path);
+      text-decoration: none;
+      transition: color .2s, border-color .2s, box-shadow .2s;
+    }
+    .btn-home:hover {
+      color: var(--red-400); border-color: var(--red-500);
+      box-shadow: var(--glow-red);
+    }
+
     /* ── SAVE TOAST ───────────────────────────────────────────── */
     #toast {
       position: fixed; bottom: 5rem; right: 1.5rem;
@@ -485,6 +511,11 @@
   </style>
 </head>
 <body class="">
+
+<!-- ── HOME BUTTON (TOP) ─────────────────────────────────────── -->
+<div class="home-btn-bar">
+  <a href="../../main.html" class="btn-home">&#8592; Home</a>
+</div>
 
 <!-- ── EDITOR TOOLBAR ────────────────────────────────────────── -->
 <div id="editor-bar" class="hidden">
@@ -1179,5 +1210,10 @@ document.addEventListener('mousedown', e => {
 render();
 </script>
 
+
+<!-- ── HOME BUTTON (BOTTOM) ──────────────────────────────────── -->
+<div class="home-btn-bar bottom">
+  <a href="../../main.html" class="btn-home">&#8592; Home</a>
+</div>
 
 </body></html>
