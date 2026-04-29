@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fafafa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #262626;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* ── MAIN CARD ── */
+    .login-card {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      width: 100%;
+      max-width: 350px;
+      padding: 40px 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      font-family: 'Grand Hotel', cursive;
+      font-size: 2.4rem;
+      letter-spacing: 0.5px;
+      color: #262626;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+
+    /* ── PHONE MOCKUP ── */
+    .phone-mock {
+      width: 96px;
+      margin-bottom: 4px;
+    }
+
+    /* ── FORM ── */
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      background: #fafafa;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      padding: 9px 10px 7px;
+      font-size: 12px;
+      color: #262626;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus {
+      border-color: #a8a8a8;
+    }
+
+    .field input::placeholder {
+      color: #8e8e8e;
+    }
+
+    .field .show-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      font-weight: 600;
+      color: #262626;
+      cursor: pointer;
+      user-select: none;
+      display: none;
+    }
+
+    .field input[type="password"]:not(:placeholder-shown) ~ .show-toggle,
+    .field input[type="text"].pwd-shown ~ .show-toggle {
+      display: block;
+    }
+
+    .btn-login {
+      width: 100%;
+      margin-top: 4px;
+      padding: 7px;
+      background: #0095f6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .btn-login.active {
+      opacity: 1;
+    }
+
+    /* ── OR DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid #dbdbdb;
+    }
+
+    .divider span {
+      font-size: 13px;
+      font-weight: 600;
+      color: #8e8e8e;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FACEBOOK LOGIN ── */
+    .btn-facebook {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #385185;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+    }
+
+    .btn-facebook svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn-facebook:hover { opacity: 0.8; }
+
+    /* ── FORGOT ── */
+    .forgot {
+      font-size: 12px;
+      color: #00376b;
+      text-decoration: none;
+      margin-top: 4px;
+      text-align: center;
+      display: block;
+    }
+
+    /* ── SIGNUP CARD ── */
+    .signup-card {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      width: 100%;
+      max-width: 350px;
+      padding: 16px;
+      text-align: center;
+      font-size: 14px;
+      color: #262626;
+      margin-bottom: 16px;
+    }
+
+    .signup-card a {
+      color: #0095f6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* ── GET THE APP ── */
+    .get-app {
+      text-align: center;
+      color: #262626;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .store-badges {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .store-badge {
+      border: 1px solid #262626;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.3;
+      color: #262626;
+      text-decoration: none;
+      cursor: default;
+    }
+
+    .store-badge .store-sub { font-size: 9px; color: #555; }
+    .store-badge .store-name { font-size: 13px; font-weight: 700; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: #8e8e8e;
+      max-width: 350px;
+      line-height: 2;
+    }
+
+    footer a {
+      color: #8e8e8e;
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    footer .copyright {
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* ── REVEAL OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .overlay.show { display: flex; }
+
+    .overlay-box {
+      background: #0d0a0d;
+      border: 2px solid #e8615a;
+      box-shadow: 0 0 30px rgba(232,97,90,0.5);
+      max-width: 480px;
+      width: 100%;
+      padding: 0;
+      animation: popIn 0.3s cubic-bezier(0.16,1,0.3,1);
+      font-family: "Share Tech Mono", "Courier New", monospace;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9) translateY(16px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .overlay-header {
+      background: #e8615a;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .overlay-header-dots {
+      display: flex; gap: 5px;
+    }
+
+    .overlay-header-dots span {
+      width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.3);
+    }
+
+    .overlay-header-title {
+      font-family: "VT323", monospace;
+      font-size: 1.1rem;
+      color: #fff;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+
+    .overlay-body {
+      padding: 28px 32px 24px;
+      color: #ea6f69;
+    }
+
+    .overlay-verdict {
+      font-family: "VT323", monospace;
+      font-size: 3.6rem;
+      color: #e8615a;
+      text-shadow: 0 0 12px rgba(232,97,90,0.6);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: 0.06em;
+    }
+
+    .overlay-sub {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #b09090;
+      margin-bottom: 18px;
+    }
+
+    .overlay-detail {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: #b09090;
+      margin-bottom: 18px;
+    }
+
+    .overlay-detail strong { color: #ea6f69; }
+
+    .captured-box {
+      background: rgba(232,97,90,0.08);
+      border: 1px solid #5e2122;
+      border-left: 3px solid #e8615a;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: #907878;
+    }
+
+    .captured-box .cap-field { color: #ea6f69; font-weight: 600; }
+    .captured-box .cap-val   { color: #f4908b; }
+
+    .overlay-tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px;
+    }
+
+    .otag {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid #5e2122;
+      background: rgba(232,97,90,0.06);
+      color: #e8615a;
+      border-radius: 2px;
+    }
+
+    .btn-dismiss {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 2px solid #9c3230;
+      color: #e8615a;
+      font-family: "VT323", monospace;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-dismiss:hover {
+      background: #3c181a;
+      border-color: #e8615a;
+      box-shadow: 0 0 12px rgba(232,97,90,0.35);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN CARD -->
+  <div class="login-card">
+    <div class="logo">Instagram</div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off" novalidate>
+      <div class="field">
+        <input type="text" id="username" placeholder="Phone number, username, or email" autocomplete="off">
+      </div>
+      <div class="field">
+        <input type="password" id="pwdField" placeholder="Password" autocomplete="new-password" oninput="toggleShowBtn(this)">
+        <span class="show-toggle" id="showToggle" onclick="togglePwd()">Show</span>
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">Log in</button>
+    </form>
+
+    <div class="divider">
+      <hr><span>OR</span><hr>
+    </div>
+
+    <button class="btn-facebook" type="button">
+      <svg viewBox="0 0 24 24" fill="#385185" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+      </svg>
+      Log in with Facebook
+    </button>
+
+    <a href="#" class="forgot" onclick="return false;">Forgot password?</a>
+  </div>
+
+  <!-- SIGNUP CARD -->
+  <div class="signup-card">
+    Don't have an account? <a href="#" onclick="return false;">Sign up</a>
+  </div>
+
+  <!-- GET THE APP -->
+  <div class="get-app">
+    <div>Get the app.</div>
+    <div class="store-badges">
+      <div class="store-badge">
+        <span class="store-sub">Download on the</span>
+        <span class="store-name">App Store</span>
+      </div>
+      <div class="store-badge">
+        <span class="store-sub">Get it on</span>
+        <span class="store-name">Google Play</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <a href="#">Meta</a> &nbsp;·&nbsp;
+      <a href="#">About</a> &nbsp;·&nbsp;
+      <a href="#">Blog</a> &nbsp;·&nbsp;
+      <a href="#">Jobs</a> &nbsp;·&nbsp;
+      <a href="#">Help</a> &nbsp;·&nbsp;
+      <a href="#">API</a> &nbsp;·&nbsp;
+      <a href="#">Privacy</a> &nbsp;·&nbsp;
+      <a href="#">Terms</a>
+    </div>
+    <div>
+      <a href="#">Locations</a> &nbsp;·&nbsp;
+      <a href="#">Instagram Lite</a> &nbsp;·&nbsp;
+      <a href="#">Threads</a> &nbsp;·&nbsp;
+      <a href="#">Contact uploading and non-users</a>
+    </div>
+    <span class="copyright">© 2026 Instagram from Meta</span>
+  </footer>
+
+  <!-- REVEAL OVERLAY -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-box">
+      <div class="overlay-header">
+        <div class="overlay-header-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="overlay-header-title">// INFOSEC//EDUCATOR — Phishing Sim</div>
+      </div>
+      <div class="overlay-body">
+        <div class="overlay-verdict">CREDENTIALS STOLEN</div>
+        <div class="overlay-sub">You just fell for a phishing portal</div>
+        <p class="overlay-detail">
+          In a real attack, the credentials you just entered would have been
+          transmitted to an attacker's server the moment you hit <strong>Log in</strong>.
+          The page looks identical to Instagram — that's the point.
+        </p>
+        <div class="captured-box" id="capturedBox">
+          <div><span class="cap-field">USERNAME&nbsp;&nbsp;›</span> <span class="cap-val" id="capUser"></span></div>
+          <div><span class="cap-field">PASSWORD&nbsp;&nbsp;›</span> <span class="cap-val" id="capPass"></span></div>
+          <div><span class="cap-field">SENT TO&nbsp;&nbsp;&nbsp;›</span> <span class="cap-val">attacker@darkweb.onion</span></div>
+        </div>
+        <div class="overlay-tags">
+          <span class="otag">Credential Harvesting</span>
+          <span class="otag">Phishing Portal</span>
+          <span class="otag">Domain Spoofing</span>
+          <span class="otag">Social Engineering</span>
+        </div>
+        <button class="btn-dismiss" onclick="dismissOverlay()">⟳ Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const usernameEl = document.getElementById('username');
+    const pwdEl      = document.getElementById('pwdField');
+    const loginBtn   = document.getElementById('loginBtn');
+
+    // Activate login button when both fields have content
+    function checkFields() {
+      const ready = usernameEl.value.trim().length > 0 && pwdEl.value.length > 0;
+      loginBtn.classList.toggle('active', ready);
+    }
+
+    usernameEl.addEventListener('input', checkFields);
+    pwdEl.addEventListener('input', checkFields);
+
+    // Show/hide password toggle
+    function toggleShowBtn(el) {
+      document.getElementById('showToggle').style.display = el.value.length > 0 ? 'block' : 'none';
+    }
+
+    let pwdVisible = false;
+    function togglePwd() {
+      pwdVisible = !pwdVisible;
+      pwdEl.type = pwdVisible ? 'text' : 'password';
+      document.getElementById('showToggle').textContent = pwdVisible ? 'Hide' : 'Show';
+    }
+
+    // Submit handler — route to hacked.html
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = usernameEl.value.trim();
+      const pass = pwdEl.value;
+      if (!user || !pass) return;
+      window.location.href = 'hacked.html';
+    }
+
+    function dismissOverlay() {
+      document.getElementById('overlay').classList.remove('show');
+      document.getElementById('loginForm').reset();
+      loginBtn.classList.remove('active');
+      document.getElementById('showToggle').style.display = 'none';
+      pwdEl.type = 'password';
+      pwdVisible = false;
+    }
+  </script>
+
+</body>
+</html>

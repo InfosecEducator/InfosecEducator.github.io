@@ -209,18 +209,18 @@
     /* Email address bar */
     .panel-addressbar {
       display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.35rem 0.75rem;
+      padding: 0.1rem 0.75rem;
       background: var(--bg-800);
       border-bottom: 1px solid var(--red-900);
-      flex-shrink: 0;
+      flex-shrink: 0; overflow: hidden;
     }
     .addressbar-label {
-      font-family: var(--font-mono); font-size: 0.58rem;
+      font-family: var(--font-mono); font-size: 0.87rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: #39FF14; flex-shrink: 0;
     }
     .addressbar-url {
-      font-family: var(--font-mono); font-size: 0.65rem;
+      font-family: var(--font-mono); font-size: 0.975rem; font-weight: 700;
       letter-spacing: 0.03em; color: #39FF14;
       flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
@@ -629,27 +629,55 @@
 </footer>
 
 <script>
+  // ─── SCENARIOS ────────────────────────────────────────────────────────────────
+  const SCENARIOS = [
+    {
+      legitSrc:  '../phish/email_legit.html',
+      phishSrc:  '../phish/email_phish.html',
+      legitAddr: 'Google Alerts <noreply-support@google.com>',
+      phishAddr: 'Google Alerts <totallylegit@notsus.com>',
+    },
+    {
+      legitSrc:  '../phish/email2_legit.html',
+      phishSrc:  '../phish/email2_phish.html',
+      legitAddr: 'Instagram <no-reply@mail.instagram.com>',
+      phishAddr: 'Instagram <no-reply@instagram-security.net>',
+    },
+    {
+      legitSrc:  '../phish/email3_legit.html',
+      phishSrc:  '../phish/email3_phish.html',
+      legitAddr: 'Amazon.com <payments-update@amazon.com>',
+      phishAddr: 'Amazon.com <payments-update@amaz0n-billing.net>',
+    },
+  ];
+
   // ─── STATE ────────────────────────────────────────────────────────────────────
-  let legitIsLeft = true;   // tracks which panel has email_legit.html
+  let legitIsLeft = true;
   let round       = 1;
   let correct     = 0;
   let incorrect   = 0;
-  let answered    = false;
+  let answered       = false;
+  let scenario       = SCENARIOS[0];
+  let lastScenarioIdx = -1;
 
   // ─── INIT ─────────────────────────────────────────────────────────────────────
   function init() {
     answered    = false;
     legitIsLeft = Math.random() > 0.5;
 
-    const leftSrc  = legitIsLeft ? '../phish/email_legit.html' : '../phish/email_phish.html';
-    const rightSrc = legitIsLeft ? '../phish/email_phish.html' : '../phish/email_legit.html';
+    const pool = SCENARIOS.map((_, i) => i).filter(i => i !== lastScenarioIdx);
+    lastScenarioIdx = pool[Math.floor(Math.random() * pool.length)];
+    scenario = SCENARIOS[lastScenarioIdx];
+
+    const leftSrc  = legitIsLeft ? scenario.legitSrc  : scenario.phishSrc;
+    const rightSrc = legitIsLeft ? scenario.phishSrc  : scenario.legitSrc;
 
     document.getElementById('frameLeft').src  = leftSrc;
     document.getElementById('frameRight').src = rightSrc;
 
     // Address bar sender names
-    document.getElementById('addrLeft').textContent  = legitIsLeft ? 'Google Alerts <noreply-support@google.com>' : 'Google Alerts <totallylegit@notsus.com>';
-    document.getElementById('addrRight').textContent = legitIsLeft ? 'Google Alerts <totallylegit@notsus.com>' : 'Google Alerts <noreply-support@google.com>';
+    document.getElementById('addrLeft').textContent  = legitIsLeft ? scenario.legitAddr : scenario.phishAddr;
+    document.getElementById('addrRight').textContent = legitIsLeft ? scenario.phishAddr : scenario.legitAddr;
 
     // Reset panel state
     ['panelLeft','panelRight'].forEach(id => {
