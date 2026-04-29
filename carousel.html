@@ -171,6 +171,7 @@
     .tag-yellow { color: var(--yellow-500); background: rgba(254,211,63,0.08);  border: 1px solid var(--yellow-900); }
     .tag-green  { color: var(--green-500);  background: rgba(43,254,160,0.07);  border: 1px solid var(--green-900); }
     .tag-blue   { color: #4fa3e0;           background: rgba(79,163,224,0.07);  border: 1px solid #0d1e30; }
+    .tag-orange { color: var(--orange-500); background: rgba(255,154,40,0.08);  border: 1px solid #4a2c0a; }
 
     .c-card__title {
       font-family: var(--font-display); font-size: 2.4rem; line-height: 1.05;
@@ -730,6 +731,127 @@
         </div>
       </div>
 
+      <!-- ── CARD 6: timeline.html ── -->
+      <div class="c-card" data-href="resources/learning/timeline.html">
+        <div class="c-card__image">
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="hexTL" x="0" y="0" width="40" height="35" patternUnits="userSpaceOnUse">
+                <polygon points="20,1 38,11 38,31 20,41 2,31 2,11" fill="none" stroke="#3a1f08" stroke-width="0.6"/>
+              </pattern>
+              <filter id="glowTL" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <filter id="glowTLsm" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <radialGradient id="tlBg" cx="20%" cy="55%" r="45%">
+                <stop offset="0%" stop-color="#4a2c0a" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#0c0a10" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <rect width="360" height="220" fill="#0c0a10"/>
+            <rect width="360" height="220" fill="url(#hexTL)"/>
+            <rect width="360" height="220" fill="url(#tlBg)"/>
+
+            <!-- Header -->
+            <text x="20" y="20" fill="#5a3015" font-family="Share Tech Mono,monospace" font-size="7" letter-spacing="2">INFOSEC TIMELINE</text>
+            <line x1="20" y1="25" x2="340" y2="25" stroke="#3a1f08" stroke-width="0.6"/>
+
+            <!-- ── Main timeline track (y=118) ── -->
+            <line x1="20" y1="118" x2="340" y2="118" stroke="#3a1f08" stroke-width="1.8"/>
+            <line x1="20" y1="118" x2="340" y2="118" stroke="#ff9a28" stroke-width="0.5" opacity="0.25"/>
+
+            <!-- Decade ticks & labels (1971–2025, 320px / 54yr ≈ 5.926 px/yr, origin x=20 at 1971) -->
+            <!-- 1980 x≈73 -->
+            <line x1="73" y1="113" x2="73" y2="123" stroke="#5a3015" stroke-width="1"/>
+            <text x="73" y="133" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">1980</text>
+            <!-- 1990 x≈132 -->
+            <line x1="132" y1="113" x2="132" y2="123" stroke="#5a3015" stroke-width="1"/>
+            <text x="132" y="133" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">1990</text>
+            <!-- 2000 x≈192 -->
+            <line x1="192" y1="113" x2="192" y2="123" stroke="#5a3015" stroke-width="1"/>
+            <text x="192" y="133" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">2000</text>
+            <!-- 2010 x≈251 -->
+            <line x1="251" y1="113" x2="251" y2="123" stroke="#5a3015" stroke-width="1"/>
+            <text x="251" y="133" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">2010</text>
+            <!-- 2020 x≈310 -->
+            <line x1="310" y1="113" x2="310" y2="123" stroke="#5a3015" stroke-width="1"/>
+            <text x="310" y="133" fill="#4a2c0a" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">2020</text>
+
+            <!-- ── Events above the line ── -->
+            <!-- 1971 Creeper (x=20) -->
+            <line x1="20" y1="118" x2="20" y2="98" stroke="#4a2c0a" stroke-width="0.8"/>
+            <circle cx="20" cy="94" r="4" fill="#ff9a28" filter="url(#glowTLsm)"/>
+            <text x="20" y="87" fill="#ff9a28" font-family="Share Tech Mono,monospace" font-size="5" text-anchor="middle">1971</text>
+            <text x="20" y="81" fill="#9c5510" font-family="Share Tech Mono,monospace" font-size="4" text-anchor="middle">CREEPER</text>
+
+            <!-- 1988 Morris Worm (x=121) — spotlight event -->
+            <line x1="121" y1="118" x2="121" y2="76" stroke="#5a3015" stroke-width="0.8"/>
+            <circle cx="121" cy="72" r="5.5" fill="#ff9a28" filter="url(#glowTL)"/>
+            <circle cx="121" cy="72" r="13" fill="none" stroke="#ff9a28" stroke-width="0.8" opacity="0.4" stroke-dasharray="3,3"/>
+            <text x="121" y="55" fill="#ff9a28" font-family="Share Tech Mono,monospace" font-size="5.5" text-anchor="middle">1988</text>
+            <text x="121" y="48" fill="#9c5510" font-family="Share Tech Mono,monospace" font-size="4.5" text-anchor="middle">MORRIS WORM</text>
+
+            <!-- 2001 Code Red (x=198) -->
+            <line x1="198" y1="118" x2="198" y2="88" stroke="#4a2c0a" stroke-width="0.8"/>
+            <circle cx="198" cy="84" r="4" fill="#e8615a" filter="url(#glowTLsm)"/>
+            <text x="198" y="77" fill="#e8615a" font-family="Share Tech Mono,monospace" font-size="5" text-anchor="middle">2001</text>
+            <text x="198" y="71" fill="#9c3230" font-family="Share Tech Mono,monospace" font-size="4" text-anchor="middle">CODE RED</text>
+
+            <!-- 2017 WannaCry (x=292) -->
+            <line x1="292" y1="118" x2="292" y2="88" stroke="#4a2c0a" stroke-width="0.8"/>
+            <circle cx="292" cy="84" r="4" fill="#2bfea0"/>
+            <text x="292" y="77" fill="#2bfea0" font-family="Share Tech Mono,monospace" font-size="5" text-anchor="middle">2017</text>
+            <text x="292" y="71" fill="#0b6040" font-family="Share Tech Mono,monospace" font-size="4" text-anchor="middle">WANNACRY</text>
+
+            <!-- ── Events below the line ── -->
+            <!-- 1983 TCP/IP (x=91) -->
+            <line x1="91" y1="118" x2="91" y2="148" stroke="#4a2c0a" stroke-width="0.8"/>
+            <circle cx="91" cy="152" r="4" fill="#2be4ea"/>
+            <text x="91" y="161" fill="#2be4ea" font-family="Share Tech Mono,monospace" font-size="5" text-anchor="middle">1983</text>
+            <text x="91" y="167" fill="#0d5a60" font-family="Share Tech Mono,monospace" font-size="4" text-anchor="middle">TCP/IP</text>
+
+            <!-- 1994 SSL (x=150) -->
+            <line x1="150" y1="118" x2="150" y2="152" stroke="#4a2c0a" stroke-width="0.8"/>
+            <circle cx="150" cy="156" r="3.5" fill="#fed33f"/>
+            <text x="150" y="164" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="5" text-anchor="middle">1994</text>
+            <text x="150" y="170" fill="#7a6010" font-family="Share Tech Mono,monospace" font-size="4" text-anchor="middle">SSL</text>
+
+            <!-- 2013 Snowden (x=251+12=263) -->
+            <line x1="263" y1="118" x2="263" y2="156" stroke="#4a2c0a" stroke-width="0.8"/>
+            <circle cx="263" cy="160" r="4.5" fill="#fed33f" filter="url(#glowTLsm)"/>
+            <text x="263" y="169" fill="#fed33f" font-family="Share Tech Mono,monospace" font-size="5" text-anchor="middle">2013</text>
+            <text x="263" y="175" fill="#7a6010" font-family="Share Tech Mono,monospace" font-size="4" text-anchor="middle">SNOWDEN</text>
+
+            <!-- 2023 end marker -->
+            <circle cx="338" cy="118" r="3" fill="#ff9a28" opacity="0.6"/>
+
+            <!-- Filler minor dots on track -->
+            <circle cx="44" cy="118" r="1.8" fill="#4a2c0a"/>
+            <circle cx="60" cy="118" r="1.5" fill="#3a1f08"/>
+            <circle cx="108" cy="118" r="1.8" fill="#4a2c0a"/>
+            <circle cx="167" cy="118" r="1.5" fill="#3a1f08"/>
+            <circle cx="181" cy="118" r="1.8" fill="#4a2c0a"/>
+            <circle cx="220" cy="118" r="1.5" fill="#3a1f08"/>
+            <circle cx="237" cy="118" r="1.8" fill="#4a2c0a"/>
+            <circle cx="317" cy="118" r="1.5" fill="#3a1f08"/>
+
+            <!-- Footer -->
+            <text x="180" y="210" fill="#3a1f08" font-family="Share Tech Mono,monospace" font-size="6.5" text-anchor="middle" letter-spacing="2">62 EVENTS · 1971–2025</text>
+          </svg>
+        </div>
+        <div class="c-card__body">
+          <span class="c-card__tag tag-orange">History</span>
+          <h3 class="c-card__title">Infosec Timeline</h3>
+          <p class="c-card__desc">Five decades of pivotal hacks, worms, leaks, and breakthroughs — from the Creeper virus to modern ransomware. Navigate 62 events that shaped cybersecurity.</p>
+          <span class="c-card__enter">Explore Timeline &rarr;</span>
+        </div>
+      </div>
+
     </div><!-- /carousel-stage -->
 
     <!-- ── Nav controls ── -->
@@ -741,6 +863,7 @@
         <button class="c-dot" data-i="2"></button>
         <button class="c-dot" data-i="3"></button>
         <button class="c-dot" data-i="4"></button>
+        <button class="c-dot" data-i="5"></button>
       </div>
       <button class="c-arrow" id="c-next">&#8594;</button>
     </div>

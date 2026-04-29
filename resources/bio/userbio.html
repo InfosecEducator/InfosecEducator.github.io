@@ -415,6 +415,62 @@
     [contenteditable]:focus { outline: 1px solid rgba(43,228,234,0.25); outline-offset: 2px; }
     [contenteditable]:empty::before { content: attr(data-ph); color: var(--red-900); }
 
+    /* ── TIMELINE ────────────────────────────────────────────── */
+    .bio-timeline-wrap { margin-bottom: 0.75rem; }
+    .bio-timeline-track {
+      display: flex; gap: 1.25rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin; scrollbar-color: var(--red-800) var(--bg-900);
+      padding: 0.75rem 0.25rem 1rem; cursor: grab; user-select: none;
+    }
+    .bio-timeline-track:active { cursor: grabbing; }
+    .bio-timeline-track::-webkit-scrollbar { height: 3px; }
+    .bio-timeline-track::-webkit-scrollbar-track { background: var(--bg-900); }
+    .bio-timeline-track::-webkit-scrollbar-thumb { background: var(--red-800); }
+    .tl-card {
+      flex: 0 0 240px; scroll-snap-align: start;
+      background: var(--bg-700); border: 1px solid var(--red-800);
+      border-top: 2px solid var(--red-500); padding: 1rem;
+      clip-path: var(--notch-path); position: relative;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .tl-card:hover { border-color: var(--red-400); box-shadow: var(--glow-red); }
+    .tl-dot {
+      position: absolute; top: -5px; left: 1rem;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red-500); box-shadow: var(--glow-red);
+    }
+    .tl-date {
+      font-family: var(--font-mono); font-size: 0.64rem;
+      letter-spacing: 0.12em; color: var(--cyan-500);
+      text-transform: uppercase; margin-bottom: 0.45rem;
+    }
+    .tl-title {
+      font-family: var(--font-display); font-size: 1.55rem;
+      color: var(--red-300); line-height: 1.1; margin-bottom: 0.5rem;
+    }
+    .tl-desc {
+      font-family: var(--font-ui); font-size: 0.88rem;
+      color: var(--text-secondary); line-height: 1.65;
+    }
+    .bio-timeline-nav {
+      display: flex; align-items: center;
+      gap: 0.4rem; margin-top: 0.4rem;
+    }
+    .tl-counter {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      color: var(--text-muted); flex: 1;
+    }
+    .tl-nav-btn {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.08em; color: var(--text-muted);
+      background: transparent; border: 1px solid var(--red-900);
+      padding: 0.22rem 0.55rem; cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .tl-nav-btn:hover { color: var(--cyan-500); border-color: var(--cyan-500); }
+
     /* ── SAVE TOAST ───────────────────────────────────────────── */
     #toast {
       position: fixed; bottom: 5rem; right: 1.5rem;
@@ -475,6 +531,8 @@
         <span class="btype-icon">◈</span>BADGES</button>
       <button class="btype-btn" onclick="insertBlock('stats')">
         <span class="btype-icon">#</span>STATS</button>
+      <button class="btype-btn" onclick="insertBlock('timeline')">
+        <span class="btype-icon">◈</span>TIMELINE</button>
     </div>
   </div>
 </div>
@@ -582,7 +640,12 @@ const DEFS = {
   divider: () => ({ id:uid(), type:'divider', style:'solid' }),
   columns: () => ({ id:uid(), type:'columns', ratio:'50', cols:['Left column.','Right column.',''] }),
   badges:  () => ({ id:uid(), type:'badges',  items:[{text:'CTF Player',color:'cyan'},{text:'Blue Team',color:'green'},{text:'OSINT',color:'yellow'}] }),
-  stats:   () => ({ id:uid(), type:'stats',   items:[{val:'5+',lbl:'Years',color:'red'},{val:'42',lbl:'CTF Solves',color:'cyan'},{val:'3',lbl:'Certs',color:'green'}] }),
+  stats:    () => ({ id:uid(), type:'stats',    items:[{val:'5+',lbl:'Years',color:'red'},{val:'42',lbl:'CTF Solves',color:'cyan'},{val:'3',lbl:'Certs',color:'green'}] }),
+  timeline: () => ({ id:uid(), type:'timeline', items:[
+    { title:'First Event',  date:'Jan 2024', desc:'Describe what happened here.' },
+    { title:'Second Event', date:'Jun 2024', desc:'Another milestone or achievement.' },
+    { title:'Third Event',  date:'Dec 2024', desc:'Where it led you next.' },
+  ]}),
 };
 
 // ── BLOCK RENDERERS ────────────────────────────────────────────
@@ -637,6 +700,27 @@ function renderBlock(b) {
           <div class="bio-stat__lbl">${esc(it.lbl)}</div>
         </div>`
       ).join('')}</div>`;
+
+    case 'timeline': {
+      if (!b.items || !b.items.length)
+        return `<div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--red-800);padding:1rem">[timeline: no events]</div>`;
+      const tid = `tl-${b.id}`;
+      const cards = b.items.map(ev => `
+        <div class="tl-card">
+          <span class="tl-dot"></span>
+          <div class="tl-date">${esc(ev.date)}</div>
+          <div class="tl-title">${esc(ev.title)}</div>
+          <p class="tl-desc">${nl2br(ev.desc)}</p>
+        </div>`).join('');
+      return `<div class="bio-timeline-wrap">
+        <div class="bio-timeline-track" id="${tid}">${cards}</div>
+        <div class="bio-timeline-nav">
+          <span class="tl-counter">${b.items.length} event${b.items.length !== 1 ? 's' : ''} — scroll or swipe</span>
+          <button class="tl-nav-btn" onclick="tlScroll('${tid}',-1)">◀ PREV</button>
+          <button class="tl-nav-btn" onclick="tlScroll('${tid}', 1)">NEXT ▶</button>
+        </div>
+      </div>`;
+    }
 
     default:
       return `<div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--red-800)">[unknown: ${esc(b.type)}]</div>`;
@@ -730,7 +814,7 @@ function insertBlock(type) {
   }
   render();
   // Auto-open edit modal for structured blocks
-  const needsModal = ['code','photo','divider','columns','badges','stats'];
+  const needsModal = ['code','photo','divider','columns','badges','stats','timeline'];
   if (needsModal.includes(type)) {
     const newIdx = insertIdx === null ? blocks.length - 1 :
                    insertIdx === -1  ? 0 : insertIdx + 1;
@@ -873,6 +957,13 @@ function buildForm(b) {
         <button class="le-add" onclick="addStat()">+ ADD STAT</button></div>`;
     }
 
+    case 'timeline': {
+      const rows = (b.items||[]).map(ev => tlEventRow(ev)).join('');
+      return `<div class="frow"><label class="flabel">TIMELINE EVENTS</label>
+        <div class="list-editor" id="tl-list" style="gap:0.6rem">${rows}</div>
+        <button class="le-add" onclick="addTlEvent()">+ ADD EVENT</button></div>`;
+    }
+
     default: return `<p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted)">No fields for this block.</p>`;
   }
 }
@@ -951,6 +1042,12 @@ function applyEdit() {
         lbl:   row.querySelector('.stat-lbl').value,
         color: row.querySelector('.stat-color').value
       })); break;
+    case 'timeline':
+      b.items = [...document.querySelectorAll('#tl-list .tl-ev-row')].map(row => ({
+        title: row.querySelector('.tl-ev-title').value,
+        date:  row.querySelector('.tl-ev-date').value,
+        desc:  row.querySelector('.tl-ev-desc').value,
+      })); break;
   }
 
   closeEditModal();
@@ -1025,6 +1122,36 @@ function showToast(msg, type) {
   clearTimeout(_toastTmr);
   _toastTmr = setTimeout(() => el.classList.add('off'), 2600);
 }
+
+// ── TIMELINE HELPERS ───────────────────────────────────────────
+function tlEventRow(ev) {
+  return `<div class="tl-ev-row" style="border:1px solid var(--red-900);padding:0.55rem;display:flex;flex-direction:column;gap:0.35rem">
+    <div style="display:flex;gap:0.35rem;align-items:center">
+      <input class="finput tl-ev-title" value="${esc(ev.title)}" placeholder="Event title" style="flex:1">
+      <button class="le-del" onclick="this.closest('.tl-ev-row').remove()">✕</button>
+    </div>
+    <input class="finput tl-ev-date" value="${esc(ev.date)}" placeholder="Date (e.g. Jan 2024)">
+    <textarea class="ftarea tl-ev-desc" style="min-height:60px">${esc(ev.desc)}</textarea>
+  </div>`;
+}
+function addTlEvent() {
+  document.getElementById('tl-list').insertAdjacentHTML('beforeend', tlEventRow({title:'New Event',date:'',desc:''}));
+}
+function tlScroll(trackId, dir) {
+  const el = document.getElementById(trackId);
+  if (el) el.scrollBy({ left: dir * 265, behavior: 'smooth' });
+}
+
+// Drag-to-scroll for timeline tracks
+document.addEventListener('mousedown', e => {
+  const track = e.target.closest('.bio-timeline-track');
+  if (!track) return;
+  let startX = e.pageX, startScroll = track.scrollLeft, dragging = false;
+  const onMove = e => { dragging = true; track.scrollLeft = startScroll - (e.pageX - startX); };
+  const onUp   = () => { document.removeEventListener('mousemove', onMove); };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp, { once: true });
+});
 
 // ── INIT ───────────────────────────────────────────────────────
 render();

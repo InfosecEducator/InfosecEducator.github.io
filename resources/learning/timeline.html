@@ -121,8 +121,9 @@
 
     /* ── EVENT CARD AREA ───────────────────────────────────────── */
     #card-area {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      padding: 1.5rem 2rem 1rem; min-height: 0;
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 1.5rem 2rem 1rem; min-height: 0; gap: 1rem;
       position: relative;
     }
 
@@ -252,7 +253,7 @@
     /* era label */
     .era-label {
       position: absolute; top: 8%;
-      font-family: var(--font-display); font-size: 1.6rem;
+      font-family: var(--font-display); font-size: 2.2rem;
       letter-spacing: 0.08em;
       transform: translateX(-50%);
       pointer-events: none; z-index: 2;
@@ -263,7 +264,7 @@
       position: absolute; top: 0; bottom: 0;
       transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center;
-      width: 100px; z-index: 4;
+      width: 160px; z-index: 4;
       transition: opacity 0.4s;
     }
     .enode-dot {
@@ -276,17 +277,16 @@
     }
     .enode-year {
       position: absolute; top: calc(38% + 20px);
-      font-family: var(--font-mono); font-size: 0.9rem;
+      font-family: var(--font-mono); font-size: 1.35rem;
       color: var(--text-muted); letter-spacing: 0.07em;
       white-space: nowrap; font-weight: 600;
     }
     .enode-title {
-      position: absolute; top: calc(38% + 40px);
-      font-family: var(--font-mono); font-size: 0.72rem;
+      position: absolute; top: calc(38% + 52px);
+      font-family: var(--font-mono); font-size: 1.0rem;
       color: transparent; letter-spacing: 0.04em;
-      white-space: nowrap; max-width: 140px;
-      text-align: center; overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal; max-width: 200px;
+      text-align: center;
       transition: color 0.3s;
     }
 
@@ -299,8 +299,8 @@
       border-color: var(--node-color, var(--cyan-500));
       background: var(--node-color, var(--cyan-500));
     }
-    .enode.active .enode-year { color: var(--cyan-400); font-weight: 700; font-size: 1rem; }
-    .enode.active .enode-title { color: var(--cyan-500); font-size: 0.78rem; }
+    .enode.active .enode-year { color: var(--cyan-400); font-weight: 700; font-size: 1.5rem; }
+    .enode.active .enode-title { color: var(--cyan-500); font-size: 1.1rem; }
 
     /* past/near/future node styles */
     .enode.past   { opacity: 0.3; }
@@ -315,6 +315,27 @@
       100% { box-shadow: 0 0 0 3px rgba(43,228,234,0.15), 0 0 0 0 rgba(43,228,234,0); }
     }
     .enode.active .enode-dot { animation: pulse-ring 2s ease-out infinite; }
+
+    /* ── SIGNIFICANCE PANEL ───────────────────────────────────── */
+    #tl-sig {
+      width: min(540px, 82%);
+      text-align: center;
+      pointer-events: none;
+      opacity: 1; transition: opacity 0.25s ease;
+      flex-shrink: 0;
+      margin-top: calc(3rem + 300px);
+    }
+    #tl-sig-label {
+      display: block;
+      font-family: var(--font-mono); font-size: 1.65rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--red-800); margin-bottom: 0.4rem;
+    }
+    #tl-sig-text {
+      font-family: var(--font-mono); font-size: 2.16rem;
+      line-height: 1.65; color: var(--text-secondary);
+      letter-spacing: 0.035em;
+    }
 
     /* ── FOOTER ────────────────────────────────────────────────── */
     #ftr {
@@ -397,6 +418,10 @@
 
   <!-- EVENT CARD -->
   <div id="card-area">
+    <div id="tl-sig">
+      <span id="tl-sig-label">// significance</span>
+      <span id="tl-sig-text"></span>
+    </div>
     <div id="event-card">
       <div id="ev-header">
         <div id="ev-badge">LOADING</div>
@@ -564,6 +589,72 @@ const EVENTS = [
     blurb:"K-12 education software giant PowerSchool is breached via stolen credentials, exposing sensitive data — grades, medical records, Social Security numbers, and disciplinary files — for tens of millions of students and educators across North America. Despite paying a ransom, stolen data begins appearing publicly. The breach spotlights the education sector's chronic under-investment in cybersecurity and the profound, lasting harm of minors' sensitive records being weaponized for extortion." },
 ];
 
+// ── SIGNIFICANCE ─────────────────────────────────────────────
+const SIGS = [
+  /* 0  1971 CREEPER */        "Launched the malware era — history's first self-replicating program, erased by history's first antivirus.",
+  /* 1  1973 PHREAKING */      "Founded the hacker ethos: any system can be subverted through curiosity — even with a cereal-box toy whistle.",
+  /* 2  1983 WARGAMES */       "A Hollywood film directly prompted the first US federal cybercrime legislation within three years.",
+  /* 3  1984 2600 */           "The enduring voice of hacker culture — in print for 40+ years, still confronting institutions.",
+  /* 4  1984 CCC */            "Pioneered responsible disclosure: expose the flaw publicly, return the funds, then call a press conference.",
+  /* 5  1986 BRAIN */          "The first PC virus to spread globally — opened the era of self-replicating malicious code.",
+  /* 6  1986 CFAA */           "Vague by design, wielded broadly — the primary US federal cybercrime statute for nearly 40 years.",
+  /* 7  1986 HANNOVER */       "First documented cyber espionage: a nation-state paying hackers to steal US military secrets.",
+  /* 8  1988 MORRIS */         "First CFAA conviction; its damage spawned CERT/CC, the world's first computer emergency response team.",
+  /* 9  1989 AIDS TROJAN */    "World's first ransomware — 28 years before ransomware became a multi-billion-dollar criminal industry.",
+  /* 10 1990 SUNDEVIL */       "Overzealous raids on hackers directly inspired the founding of the EFF, the foremost digital civil liberties org.",
+  /* 11 1993 DEFCON */         "What began as a one-time farewell party became the world's largest and most influential hacker conference.",
+  /* 12 1994 CITIBANK */       "The first major online bank heist — shocked the financial industry into taking network security seriously.",
+  /* 13 1995 MITNICK */        "The most-wanted hacker in US history; his rehabilitation redefined what a 'reformed hacker' could become.",
+  /* 14 1997 BLACK HAT */      "The world's premier security research conference — where the most consequential disclosures are made public.",
+  /* 15 1998 BACK ORIFICE */   "Exposed Windows' systemic insecurity to global ridicule, forcing Microsoft to finally take OS security seriously.",
+  /* 16 1999 MELISSA */        "First major email worm; the first significant prison sentence handed down for malware authorship.",
+  /* 17 2000 ILOVEYOU */       "$10B in damages, zero arrests — exposed a critical gap in global cybercrime law that Congress rushed to close.",
+  /* 18 2000 MAFIABOY */       "A 15-year-old took down Yahoo, Amazon, and CNN — forced industry to confront volumetric DDoS as a real threat.",
+  /* 19 2001 CODE RED */       "Demonstrated the window from patch release to active exploitation had collapsed to near-zero.",
+  /* 20 2003 SLAMMER */        "376 bytes; 75,000 infections in under 10 minutes. Proved critical infrastructure can be paralyzed at internet speed.",
+  /* 21 2004 MYDOOM */         "The fastest-spreading email worm in history — its author was never identified and remains unknown today.",
+  /* 22 2007 ESTONIA */        "The first recognized act of state-level cyberwarfare; prompted NATO's first dedicated cyber defence centre.",
+  /* 23 2007 TJX */            "45 million cards stolen via a store Wi-Fi antenna — forced retail and banking to adopt PCI-DSS compliance.",
+  /* 24 2008 CONFICKER */      "15 million infected machines; its ultimate purpose was never established. It just watched — and waited.",
+  /* 25 2008 ANONYMOUS */      "Proved loosely coordinated online collectives could challenge established institutions with real-world consequences.",
+  /* 26 2009 AURORA */         "Google's public attribution of a Chinese attack reshaped norms around corporate disclosure of state intrusions.",
+  /* 27 2010 STUXNET */        "The first cyberweapon to cause physical destruction — opened the Pandora's box of offensive state cyber operations.",
+  /* 28 2011 RSA */            "Compromising the security vendor compromised every downstream client — supply chain attack logic, defined.",
+  /* 29 2011 PSN */            "77 million accounts exposed; established that gaming companies must be treated as custodians of sensitive data.",
+  /* 30 2011 LULZSEC */        "50-day hacking spree ended by an FBI informant — one of the first major cautionary tales of online infiltration.",
+  /* 31 2012 SHAMOON */        "One of the most destructive attacks on a private company; 35,000 computers had to be physically replaced.",
+  /* 32 2013 SNOWDEN */        "Revealed mass surveillance of billions; accelerated global adoption of encryption, VPNs, and privacy law reform.",
+  /* 33 2013 TARGET */         "The HVAC contractor was the attack vector — made third-party vendor risk a boardroom-level priority.",
+  /* 34 2014 HEARTBLEED */     "The first vulnerability with a logo; launched the modern era of named, branded vulnerability disclosure.",
+  /* 35 2014 SHELLSHOCK */     "A 25-year-old bug exploited within hours of disclosure — forced reassessment of legacy code security everywhere.",
+  /* 36 2014 SONY PICTURES */  "The first public state attribution of a destructive cyberattack; redefined nation-state threat norms permanently.",
+  /* 37 2015 OPM */            "Called the most damaging US government breach in history — a roadmap for targeting America's intelligence apparatus.",
+  /* 38 2015 ASHLEY MADISON */ "Proved intimate personal data could become a weapon; led to suicides, extortion campaigns, and mass divorces.",
+  /* 39 2016 BANGLADESH */     "North Korea stole $81M via SWIFT — exposed the global financial messaging system as a systemic attack surface.",
+  /* 40 2016 MIRAI */          "A 1.2 Tbps DDoS from hijacked home cameras and routers — proved IoT is a systemic, unaddressed global crisis.",
+  /* 41 2016 DNC */            "The most sophisticated election interference campaign in history — cyberattacks as a tool of democratic warfare.",
+  /* 42 2016 YAHOO */          "3 billion accounts compromised; the largest breach ever reduced a $4.8B acquisition price by $350M.",
+  /* 43 2017 SHADOW BROKERS */ "Stolen NSA tools became history's most destructive worm payloads — EternalBlue is still actively exploited today.",
+  /* 44 2017 WANNACRY */       "230,000 systems, 150 countries, the NHS paralyzed — proved ransomware can directly threaten human lives.",
+  /* 45 2017 NOTPETYA */       "Called the most destructive cyberattack in history — $10B wiped, not ransomed. A weapon wearing ransomware's mask.",
+  /* 46 2017 EQUIFAX */        "The definitive patch-management failure — 147 million SSNs exposed from a known, unpatched vulnerability.",
+  /* 47 2018 MARRIOTT */       "Intelligence value over money: 500M guest records built a global surveillance atlas of diplomats and officials.",
+  /* 48 2019 CAPITAL ONE */    "Misconfiguration, not sophistication, exposed 100M records — established cloud misconfig as the new breach baseline.",
+  /* 49 2020 SOLARWINDS */     "The most consequential software supply chain attack ever — trusted update packages were the delivery mechanism.",
+  /* 50 2020 TWITTER */        "Teenagers social-engineered admin access to seize Obama's and Musk's accounts — earning just $120,000.",
+  /* 51 2021 PROXYLOGON */     "Ten nation-states exploiting the same Exchange zero-days simultaneously — the most chaotic mass-exploitation ever.",
+  /* 52 2021 COLONIAL */       "A pipeline shutdown, national emergency, and $4.4M ransom — reshaped US critical infrastructure cyber policy.",
+  /* 53 2021 LOG4SHELL */      "Billions of devices, trivial exploitation — forced a global reckoning with software supply chain fragility.",
+  /* 54 2022 LAPSUS$ */        "Phone calls and bribery, not code — proved the human layer remains the most exploitable attack surface.",
+  /* 55 2022 LASTPASS */       "Raised a foundational question: should any single company be trusted as the custodian of every password you own?",
+  /* 56 2023 MOVEIT */         "2,700+ organizations breached via one file-transfer tool — a single point of failure at global scale.",
+  /* 57 2023 MGM */            "A 10-minute LinkedIn impersonation call paralyzed a Las Vegas casino empire for 10 days.",
+  /* 58 2024 CHANGE HEALTH */  "The most consequential attack on US healthcare ever — prescriptions blocked, patient care directly threatened.",
+  /* 59 2024 CROWDSTRIKE */    "A security tool's own update, not an attack, crashed 8.5M Windows systems — the largest IT outage ever recorded.",
+  /* 60 2024 SALT TYPHOON */   "China penetrated US telecom wiretap infrastructure — the surveillance systems turned against those they protect.",
+  /* 61 2025 POWERSCHOOL */    "Millions of children's records weaponized for extortion — ransom paid, data leaked publicly anyway.",
+];
+
 // ── CONFIG ────────────────────────────────────────────────────
 const SPACING    = 340;  // px between event nodes
 const DWELL_MS   = 10000; // 10s dwell per event
@@ -683,6 +774,9 @@ function showEvent(i) {
   const ev = EVENTS[i];
   card.classList.remove('visible');
 
+  const sigEl = document.getElementById('tl-sig');
+  sigEl.style.opacity = '0';
+
   setTimeout(() => {
     // Update content
     evBadge.textContent = ev.cat.toUpperCase();
@@ -699,6 +793,10 @@ function showEvent(i) {
 
     dwellFill.style.width = '0%';
     card.classList.add('visible');
+
+    // Significance text
+    document.getElementById('tl-sig-text').textContent = SIGS[i] || '';
+    sigEl.style.opacity = '1';
   }, activeIdx === -1 ? 0 : 120);
 }
 
