@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    /* ── VARIABLES ────────────────────────────────────────────── */
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-300: #f4908b;
+      --red-400: #ea6f69;
+      --red-500: #e8615a;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-400: #5eeef3;
+      --cyan-500: #2be4ea;
+      --cyan-900: #0d3336;
+      --green-400: #5afeba;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --purple-500: #c084fc;
+      --text-secondary: #b09090;
+      --text-muted:     #907878;
+      --font-display: "VT323", monospace;
+      --font-ui:      "Rajdhani", sans-serif;
+      --font-mono:    "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 24px rgba(232,97,90,0.3);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 24px rgba(43,228,234,0.3);
+      --glow-green:  0 0 8px var(--green-500),  0 0 24px rgba(43,254,160,0.3);
+      --glow-yellow: 0 0 8px var(--yellow-500), 0 0 24px rgba(254,211,63,0.3);
+      --notch: 10px;
+      --notch-path: polygon(0 0,100% 0,100% calc(100% - var(--notch)),calc(100% - var(--notch)) 100%,0 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-800);
+      color: var(--red-300);
+      font-family: var(--font-ui);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* scanline overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px,
+        transparent 1px, transparent 3px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-800); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ── EDITOR BAR ───────────────────────────────────────────── */
+    #editor-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.45rem 1.25rem;
+      background: rgba(13,10,13,0.96);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 2px 20px rgba(232,97,90,0.12);
+      backdrop-filter: blur(8px);
+    }
+    #editor-bar.hidden { display: none !important; }
+
+    .ed-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--cyan-500);
+      text-shadow: var(--glow-cyan);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+
+    .ed-btn {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 0.28rem 0.7rem;
+      background: transparent;
+      border: 1px solid;
+      cursor: pointer;
+      clip-path: var(--notch-path);
+      transition: filter .15s, background .15s;
+    }
+    .ed-btn:hover { filter: brightness(1.35); background: rgba(255,255,255,0.04); }
+    .ed-btn-add    { color: var(--cyan-500);   border-color: var(--cyan-900); }
+    .ed-btn-save   { color: var(--green-500);  border-color: var(--green-900); margin-left: auto; }
+    .ed-btn-prev   { color: var(--text-muted); border-color: var(--red-900); }
+
+    /* ── CANVAS ───────────────────────────────────────────────── */
+    #canvas {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 7rem;
+    }
+    body.edit-on #canvas { padding-top: 5.5rem; }
+
+    /* ── BLOCK WRAPPER ────────────────────────────────────────── */
+    .bwrap { position: relative; }
+
+    .bctrl {
+      display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.25rem 0.5rem;
+      background: rgba(13,10,13,0.94);
+      border: 1px solid var(--red-900); border-bottom: none;
+      opacity: 0; transition: opacity .15s;
+    }
+    .bwrap:hover .bctrl { opacity: 1; }
+
+    .bctrl-type {
+      font-family: var(--font-mono);
+      font-size: 0.56rem;
+      color: var(--red-900);
+      letter-spacing: 0.1em;
+    }
+    .bctrl-spacer { flex: 1; }
+    .cbtn {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      color: var(--text-muted); background: transparent;
+      border: 1px solid var(--red-900);
+      padding: 0.12rem 0.38rem; cursor: pointer;
+      transition: color .1s, border-color .1s;
+    }
+    .cbtn:hover       { color: var(--cyan-500); border-color: var(--cyan-500); }
+    .cbtn.del:hover   { color: var(--red-500);  border-color: var(--red-500); }
+    .cbtn.edit-btn:hover { color: var(--yellow-500); border-color: var(--yellow-500); }
+
+    /* insert-between button */
+    .ins-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 22px;
+      background: transparent; border: none; cursor: pointer;
+      opacity: 0; transition: opacity .15s; position: relative;
+    }
+    .ins-btn::before {
+      content: ''; position: absolute;
+      left: 0; right: 0; top: 50%; height: 1px;
+      background: var(--red-900); transition: background .15s;
+    }
+    .ins-lbl {
+      font-family: var(--font-mono); font-size: 0.6rem;
+      color: var(--red-900); background: var(--bg-800);
+      padding: 0 0.45rem; position: relative; z-index: 1;
+      transition: color .15s;
+    }
+    .ins-btn:hover          { opacity: 1 !important; }
+    .ins-btn:hover::before  { background: var(--cyan-500); }
+    .ins-btn:hover .ins-lbl { color: var(--cyan-500); }
+    .bwrap:hover + .ins-btn { opacity: 1; }
+
+    /* ── BIO BLOCK TYPES ──────────────────────────────────────── */
+
+    /* title */
+    .bio-title {
+      font-family: var(--font-display);
+      line-height: 1; letter-spacing: 0.04em; margin-bottom: 0.15em;
+    }
+    .bio-title.sz-xl { font-size: 4.6rem; }
+    .bio-title.sz-lg { font-size: 3.5rem; }
+    .bio-title.sz-md { font-size: 2.6rem; }
+    .bio-title.sz-sm { font-size: 1.9rem; }
+    .bio-title.clr-red    { color: var(--red-500);    text-shadow: var(--glow-red); }
+    .bio-title.clr-cyan   { color: var(--cyan-500);   text-shadow: var(--glow-cyan); }
+    .bio-title.clr-green  { color: var(--green-500);  text-shadow: var(--glow-green); }
+    .bio-title.clr-yellow { color: var(--yellow-500); text-shadow: var(--glow-yellow); }
+    .bio-title.clr-white  { color: #e8e0f0; }
+
+    /* subtitle */
+    .bio-subtitle {
+      font-family: var(--font-ui); font-size: 1.15rem;
+      font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 0.4em;
+    }
+    .bio-subtitle.clr-red    { color: var(--red-400); }
+    .bio-subtitle.clr-cyan   { color: var(--cyan-500); }
+    .bio-subtitle.clr-green  { color: var(--green-400); }
+    .bio-subtitle.clr-yellow { color: var(--yellow-500); }
+    .bio-subtitle.clr-white  { color: var(--text-secondary); }
+
+    /* section label */
+    .bio-label {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      letter-spacing: 0.12em; padding-top: 0.75rem; margin-bottom: 0.6rem;
+    }
+    .bio-label.clr-red    { color: var(--text-secondary); }
+    .bio-label.clr-cyan   { color: #2a9aa0; }
+    .bio-label.clr-green  { color: #2a9060; }
+    .bio-label.clr-yellow { color: #b89430; }
+
+    /* text paragraph */
+    .bio-text {
+      font-size: 1rem; line-height: 1.75;
+      color: var(--text-secondary); margin-bottom: 0.8em;
+    }
+    .bio-text.mono {
+      font-family: var(--font-mono); font-size: 0.87rem;
+      color: var(--red-300);
+    }
+
+    /* code block */
+    .bio-code {
+      background: var(--bg-700);
+      border: 1px solid var(--red-900); border-left: 3px solid var(--cyan-500);
+      padding: 0.9rem 1.2rem;
+      font-family: var(--font-mono); font-size: 0.84rem;
+      color: var(--cyan-400); white-space: pre; overflow-x: auto;
+      line-height: 1.6; margin-bottom: 0.75rem;
+    }
+    .code-lang {
+      display: block; font-size: 0.62rem; color: var(--text-muted);
+      letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    }
+
+    /* photo */
+    .bio-photo-wrap { margin-bottom: 0.75rem; }
+    .bio-photo-wrap.al-left   { text-align: left; }
+    .bio-photo-wrap.al-center { text-align: center; }
+    .bio-photo-wrap.al-right  { text-align: right; }
+    .bio-photo {
+      display: inline-block; clip-path: var(--notch-path);
+      overflow: hidden;
+    }
+    .bio-photo.w-sm   { max-width: 200px; width: 100%; }
+    .bio-photo.w-md   { max-width: 380px; width: 100%; }
+    .bio-photo.w-full { width: 100%; }
+    .bio-photo img    { width: 100%; display: block; }
+    .bio-photo.br-red    { box-shadow: 0 0 0 1px var(--red-500),    var(--glow-red); }
+    .bio-photo.br-cyan   { box-shadow: 0 0 0 1px var(--cyan-500),   var(--glow-cyan); }
+    .bio-photo.br-green  { box-shadow: 0 0 0 1px var(--green-500),  var(--glow-green); }
+    .bio-photo.br-yellow { box-shadow: 0 0 0 1px var(--yellow-500), var(--glow-yellow); }
+    .bio-photo.br-none   { box-shadow: none; }
+    .bio-caption {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      color: var(--text-muted); letter-spacing: 0.07em;
+      margin-top: 0.35rem;
+    }
+    .bio-img-missing {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100px; background: var(--bg-600);
+      font-family: var(--font-mono); font-size: 0.68rem;
+      color: var(--red-800); letter-spacing: 0.06em;
+    }
+
+    /* divider */
+    .bio-divider { margin: 1.4rem 0; border: none; }
+    .bio-divider.sty-solid  { height: 1px; background: linear-gradient(90deg, transparent, var(--red-700) 40%, var(--red-700) 60%, transparent); }
+    .bio-divider.sty-dashed { border-top: 1px dashed var(--red-800); }
+    .bio-divider.sty-glitch { height: 2px; background: linear-gradient(90deg, var(--cyan-500) 25%, var(--red-500) 50%, var(--green-500) 75%); box-shadow: 0 0 10px rgba(43,228,234,0.35); }
+
+    /* columns */
+    .bio-cols { display: grid; gap: 1.5rem; margin-bottom: 0.75rem; }
+    .bio-cols.r-50  { grid-template-columns: 1fr 1fr; }
+    .bio-cols.r-60  { grid-template-columns: 3fr 2fr; }
+    .bio-cols.r-40  { grid-template-columns: 2fr 3fr; }
+    .bio-cols.r-3   { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 580px) { .bio-cols { grid-template-columns: 1fr !important; } }
+    .bio-col-cell .bio-text { margin-bottom: 0; }
+
+    /* badges */
+    .bio-badges { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.75rem; }
+    .bio-badge {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.07em; padding: 0.2rem 0.55rem;
+      border: 1px solid; clip-path: var(--notch-path);
+    }
+    .bio-badge.clr-red    { color: var(--red-400);    border-color: var(--red-700);    background: rgba(232,97,90,0.07); }
+    .bio-badge.clr-cyan   { color: var(--cyan-500);   border-color: var(--cyan-900);   background: rgba(43,228,234,0.07); }
+    .bio-badge.clr-green  { color: var(--green-500);  border-color: var(--green-900);  background: rgba(43,254,160,0.07); }
+    .bio-badge.clr-yellow { color: var(--yellow-500); border-color: var(--yellow-900); background: rgba(254,211,63,0.07); }
+    .bio-badge.clr-orange { color: var(--orange-500); border-color: #4a2c0a;           background: rgba(255,154,40,0.07); }
+    .bio-badge.clr-purple { color: var(--purple-500); border-color: #4a2060;           background: rgba(192,132,252,0.07); }
+
+    /* stats */
+    .bio-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 0.75rem; }
+    .bio-stat {
+      padding: 0.9rem 0.75rem; text-align: center;
+      border: 1px solid var(--red-900); clip-path: var(--notch-path);
+    }
+    .bio-stat__val {
+      font-family: var(--font-display); font-size: 2.4rem;
+      line-height: 1; margin-bottom: 0.2rem;
+    }
+    .bio-stat__lbl {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase;
+    }
+    .bio-stat.clr-red    .bio-stat__val { color: var(--red-500);    text-shadow: var(--glow-red); }
+    .bio-stat.clr-cyan   .bio-stat__val { color: var(--cyan-500);   text-shadow: var(--glow-cyan); }
+    .bio-stat.clr-green  .bio-stat__val { color: var(--green-500);  text-shadow: var(--glow-green); }
+    .bio-stat.clr-yellow .bio-stat__val { color: var(--yellow-500); text-shadow: var(--glow-yellow); }
+
+    /* ── FLOATING EDIT BUTTON ─────────────────────────────────── */
+    #edit-toggle {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--red-500); border: 1px solid var(--red-800);
+      background: rgba(13,10,13,0.9); padding: 0.4rem 0.8rem;
+      cursor: pointer; z-index: 90; clip-path: var(--notch-path);
+      transition: color .2s, border-color .2s, box-shadow .2s;
+      backdrop-filter: blur(4px);
+    }
+    #edit-toggle:hover { color: var(--cyan-500); border-color: var(--cyan-500); box-shadow: var(--glow-cyan); }
+    body.edit-on #edit-toggle { display: none; }
+
+    /* empty state */
+    #empty-state {
+      text-align: center; padding: 7rem 2rem;
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--red-800); line-height: 2;
+    }
+    #empty-state .es-head {
+      font-family: var(--font-display); font-size: 2rem;
+      color: var(--red-900); display: block; margin-bottom: 0.5rem;
+    }
+
+    /* ── MODALS ───────────────────────────────────────────────── */
+    .modal-ov {
+      position: fixed; inset: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,8,16,0.88); backdrop-filter: blur(4px);
+    }
+    .modal-ov.hidden { display: none; }
+
+    .modal-box {
+      background: var(--bg-700); border: 1px solid var(--red-800);
+      clip-path: var(--notch-path); padding: 1.4rem;
+      width: 90%; max-width: 540px; max-height: 82vh; overflow-y: auto;
+    }
+    .modal-head {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--cyan-500); letter-spacing: 0.12em;
+      margin-bottom: 1.1rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--red-900);
+    }
+
+    /* block type picker */
+    .btype-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.45rem; }
+    .btype-btn {
+      font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.05em;
+      color: var(--text-secondary); background: transparent;
+      border: 1px solid var(--red-900); padding: 0.55rem 0.4rem;
+      cursor: pointer; text-align: center; clip-path: var(--notch-path);
+      transition: color .15s, border-color .15s, background .15s;
+    }
+    .btype-btn:hover { color: var(--cyan-500); border-color: var(--cyan-500); background: rgba(43,228,234,0.05); }
+    .btype-icon { font-size: 1rem; display: block; margin-bottom: 0.2rem; }
+
+    /* form elements */
+    .frow   { margin-bottom: 0.9rem; }
+    .frow2  { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.9rem; }
+    .flabel {
+      display: block; font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.3rem;
+    }
+    .finput, .fselect, .ftarea {
+      width: 100%; background: var(--bg-800); border: 1px solid var(--red-800);
+      color: var(--red-300); font-family: var(--font-mono); font-size: 0.8rem;
+      padding: 0.38rem 0.55rem; outline: none; transition: border-color .15s;
+    }
+    .finput:focus, .fselect:focus, .ftarea:focus { border-color: var(--cyan-500); }
+    .ftarea { min-height: 90px; resize: vertical; line-height: 1.55; }
+    .fselect option { background: var(--bg-800); }
+    .fcheck { display: flex; align-items: center; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); cursor: pointer; }
+    .fcheck input { accent-color: var(--cyan-500); }
+
+    .modal-actions {
+      display: flex; gap: 0.5rem; justify-content: flex-end;
+      margin-top: 1.1rem; padding-top: 0.7rem;
+      border-top: 1px solid var(--red-900);
+    }
+    .mbtn {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+      padding: 0.32rem 0.75rem; background: transparent; border: 1px solid;
+      cursor: pointer; clip-path: var(--notch-path); transition: filter .15s, background .15s;
+    }
+    .mbtn:hover     { filter: brightness(1.35); background: rgba(255,255,255,0.04); }
+    .mbtn-cancel    { color: var(--text-muted);  border-color: var(--red-900); }
+    .mbtn-apply     { color: var(--green-500);   border-color: var(--green-900); }
+    .mbtn-del-all   { color: var(--red-500);     border-color: var(--red-800); margin-right: auto; }
+
+    /* list editors (badges / stats) */
+    .list-editor  { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.4rem; }
+    .le-row       { display: flex; gap: 0.35rem; align-items: center; }
+    .le-row .finput  { flex: 1; }
+    .le-row .fselect { width: 80px; }
+    .le-del { font-family: var(--font-mono); font-size: 0.68rem; color: var(--red-500); background: transparent; border: 1px solid var(--red-900); padding: 0.2rem 0.38rem; cursor: pointer; flex-shrink: 0; }
+    .le-del:hover { border-color: var(--red-500); }
+    .le-add { font-family: var(--font-mono); font-size: 0.62rem; color: var(--cyan-500); background: transparent; border: 1px dashed var(--cyan-900); padding: 0.32rem; cursor: pointer; text-align: center; width: 100%; margin-top: 0.1rem; }
+    .le-add:hover { border-color: var(--cyan-500); background: rgba(43,228,234,0.04); }
+
+    .stat-le-row { display: grid; grid-template-columns: 1fr 2fr 76px auto; gap: 0.35rem; align-items: center; }
+
+    /* inline contenteditable hint */
+    [contenteditable]:focus { outline: 1px solid rgba(43,228,234,0.25); outline-offset: 2px; }
+    [contenteditable]:empty::before { content: attr(data-ph); color: var(--red-900); }
+
+    /* ── SAVE TOAST ───────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 5rem; right: 1.5rem;
+      font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+      padding: 0.45rem 0.9rem; clip-path: var(--notch-path);
+      z-index: 300; pointer-events: none;
+      transition: opacity .4s; opacity: 1;
+    }
+    #toast.ok  { color: var(--green-500); border: 1px solid var(--green-900); background: rgba(11,46,30,0.96); text-shadow: var(--glow-green); }
+    #toast.err { color: var(--red-500);   border: 1px solid var(--red-800);   background: rgba(60,24,26,0.96); }
+    #toast.off { opacity: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ── EDITOR TOOLBAR ────────────────────────────────────────── -->
+<div id="editor-bar" class="hidden">
+  <span class="ed-badge">// EDIT MODE</span>
+  <button class="ed-btn ed-btn-add" onclick="openAddModal(null)">⊕ ADD BLOCK</button>
+  <button class="ed-btn ed-btn-save" onclick="saveFile()">[ SAVE ]</button>
+  <button class="ed-btn ed-btn-prev" onclick="toggleEdit()">[ PREVIEW ]</button>
+</div>
+
+<!-- ── CANVAS ────────────────────────────────────────────────── -->
+<div id="canvas"></div>
+
+<!-- ── FLOATING EDIT BUTTON ──────────────────────────────────── -->
+<button id="edit-toggle" onclick="toggleEdit()">// EDIT</button>
+
+<!-- ── TOAST ─────────────────────────────────────────────────── -->
+<div id="toast" class="off"></div>
+
+<!-- ── ADD BLOCK MODAL ───────────────────────────────────────── -->
+<div id="add-modal" class="modal-ov hidden" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal-box">
+    <div class="modal-head">// INSERT BLOCK</div>
+    <div class="btype-grid">
+      <button class="btype-btn" onclick="insertBlock('title')">
+        <span class="btype-icon">T_</span>TITLE</button>
+      <button class="btype-btn" onclick="insertBlock('subtitle')">
+        <span class="btype-icon">S_</span>SUBTITLE</button>
+      <button class="btype-btn" onclick="insertBlock('label')">
+        <span class="btype-icon">//</span>LABEL</button>
+      <button class="btype-btn" onclick="insertBlock('text')">
+        <span class="btype-icon">¶</span>TEXT</button>
+      <button class="btype-btn" onclick="insertBlock('code')">
+        <span class="btype-icon">&lt;/&gt;</span>CODE</button>
+      <button class="btype-btn" onclick="insertBlock('photo')">
+        <span class="btype-icon">⬜</span>PHOTO</button>
+      <button class="btype-btn" onclick="insertBlock('divider')">
+        <span class="btype-icon">—</span>DIVIDER</button>
+      <button class="btype-btn" onclick="insertBlock('columns')">
+        <span class="btype-icon">⊞</span>COLUMNS</button>
+      <button class="btype-btn" onclick="insertBlock('badges')">
+        <span class="btype-icon">◈</span>BADGES</button>
+      <button class="btype-btn" onclick="insertBlock('stats')">
+        <span class="btype-icon">#</span>STATS</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── EDIT BLOCK MODAL ──────────────────────────────────────── -->
+<div id="edit-modal" class="modal-ov hidden" onclick="if(event.target===this)closeEditModal()">
+  <div class="modal-box">
+    <div class="modal-head" id="em-head">// EDIT BLOCK</div>
+    <div id="em-body"></div>
+    <div class="modal-actions">
+      <button class="mbtn mbtn-cancel" onclick="closeEditModal()">CANCEL</button>
+      <button class="mbtn mbtn-apply" onclick="applyEdit()">APPLY</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── BLOCK DATA (edited by SAVE) ───────────────────────────── -->
+<script id="bio-data" type="application/json">
+[]
+</script>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────
+let blocks = [];
+try { blocks = JSON.parse(document.getElementById('bio-data').textContent) || []; } catch(e){}
+
+let editMode   = false;
+let insertIdx  = null;   // null = end; -1 = top; N = after block N
+let editTarget = null;   // { index, snapshot }
+let savedHandle = null;
+
+// ── UTILS ──────────────────────────────────────────────────────
+const uid  = () => 'b' + Math.random().toString(36).slice(2,9);
+const esc  = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const nl2br = s => esc(s).replace(/\n/g,'<br>');
+const gv  = id => { const e = document.getElementById(id); return e ? e.value : ''; };
+const gch = id => { const e = document.getElementById(id); return e ? e.checked : false; };
+
+// ── BLOCK DEFAULTS ─────────────────────────────────────────────
+const DEFS = {
+  title:   () => ({ id:uid(), type:'title',   content:'YOUR NAME',          color:'red',  size:'xl' }),
+  subtitle:() => ({ id:uid(), type:'subtitle',content:'Security Researcher', color:'cyan' }),
+  label:   () => ({ id:uid(), type:'label',   content:'// about me',        color:'cyan' }),
+  text:    () => ({ id:uid(), type:'text',    content:'Write something here.', mono:false }),
+  code:    () => ({ id:uid(), type:'code',    content:'$ whoami\nuser@host', lang:'bash' }),
+  photo:   () => ({ id:uid(), type:'photo',   src:'assets/photo.jpg', alt:'', caption:'', align:'center', width:'md', border:'cyan' }),
+  divider: () => ({ id:uid(), type:'divider', style:'solid' }),
+  columns: () => ({ id:uid(), type:'columns', ratio:'50', cols:['Left column.','Right column.',''] }),
+  badges:  () => ({ id:uid(), type:'badges',  items:[{text:'CTF Player',color:'cyan'},{text:'Blue Team',color:'green'},{text:'OSINT',color:'yellow'}] }),
+  stats:   () => ({ id:uid(), type:'stats',   items:[{val:'5+',lbl:'Years',color:'red'},{val:'42',lbl:'CTF Solves',color:'cyan'},{val:'3',lbl:'Certs',color:'green'}] }),
+};
+
+// ── BLOCK RENDERERS ────────────────────────────────────────────
+function renderBlock(b) {
+  switch(b.type) {
+
+    case 'title':
+      return `<h1 class="bio-title clr-${b.color} sz-${b.size}" data-field="content" data-ph="Title text">${esc(b.content)}</h1>`;
+
+    case 'subtitle':
+      return `<h2 class="bio-subtitle clr-${b.color}" data-field="content" data-ph="Subtitle text">${esc(b.content)}</h2>`;
+
+    case 'label':
+      return `<div class="bio-label clr-${b.color}" data-field="content" data-ph="// section label">${esc(b.content)}</div>`;
+
+    case 'text':
+      return `<p class="bio-text${b.mono?' mono':''}" data-field="content" data-ph="Your text...">${nl2br(b.content)}</p>`;
+
+    case 'code':
+      return `<div class="bio-code"><span class="code-lang">${esc(b.lang)}</span>${esc(b.content)}</div>`;
+
+    case 'photo': {
+      const imgHTML = `<img src="${esc(b.src)}" alt="${esc(b.alt)}"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      ><div class="bio-img-missing" style="display:none">// image not found: ${esc(b.src)}</div>`;
+      const cap = b.caption ? `<div class="bio-caption">${esc(b.caption)}</div>` : '';
+      return `<div class="bio-photo-wrap al-${b.align}">
+        <div class="bio-photo w-${b.width} br-${b.border}">${imgHTML}</div>
+        ${cap}
+      </div>`;
+    }
+
+    case 'divider':
+      return `<hr class="bio-divider sty-${b.style}">`;
+
+    case 'columns': {
+      const cells = (b.cols||[]).filter((_,i) => b.ratio==='3' || i<2).map(c =>
+        `<div class="bio-col-cell"><p class="bio-text">${nl2br(c)}</p></div>`
+      ).join('');
+      return `<div class="bio-cols r-${b.ratio}">${cells}</div>`;
+    }
+
+    case 'badges':
+      return `<div class="bio-badges">${(b.items||[]).map(it =>
+        `<span class="bio-badge clr-${it.color}">${esc(it.text)}</span>`
+      ).join('')}</div>`;
+
+    case 'stats':
+      return `<div class="bio-stats">${(b.items||[]).map(it =>
+        `<div class="bio-stat clr-${it.color}">
+          <div class="bio-stat__val">${esc(it.val)}</div>
+          <div class="bio-stat__lbl">${esc(it.lbl)}</div>
+        </div>`
+      ).join('')}</div>`;
+
+    default:
+      return `<div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--red-800)">[unknown: ${esc(b.type)}]</div>`;
+  }
+}
+
+// ── CANVAS RENDER ──────────────────────────────────────────────
+function render() {
+  const canvas = document.getElementById('canvas');
+  canvas.innerHTML = '';
+
+  if (!blocks.length && !editMode) {
+    canvas.innerHTML = `<div id="empty-state">
+      <span class="es-head">BLANK BIO</span>
+      click <strong style="color:var(--red-500)">// EDIT</strong> to start building
+    </div>`;
+    return;
+  }
+
+  if (editMode) canvas.appendChild(insBtn(-1));
+
+  blocks.forEach((b, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'bwrap'; wrap.dataset.i = i;
+
+    if (editMode) {
+      const ctrl = document.createElement('div');
+      ctrl.className = 'bctrl';
+      ctrl.innerHTML = `<span class="bctrl-type">${b.type}</span>
+        <span class="bctrl-spacer"></span>
+        <button class="cbtn" onclick="moveBlock(${i},-1)" title="Move up">↑</button>
+        <button class="cbtn" onclick="moveBlock(${i}, 1)" title="Move down">↓</button>
+        <button class="cbtn edit-btn" onclick="openEditModal(${i})" title="Edit">✎</button>
+        <button class="cbtn del" onclick="deleteBlock(${i})" title="Delete">✕</button>`;
+      wrap.appendChild(ctrl);
+    }
+
+    const content = document.createElement('div');
+    content.innerHTML = renderBlock(b);
+
+    // Inline editing for single-line text blocks
+    if (editMode && ['title','subtitle','label'].includes(b.type)) {
+      const el = content.querySelector('[data-field="content"]');
+      if (el) {
+        el.contentEditable = 'true';
+        el.addEventListener('input', () => { blocks[i].content = el.textContent; });
+        el.addEventListener('blur',  () => { blocks[i].content = el.textContent.trim() || blocks[i].content; });
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
+      }
+    }
+
+    wrap.appendChild(content);
+    canvas.appendChild(wrap);
+
+    if (editMode) canvas.appendChild(insBtn(i));
+  });
+}
+
+function insBtn(afterIdx) {
+  const btn = document.createElement('button');
+  btn.className = 'ins-btn';
+  btn.innerHTML = '<span class="ins-lbl">+ insert block</span>';
+  btn.onclick = () => openAddModal(afterIdx);
+  return btn;
+}
+
+// ── EDIT MODE TOGGLE ───────────────────────────────────────────
+function toggleEdit() {
+  editMode = !editMode;
+  document.getElementById('editor-bar').classList.toggle('hidden', !editMode);
+  document.body.classList.toggle('edit-on', editMode);
+  render();
+}
+
+// ── ADD BLOCK ──────────────────────────────────────────────────
+function openAddModal(afterIdx) {
+  insertIdx = afterIdx;
+  document.getElementById('add-modal').classList.remove('hidden');
+}
+function closeAddModal() { document.getElementById('add-modal').classList.add('hidden'); }
+
+function insertBlock(type) {
+  closeAddModal();
+  const b = DEFS[type]();
+  if (insertIdx === null || insertIdx >= blocks.length - 1) {
+    blocks.push(b);
+  } else if (insertIdx === -1) {
+    blocks.unshift(b);
+  } else {
+    blocks.splice(insertIdx + 1, 0, b);
+  }
+  render();
+  // Auto-open edit modal for structured blocks
+  const needsModal = ['code','photo','divider','columns','badges','stats'];
+  if (needsModal.includes(type)) {
+    const newIdx = insertIdx === null ? blocks.length - 1 :
+                   insertIdx === -1  ? 0 : insertIdx + 1;
+    setTimeout(() => openEditModal(newIdx), 60);
+  }
+}
+
+// ── BLOCK OPS ──────────────────────────────────────────────────
+function moveBlock(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= blocks.length) return;
+  [blocks[i], blocks[j]] = [blocks[j], blocks[i]];
+  render();
+}
+function deleteBlock(i) { blocks.splice(i, 1); render(); }
+
+// ── EDIT MODAL ─────────────────────────────────────────────────
+function openEditModal(i) {
+  editTarget = { index: i };
+  const b = blocks[i];
+  document.getElementById('em-head').textContent = `// EDIT: ${b.type.toUpperCase()}`;
+  document.getElementById('em-body').innerHTML = buildForm(b);
+  document.getElementById('edit-modal').classList.remove('hidden');
+}
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.add('hidden');
+  editTarget = null;
+}
+
+const COLOR_OPTS = (sel, list=['red','cyan','green','yellow','orange','purple','white']) =>
+  list.map(c => `<option value="${c}" ${sel===c?'selected':''}>${c.toUpperCase()}</option>`).join('');
+
+function buildForm(b) {
+  switch(b.type) {
+
+    case 'title': return `
+      <div class="frow"><label class="flabel">TEXT</label>
+        <input class="finput" id="ef-content" value="${esc(b.content)}"></div>
+      <div class="frow2">
+        <div><label class="flabel">COLOR</label>
+          <select class="fselect" id="ef-color">${COLOR_OPTS(b.color,['red','cyan','green','yellow','white'])}</select></div>
+        <div><label class="flabel">SIZE</label>
+          <select class="fselect" id="ef-size">
+            <option value="xl" ${b.size==='xl'?'selected':''}>XL — 4.6rem</option>
+            <option value="lg" ${b.size==='lg'?'selected':''}>LG — 3.5rem</option>
+            <option value="md" ${b.size==='md'?'selected':''}>MD — 2.6rem</option>
+            <option value="sm" ${b.size==='sm'?'selected':''}>SM — 1.9rem</option>
+          </select></div></div>`;
+
+    case 'subtitle': return `
+      <div class="frow"><label class="flabel">TEXT</label>
+        <input class="finput" id="ef-content" value="${esc(b.content)}"></div>
+      <div class="frow"><label class="flabel">COLOR</label>
+        <select class="fselect" id="ef-color">${COLOR_OPTS(b.color,['red','cyan','green','yellow','white'])}</select></div>`;
+
+    case 'label': return `
+      <div class="frow"><label class="flabel">LABEL TEXT (e.g. // about me)</label>
+        <input class="finput" id="ef-content" value="${esc(b.content)}"></div>
+      <div class="frow"><label class="flabel">COLOR</label>
+        <select class="fselect" id="ef-color">${COLOR_OPTS(b.color,['red','cyan','green','yellow'])}</select></div>`;
+
+    case 'text': return `
+      <div class="frow"><label class="flabel">CONTENT</label>
+        <textarea class="ftarea" id="ef-content">${esc(b.content)}</textarea></div>
+      <div class="frow"><label class="fcheck">
+        <input type="checkbox" id="ef-mono" ${b.mono?'checked':''}> MONOSPACE FONT
+      </label></div>`;
+
+    case 'code': return `
+      <div class="frow"><label class="flabel">LANGUAGE / LABEL</label>
+        <input class="finput" id="ef-lang" value="${esc(b.lang)}"></div>
+      <div class="frow"><label class="flabel">CODE</label>
+        <textarea class="ftarea" id="ef-content" style="min-height:150px;font-family:var(--font-mono)">${esc(b.content)}</textarea></div>`;
+
+    case 'photo': return `
+      <div class="frow"><label class="flabel">FILE PATH (from assets/ folder, e.g. assets/photo.jpg)</label>
+        <input class="finput" id="ef-src" value="${esc(b.src)}"></div>
+      <div class="frow"><label class="flabel">ALT TEXT</label>
+        <input class="finput" id="ef-alt" value="${esc(b.alt)}"></div>
+      <div class="frow"><label class="flabel">CAPTION (optional)</label>
+        <input class="finput" id="ef-caption" value="${esc(b.caption||'')}"></div>
+      <div class="frow2">
+        <div><label class="flabel">ALIGNMENT</label>
+          <select class="fselect" id="ef-align">
+            <option value="left"   ${b.align==='left'?'selected':''}>LEFT</option>
+            <option value="center" ${b.align==='center'?'selected':''}>CENTER</option>
+            <option value="right"  ${b.align==='right'?'selected':''}>RIGHT</option>
+          </select></div>
+        <div><label class="flabel">WIDTH</label>
+          <select class="fselect" id="ef-width">
+            <option value="sm"   ${b.width==='sm'?'selected':''}>SMALL — 200px</option>
+            <option value="md"   ${b.width==='md'?'selected':''}>MEDIUM — 380px</option>
+            <option value="full" ${b.width==='full'?'selected':''}>FULL WIDTH</option>
+          </select></div></div>
+      <div class="frow"><label class="flabel">GLOW BORDER</label>
+        <select class="fselect" id="ef-border">
+          ${['cyan','red','green','yellow','none'].map(c=>
+            `<option value="${c}" ${b.border===c?'selected':''}>${c.toUpperCase()}</option>`
+          ).join('')}
+        </select></div>`;
+
+    case 'divider': return `
+      <div class="frow"><label class="flabel">STYLE</label>
+        <select class="fselect" id="ef-style">
+          <option value="solid"  ${b.style==='solid'?'selected':''}>SOLID (gradient fade)</option>
+          <option value="dashed" ${b.style==='dashed'?'selected':''}>DASHED</option>
+          <option value="glitch" ${b.style==='glitch'?'selected':''}>GLITCH (RGB stripe)</option>
+        </select></div>`;
+
+    case 'columns': {
+      const cols = b.cols || ['','',''];
+      return `
+      <div class="frow"><label class="flabel">LAYOUT</label>
+        <select class="fselect" id="ef-ratio" onchange="toggleThirdCol(this.value)">
+          <option value="50" ${b.ratio==='50'?'selected':''}>50 / 50 — Equal halves</option>
+          <option value="60" ${b.ratio==='60'?'selected':''}>60 / 40 — Left wider</option>
+          <option value="40" ${b.ratio==='40'?'selected':''}>40 / 60 — Right wider</option>
+          <option value="3"  ${b.ratio==='3'?'selected':''}>33 / 33 / 33 — Three columns</option>
+        </select></div>
+      <div class="frow"><label class="flabel">LEFT COLUMN</label>
+        <textarea class="ftarea" id="ef-col0">${esc(cols[0])}</textarea></div>
+      <div class="frow"><label class="flabel" id="col1-lbl">RIGHT COLUMN</label>
+        <textarea class="ftarea" id="ef-col1">${esc(cols[1])}</textarea></div>
+      <div class="frow" id="ef-col2-row" style="${b.ratio!=='3'?'display:none':''}">
+        <label class="flabel">THIRD COLUMN</label>
+        <textarea class="ftarea" id="ef-col2">${esc(cols[2]||'')}</textarea></div>`;
+    }
+
+    case 'badges': {
+      const rows = (b.items||[]).map((it,idx) => badgeRow(it, idx)).join('');
+      return `<div class="frow"><label class="flabel">BADGES</label>
+        <div class="list-editor" id="badge-list">${rows}</div>
+        <button class="le-add" onclick="addBadge()">+ ADD BADGE</button></div>`;
+    }
+
+    case 'stats': {
+      const rows = (b.items||[]).map((it,idx) => statRow(it, idx)).join('');
+      return `<div class="frow"><label class="flabel">STAT BLOCKS</label>
+        <div class="list-editor" id="stat-list">${rows}</div>
+        <button class="le-add" onclick="addStat()">+ ADD STAT</button></div>`;
+    }
+
+    default: return `<p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted)">No fields for this block.</p>`;
+  }
+}
+
+// Form helpers (called from inline onclick inside form HTML)
+function badgeRow(it, idx) {
+  const colors = ['red','cyan','green','yellow','orange','purple'];
+  return `<div class="le-row">
+    <input class="finput badge-text" value="${esc(it.text)}" placeholder="Badge label">
+    <select class="fselect badge-color">
+      ${colors.map(c=>`<option value="${c}" ${it.color===c?'selected':''}>${c}</option>`).join('')}
+    </select>
+    <button class="le-del" onclick="this.closest('.le-row').remove()">✕</button>
+  </div>`;
+}
+function addBadge() {
+  document.getElementById('badge-list').insertAdjacentHTML('beforeend', badgeRow({text:'New Badge',color:'cyan'}, 0));
+}
+
+function statRow(it) {
+  const colors = ['red','cyan','green','yellow'];
+  return `<div class="le-row stat-le-row">
+    <input class="finput stat-val" value="${esc(it.val)}" placeholder="42">
+    <input class="finput stat-lbl" value="${esc(it.lbl)}" placeholder="Label">
+    <select class="fselect stat-color">
+      ${colors.map(c=>`<option value="${c}" ${it.color===c?'selected':''}>${c}</option>`).join('')}
+    </select>
+    <button class="le-del" onclick="this.closest('.le-row').remove()">✕</button>
+  </div>`;
+}
+function addStat() {
+  document.getElementById('stat-list').insertAdjacentHTML('beforeend', statRow({val:'0',lbl:'Stat',color:'cyan'}));
+}
+
+function toggleThirdCol(val) {
+  const row = document.getElementById('ef-col2-row');
+  if (row) row.style.display = val === '3' ? '' : 'none';
+  const lbl = document.getElementById('col1-lbl');
+  if (lbl) lbl.textContent = val === '3' ? 'MIDDLE COLUMN' : 'RIGHT COLUMN';
+}
+
+// ── APPLY EDIT ─────────────────────────────────────────────────
+function applyEdit() {
+  if (!editTarget) return;
+  const b = blocks[editTarget.index];
+
+  switch(b.type) {
+    case 'title':
+      b.content = gv('ef-content'); b.color = gv('ef-color'); b.size = gv('ef-size'); break;
+    case 'subtitle':
+      b.content = gv('ef-content'); b.color = gv('ef-color'); break;
+    case 'label':
+      b.content = gv('ef-content'); b.color = gv('ef-color'); break;
+    case 'text':
+      b.content = gv('ef-content'); b.mono = gch('ef-mono'); break;
+    case 'code':
+      b.content = gv('ef-content'); b.lang = gv('ef-lang'); break;
+    case 'photo':
+      b.src = gv('ef-src'); b.alt = gv('ef-alt'); b.caption = gv('ef-caption');
+      b.align = gv('ef-align'); b.width = gv('ef-width'); b.border = gv('ef-border'); break;
+    case 'divider':
+      b.style = gv('ef-style'); break;
+    case 'columns': {
+      b.ratio = gv('ef-ratio');
+      b.cols  = [gv('ef-col0'), gv('ef-col1'), gv('ef-col2')];
+      break;
+    }
+    case 'badges':
+      b.items = [...document.querySelectorAll('#badge-list .le-row')].map(row => ({
+        text:  row.querySelector('.badge-text').value,
+        color: row.querySelector('.badge-color').value
+      })); break;
+    case 'stats':
+      b.items = [...document.querySelectorAll('#stat-list .le-row')].map(row => ({
+        val:   row.querySelector('.stat-val').value,
+        lbl:   row.querySelector('.stat-lbl').value,
+        color: row.querySelector('.stat-color').value
+      })); break;
+  }
+
+  closeEditModal();
+  render();
+}
+
+// ── SAVE ───────────────────────────────────────────────────────
+async function saveFile() {
+  closeAddModal();
+  closeEditModal();
+
+  // Snapshot the page in view mode so saved file opens cleanly
+  const wasEdit = editMode;
+  editMode = false;
+  document.getElementById('editor-bar').classList.add('hidden');
+  document.body.classList.remove('edit-on');
+  render();
+
+  const jsonData = JSON.stringify(blocks, null, 2);
+  let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+  // Patch the bio-data block with updated JSON
+  html = html.replace(
+    /(<script id="bio-data"[^>]*>)([\s\S]*?)(<\/script>)/,
+    '$1\n' + jsonData + '\n$3'
+  );
+
+  // Restore edit mode
+  editMode = wasEdit;
+  if (wasEdit) {
+    document.getElementById('editor-bar').classList.remove('hidden');
+    document.body.classList.add('edit-on');
+  }
+  render();
+
+  // Try File System Access API (works on localhost / served pages)
+  if (window.showSaveFilePicker) {
+    try {
+      if (!savedHandle) {
+        savedHandle = await window.showSaveFilePicker({
+          suggestedName: 'userbio.html',
+          types: [{ description: 'HTML File', accept: { 'text/html': ['.html'] } }]
+        });
+      }
+      const w = await savedHandle.createWritable();
+      await w.write(html);
+      await w.close();
+      showToast('SAVED ✓', 'ok');
+      return;
+    } catch(e) {
+      if (e.name === 'AbortError') return;
+      savedHandle = null;
+    }
+  }
+
+  // Fallback: download as userbio.html
+  const blob = new Blob([html], { type: 'text/html' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: 'userbio.html' });
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('DOWNLOADED ✓', 'ok');
+}
+
+// ── TOAST ──────────────────────────────────────────────────────
+let _toastTmr;
+function showToast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = type;
+  clearTimeout(_toastTmr);
+  _toastTmr = setTimeout(() => el.classList.add('off'), 2600);
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
