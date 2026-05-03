@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Query — INFOSEC//EDUCATOR</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-400: #5ffec0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --text-secondary: #7a6a7a;
+      --text-muted: #4a3a4a;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:   0 0 8px var(--red-500),  0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan:  0 0 8px var(--cyan-500), 0 0 20px rgba(43,228,234,0.3);
+      --glow-green: 0 0 8px var(--green-500),0 0 20px rgba(43,254,160,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%,   rgba(13,51,54,0.5)  0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(60,24,26,0.4)  0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
+
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 2rem;
+    }
+
+    .site-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem; letter-spacing: 0.08em;
+      color: var(--red-500); text-shadow: var(--glow-red);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+
+    .main-nav { display: flex; align-items: center; }
+    .main-nav a {
+      font-family: var(--font-ui); font-size: 0.85rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--red-300); padding: 0.4rem 0.85rem; border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .main-nav a.active { color: var(--cyan-500); }
+
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .search-box {
+      display: flex; align-items: center;
+      background: var(--bg-700); border: 1px solid var(--red-800);
+      border-radius: 2px; padding: 0.3rem 0.6rem; gap: 0.4rem;
+    }
+    .search-box input {
+      background: none; border: none; outline: none;
+      color: var(--red-300); font-family: var(--font-mono);
+      font-size: 0.8rem; width: 140px;
+    }
+    .search-box input::placeholder { color: var(--text-secondary); }
+    .search-icon { color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--green-900);
+      border-bottom: 1px solid rgba(43,254,160,0.2);
+      overflow: hidden; height: 28px;
+      display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: var(--green-500); color: #0d0a0d;
+      font-family: var(--font-display); font-size: 1rem;
+      letter-spacing: 0.1em; padding: 0 0.75rem;
+      height: 100%; display: flex; align-items: center; flex-shrink: 0;
+    }
+    .ticker-track {
+      display: flex; align-items: center; white-space: nowrap;
+      animation: ticker 35s linear infinite;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--green-400); gap: 3rem; padding-left: 2rem;
+    }
+    .ticker-track span::before { content: "▶ "; color: var(--green-500); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== PAGE ===== */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    .section-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 0.5rem 0 0.6rem; margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--green-500);
+      box-shadow: 0 3px 12px rgba(43,254,160,0.12);
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: 1.8rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--green-500); text-shadow: var(--glow-green); margin: 0;
+    }
+    .section-title .overline {
+      display: block; font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.15em; color: var(--cyan-500);
+      text-shadow: none; margin-bottom: -0.2rem;
+    }
+
+    /* ===== QUERY FORM ===== */
+    .query-form {
+      background: var(--bg-700);
+      border: 1px solid rgba(43,254,160,0.2);
+      border-left: 3px solid var(--green-500);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .query-form__label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--green-500); opacity: 0.75; margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .query-input-row {
+      display: flex; gap: 0; align-items: stretch;
+    }
+
+    .query-prefix {
+      background: var(--bg-900);
+      border: 1px solid rgba(43,254,160,0.25); border-right: none;
+      padding: 0.6rem 0.85rem;
+      font-family: var(--font-mono); font-size: 0.82rem;
+      color: var(--green-400); white-space: nowrap;
+      display: flex; align-items: center;
+    }
+
+    #query-input {
+      flex: 1;
+      background: var(--bg-900);
+      border: 1px solid rgba(43,254,160,0.25); border-right: none;
+      outline: none; padding: 0.6rem 0.85rem;
+      font-family: var(--font-mono); font-size: 0.88rem;
+      color: var(--green-400); caret-color: var(--green-500);
+      min-width: 0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #query-input:focus {
+      border-color: var(--green-500);
+      box-shadow: inset 0 0 0 1px rgba(43,254,160,0.15);
+    }
+    #query-input::placeholder { color: var(--text-muted); }
+
+    #query-btn {
+      background: transparent;
+      border: 1px solid rgba(43,254,160,0.4);
+      color: var(--green-400);
+      font-family: var(--font-mono); font-size: 0.82rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.6rem 1.4rem; cursor: pointer;
+      --notch: 0.5rem; clip-path: var(--notch-path);
+      position: relative;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    #query-btn::after {
+      content: "";
+      position: absolute; bottom: 3px; right: -4px;
+      width: 14.1px; height: 2px;
+      background: rgba(43,254,160,0.4); transform: rotate(-45deg);
+      transition: background 0.2s;
+    }
+    #query-btn:hover {
+      background: rgba(43,254,160,0.08);
+      border-color: var(--green-500);
+      box-shadow: var(--glow-green);
+    }
+    #query-btn:hover::after { background: var(--green-500); }
+    #query-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+    .query-hint {
+      margin-top: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.06em; color: var(--text-muted);
+    }
+
+    /* ===== RESULTS ===== */
+    #results { display: none; }
+
+    .results-target-bar {
+      background: var(--bg-900);
+      border: 1px solid rgba(43,254,160,0.15);
+      padding: 0.6rem 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      font-family: var(--font-mono); font-size: 0.78rem;
+    }
+    .results-target-bar__label {
+      color: var(--green-500); opacity: 0.65;
+      font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .results-target-bar__domain {
+      color: var(--green-400); font-size: 0.9rem;
+      text-shadow: var(--glow-green); letter-spacing: 0.04em;
+    }
+    .results-target-bar__ts {
+      margin-left: auto; color: var(--text-muted); font-size: 0.68rem;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .result-panel {
+      background: var(--bg-600);
+      border: 1px solid rgba(43,254,160,0.15);
+      border-top: 2px solid var(--green-500);
+      clip-path: var(--notch-path);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-panel::after {
+      content: "";
+      position: absolute; bottom: 5px; right: -6px;
+      width: 22.6px; height: 2px;
+      background: rgba(43,254,160,0.15); transform: rotate(-45deg);
+    }
+
+    .result-panel.full-width { grid-column: 1 / -1; }
+
+    .result-panel.panel-error { border-top-color: var(--red-500); }
+    .result-panel.panel-error .panel-title { color: var(--red-400); }
+
+    .panel-header {
+      background: rgba(13,46,30,0.5);
+      border-bottom: 1px solid rgba(43,254,160,0.12);
+      padding: 0.55rem 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .panel-title {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green-400);
+    }
+
+    .panel-status {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .panel-status.loading { color: var(--cyan-500); }
+    .panel-status.ok      { color: var(--green-500); }
+    .panel-status.error   { color: var(--red-500); }
+
+    .panel-body {
+      padding: 0.85rem 1rem;
+      min-height: 80px;
+    }
+
+    /* DNS table */
+    .dns-section { margin-bottom: 0.85rem; }
+    .dns-section:last-child { margin-bottom: 0; }
+
+    .dns-type {
+      font-family: var(--font-mono); font-size: 0.6rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cyan-500); margin-bottom: 0.3rem;
+    }
+
+    .dns-record {
+      display: flex; gap: 0.75rem; align-items: baseline;
+      padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(43,254,160,0.05);
+    }
+    .dns-record:last-child { border-bottom: none; }
+
+    .dns-value {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--green-400); word-break: break-all; flex: 1;
+    }
+    .dns-ttl {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--text-muted); white-space: nowrap;
+    }
+
+    /* Geo fields */
+    .geo-grid {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 0.25rem 0.85rem;
+    }
+    .geo-label {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cyan-500); opacity: 0.8; padding-top: 0.05rem;
+      white-space: nowrap;
+    }
+    .geo-value {
+      font-family: var(--font-mono); font-size: 0.76rem;
+      color: var(--green-400); word-break: break-word;
+    }
+    .geo-value.empty { color: var(--text-muted); font-style: italic; }
+
+    /* Raw pre output (WHOIS, headers) */
+    .raw-output {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      line-height: 1.65; color: var(--green-400);
+      white-space: pre-wrap; word-break: break-all;
+      max-height: 340px; overflow-y: auto;
+      margin: 0;
+    }
+    .raw-output::-webkit-scrollbar { width: 3px; }
+    .raw-output::-webkit-scrollbar-track { background: var(--bg-900); }
+    .raw-output::-webkit-scrollbar-thumb { background: rgba(43,254,160,0.3); }
+
+    /* Loading skeleton */
+    .loading-line {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--cyan-500); letter-spacing: 0.1em;
+    }
+    .blink { animation: blink 0.9s step-start infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Empty / error states within panels */
+    .panel-empty, .panel-err-msg {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      letter-spacing: 0.06em; color: var(--text-secondary);
+    }
+    .panel-err-msg { color: var(--red-400); }
+
+    /* Input validation error */
+    #query-error {
+      display: none;
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--red-400); margin-top: 0.45rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== PREVIEW PANEL ===== */
+    .view-toggle-group { display: flex; gap: 0.4rem; }
+
+    .view-toggle {
+      background: transparent;
+      border: 1px solid rgba(43,254,160,0.2);
+      color: var(--text-secondary);
+      font-family: var(--font-mono); font-size: 0.6rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.15em 0.65em; cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .view-toggle:hover { color: var(--green-400); border-color: rgba(43,254,160,0.4); }
+    .view-toggle.active {
+      color: var(--green-400);
+      border-color: var(--green-500);
+      background: rgba(43,254,160,0.07);
+    }
+
+    .preview-wrap {
+      position: relative;
+      background: #1a1a1a;
+      min-height: 120px;
+    }
+
+    .preview-screenshot {
+      width: 100%; display: block;
+    }
+
+    .preview-iframe {
+      width: 100%; height: 580px;
+      border: none; display: block;
+      background: #fff;
+    }
+
+    .preview-iframe-notice {
+      background: rgba(13,51,54,0.7);
+      border-bottom: 1px solid rgba(43,228,234,0.15);
+      padding: 0.4rem 1rem;
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.08em; color: var(--cyan-400); opacity: 0.75;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .preview-iframe-notice a {
+      color: var(--green-400); text-decoration: underline; text-underline-offset: 2px;
+    }
+
+    .preview-blocked {
+      position: absolute; inset: 0;
+      background: rgba(13,10,13,0.92);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.85rem; padding: 2.5rem; text-align: center;
+    }
+    .preview-blocked__icon {
+      font-family: var(--font-mono); font-size: 2.2rem;
+      color: var(--red-500); text-shadow: var(--glow-red);
+    }
+    .preview-blocked__msg {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--red-400); line-height: 1.65; max-width: 42ch;
+    }
+    .preview-blocked__switch {
+      background: transparent;
+      border: 1px solid var(--green-500);
+      color: var(--green-400);
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.4rem 1.1rem; cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .preview-blocked__switch:hover {
+      background: rgba(43,254,160,0.08);
+      box-shadow: var(--glow-green);
+    }
+
+    .preview-loading {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 180px; gap: 0.5rem; padding: 2rem;
+    }
+    .preview-loading__text {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--cyan-500); letter-spacing: 0.1em;
+    }
+    .preview-error {
+      padding: 1.5rem 1rem;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--red-400); letter-spacing: 0.05em;
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 1rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem;
+    }
+    .footer-logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--red-500); text-shadow: var(--glow-red); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .footer-logo span { color: var(--cyan-500); }
+    .footer-tagline { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+    .footer-social { display: flex; gap: 0.5rem; }
+    .social-btn { background: var(--bg-700); border: 1px solid var(--red-800); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; padding: 0.3em 0.6em; border-radius: 2px; transition: color 0.2s, border-color 0.2s; }
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+    .footer-col__title { font-family: var(--font-display); font-size: 1rem; color: var(--red-500); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--red-900); }
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+    .footer-links li { margin-bottom: 0.35rem; }
+    .footer-links a { font-size: 0.82rem; color: var(--text-secondary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--red-400); }
+    .footer-links a::before { content: "// "; color: var(--text-muted); }
+    .footer-bottom { border-top: 1px solid var(--red-900); padding: 1rem 1.5rem; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); }
+    .footer-bottom span { color: var(--text-secondary); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-actions { display: none; }
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .results-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.4rem; }
+      .query-prefix { display: none; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../main.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="../main.html">_Home</a>
+        <a href="../resources/bio/userbio.html">_Bio</a>
+        <a href="../404.html">_Writeups</a>
+        <a href="../resources/learning/resources.html">_Resources</a>
+        <a href="../404.html">_Community</a>
+        <a href="../404.html">_About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// RECON</div>
+    <div class="ticker-track">
+      <span>DNS · WHOIS · HTTP Headers · IP Geolocation — passive recon tool</span>
+      <span>Data sourced from Google DoH, HackerTarget, and ipapi.co</span>
+      <span>For educational and authorized security research purposes only</span>
+      <span>DNS · WHOIS · HTTP Headers · IP Geolocation — passive recon tool</span>
+      <span>Data sourced from Google DoH, HackerTarget, and ipapi.co</span>
+      <span>For educational and authorized security research purposes only</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+
+    <div class="section-header" style="margin-top:2rem;">
+      <h2 class="section-title">
+        <span class="overline">// passive recon</span>
+        Web Query
+      </h2>
+    </div>
+
+    <!-- Input -->
+    <div class="query-form">
+      <label class="query-form__label" for="query-input">// Target Domain or URL</label>
+      <div class="query-input-row">
+        <span class="query-prefix">TARGET://</span>
+        <input type="text" id="query-input" placeholder="example.com or https://example.com" autocomplete="off" spellcheck="false">
+        <button id="query-btn">SCAN &#8594;</button>
+      </div>
+      <div id="query-error"></div>
+      <div class="query-hint">Accepts domains, bare hostnames, or full URLs &mdash; path and query string are stripped automatically.</div>
+    </div>
+
+    <!-- Results -->
+    <div id="results">
+      <div class="results-target-bar">
+        <span class="results-target-bar__label">Target</span>
+        <span class="results-target-bar__domain" id="result-domain"></span>
+        <span class="results-target-bar__ts" id="result-ts"></span>
+      </div>
+
+      <div class="results-grid">
+
+        <!-- DNS -->
+        <div class="result-panel" id="panel-dns">
+          <div class="panel-header">
+            <span class="panel-title">// DNS Records</span>
+            <span class="panel-status loading" id="status-dns">QUERYING <span class="blink">_</span></span>
+          </div>
+          <div class="panel-body" id="body-dns">
+            <div class="loading-line">Fetching A · AAAA · MX · NS · TXT <span class="blink">_</span></div>
+          </div>
+        </div>
+
+        <!-- IP Geo -->
+        <div class="result-panel" id="panel-geo">
+          <div class="panel-header">
+            <span class="panel-title">// IP Geolocation</span>
+            <span class="panel-status loading" id="status-geo">WAITING <span class="blink">_</span></span>
+          </div>
+          <div class="panel-body" id="body-geo">
+            <div class="loading-line">Awaiting IP from DNS <span class="blink">_</span></div>
+          </div>
+        </div>
+
+        <!-- HTTP Headers -->
+        <div class="result-panel full-width" id="panel-headers">
+          <div class="panel-header">
+            <span class="panel-title">// HTTP Response Headers</span>
+            <span class="panel-status loading" id="status-headers">QUERYING <span class="blink">_</span></span>
+          </div>
+          <div class="panel-body" id="body-headers">
+            <div class="loading-line">Fetching headers <span class="blink">_</span></div>
+          </div>
+        </div>
+
+        <!-- WHOIS -->
+        <div class="result-panel full-width" id="panel-whois">
+          <div class="panel-header">
+            <span class="panel-title">// WHOIS</span>
+            <span class="panel-status loading" id="status-whois">QUERYING <span class="blink">_</span></span>
+          </div>
+          <div class="panel-body" id="body-whois">
+            <div class="loading-line">Fetching WHOIS <span class="blink">_</span></div>
+          </div>
+        </div>
+
+        <!-- Page Preview -->
+        <div class="result-panel full-width" id="panel-preview">
+          <div class="panel-header">
+            <span class="panel-title">// Page Preview</span>
+            <div class="view-toggle-group">
+              <button class="view-toggle active" id="toggle-screenshot">SCREENSHOT</button>
+              <button class="view-toggle" id="toggle-iframe">LIVE FRAME</button>
+            </div>
+            <span class="panel-status loading" id="status-preview">LOADING <span class="blink">_</span></span>
+          </div>
+          <div id="body-preview">
+            <div class="preview-loading">
+              <div class="preview-loading__text">Rendering screenshot <span class="blink">_</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Content</h5>
+        <ul class="footer-links">
+          <li><a href="../resources/bio/userbio.html">Bio</a></li>
+          <li><a href="../404.html">Writeups</a></li>
+          <li><a href="../resources/learning/resources.html">Resources</a></li>
+          <li><a href="../404.html">Community</a></li>
+          <li><a href="../404.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 INFOSEC//EDUCATOR — All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    const inputEl    = document.getElementById('query-input');
+    const btnEl      = document.getElementById('query-btn');
+    const errorEl    = document.getElementById('query-error');
+    const resultsEl  = document.getElementById('results');
+    const domainEl   = document.getElementById('result-domain');
+    const tsEl       = document.getElementById('result-ts');
+
+    const DNS_TYPES = [
+      { type: 'A',    code: 1  },
+      { type: 'AAAA', code: 28 },
+      { type: 'MX',   code: 15 },
+      { type: 'NS',   code: 2  },
+      { type: 'TXT',  code: 16 },
+    ];
+
+    /* ---- utilities ---- */
+    function esc(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function extractDomain(raw) {
+      raw = raw.trim();
+      if (!raw) return null;
+      // prepend scheme if missing so URL() can parse it
+      if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
+      try {
+        return new URL(raw).hostname.toLowerCase().replace(/\.$/, '');
+      } catch { return null; }
+    }
+
+    function setStatus(id, state, text) {
+      const el = document.getElementById('status-' + id);
+      if (!el) return;
+      el.className = 'panel-status ' + state;
+      el.innerHTML = state === 'loading' ? `${esc(text)} <span class="blink">_</span>` : esc(text);
+    }
+
+    function setBody(id, html) {
+      const el = document.getElementById('body-' + id);
+      if (el) el.innerHTML = html;
+    }
+
+    function setPanelError(panelId) {
+      const panel = document.getElementById('panel-' + panelId);
+      if (panel) panel.classList.add('panel-error');
+    }
+
+    /* ---- fetch helpers ---- */
+    function fetchText(url) {
+      return fetch(url).then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      });
+    }
+
+    function fetchJSON(url) {
+      return fetch(url).then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+    }
+
+    function hackertarget(endpoint, query) {
+      const url = `https://api.hackertarget.com/${endpoint}/?q=${encodeURIComponent(query)}`;
+      return fetchText(url).then(text => {
+        if (/API (count exceeded|key required|error)/i.test(text)) {
+          throw new Error('HackerTarget rate limit reached — try again later');
+        }
+        return text;
+      });
+    }
+
+    /* ---- DNS ---- */
+    function fetchDnsType(domain, typeCode, typeName) {
+      return fetchJSON(
+        `https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=${typeCode}`
+      ).then(data => ({ type: typeName, records: data.Answer || [] }));
+    }
+
+    function renderDns(results) {
+      const types = results.filter(r => r.records.length > 0);
+      if (!types.length) {
+        return '<span class="panel-empty">No records returned.</span>';
+      }
+      return types.map(({ type, records }) => `
+        <div class="dns-section">
+          <div class="dns-type">${esc(type)}</div>
+          ${records.map(r => {
+            let dataStr = esc(r.data || '');
+            if (type === 'TXT') dataStr = esc((r.data || '').replace(/^"|"$/g, ''));
+            return `
+              <div class="dns-record">
+                <span class="dns-value">${dataStr}</span>
+                <span class="dns-ttl">TTL ${esc(String(r.TTL || ''))}</span>
+              </div>`;
+          }).join('')}
+        </div>
+      `).join('');
+    }
+
+    /* ---- Geo ---- */
+    function renderGeo(data) {
+      const fields = [
+        ['IP',          data.ip],
+        ['City',        data.city],
+        ['Region',      data.region],
+        ['Country',     data.country_name],
+        ['Postal',      data.postal],
+        ['Org / ASN',   data.org],
+        ['Timezone',    data.timezone],
+        ['Latitude',    data.latitude],
+        ['Longitude',   data.longitude],
+      ];
+      return `<div class="geo-grid">${fields.map(([label, val]) => {
+        const v = val !== undefined && val !== null && String(val).trim() !== '' ? esc(String(val)) : null;
+        return `
+          <span class="geo-label">${esc(label)}</span>
+          <span class="geo-value${v ? '' : ' empty'}">${v || 'N/A'}</span>`;
+      }).join('')}</div>`;
+    }
+
+    /* ---- preview panel ---- */
+    let previewDomain = '';
+    let previewMode   = 'screenshot';
+
+    function renderScreenshot(domain) {
+      const url = 'https://image.thum.io/get/width/1200/crop/800/https://' + encodeURIComponent(domain);
+      const bodyEl = document.getElementById('body-preview');
+      bodyEl.innerHTML = `
+        <div class="preview-wrap" id="preview-wrap">
+          <div class="preview-loading" id="preview-loading">
+            <div class="preview-loading__text">Capturing screenshot <span class="blink">_</span></div>
+          </div>
+          <img class="preview-screenshot" id="preview-img"
+               src="${url}"
+               alt="Screenshot of ${esc(domain)}"
+               style="display:none;"
+               crossorigin="anonymous">
+        </div>`;
+
+      const img     = document.getElementById('preview-img');
+      const loading = document.getElementById('preview-loading');
+
+      img.onload = () => {
+        loading.remove();
+        img.style.display = 'block';
+        setStatus('preview', 'ok', 'OK');
+      };
+      img.onerror = () => {
+        loading.remove();
+        bodyEl.innerHTML = `<div class="preview-error">// Screenshot service unavailable — try LIVE FRAME.</div>`;
+        setStatus('preview', 'error', 'ERROR');
+        document.getElementById('panel-preview').classList.add('panel-error');
+      };
+    }
+
+    function renderIframe(domain) {
+      const url    = 'https://' + domain;
+      const bodyEl = document.getElementById('body-preview');
+      bodyEl.innerHTML = `
+        <div class="preview-iframe-notice">
+          <span>&#9888;&nbsp; Some sites block iframe embedding — if the frame is blank, switch to SCREENSHOT.</span>
+          <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">open in new tab ↗</a>
+        </div>
+        <div class="preview-wrap" id="preview-wrap" style="position:relative;">
+          <iframe class="preview-iframe" id="preview-frame" title="Page preview of ${esc(domain)}"></iframe>
+          <div class="preview-blocked" id="preview-blocked" style="display:none;">
+            <div class="preview-blocked__icon">&#9888;</div>
+            <div class="preview-blocked__msg">
+              This site has blocked iframe embedding<br>(X-Frame-Options or Content-Security-Policy).
+            </div>
+            <button class="preview-blocked__switch" id="blocked-switch">Switch to Screenshot</button>
+          </div>
+        </div>`;
+
+      const frame   = document.getElementById('preview-frame');
+      const blocked = document.getElementById('preview-blocked');
+      const sw      = document.getElementById('blocked-switch');
+
+      /* Set src after DOM is ready so onload fires reliably */
+      frame.src = url;
+
+      frame.onload = () => {
+        /* Attempt cross-origin content check — throws SecurityError if framed but blocked */
+        try {
+          const loc = frame.contentWindow.location.href;
+          /* If location is "about:blank" the browser silently blocked the frame */
+          if (loc === 'about:blank') {
+            blocked.style.display = 'flex';
+          }
+        } catch (e) {
+          /* SecurityError = cross-origin content loaded (site allowed framing) — this is fine */
+        }
+        setStatus('preview', 'ok', 'OK');
+      };
+
+      frame.onerror = () => {
+        blocked.style.display = 'flex';
+        setStatus('preview', 'error', 'BLOCKED');
+      };
+
+      sw && sw.addEventListener('click', () => {
+        previewMode = 'screenshot';
+        document.getElementById('toggle-screenshot').classList.add('active');
+        document.getElementById('toggle-iframe').classList.remove('active');
+        renderScreenshot(previewDomain);
+      });
+    }
+
+    function initPreviewToggles(domain) {
+      const tShot   = document.getElementById('toggle-screenshot');
+      const tFrame  = document.getElementById('toggle-iframe');
+      if (!tShot || !tFrame) return;
+
+      tShot.onclick = () => {
+        if (previewMode === 'screenshot') return;
+        previewMode = 'screenshot';
+        tShot.classList.add('active');
+        tFrame.classList.remove('active');
+        setStatus('preview', 'loading', 'LOADING');
+        document.getElementById('panel-preview').classList.remove('panel-error');
+        renderScreenshot(domain);
+      };
+
+      tFrame.onclick = () => {
+        if (previewMode === 'iframe') return;
+        previewMode = 'iframe';
+        tFrame.classList.add('active');
+        tShot.classList.remove('active');
+        setStatus('preview', 'loading', 'LOADING');
+        document.getElementById('panel-preview').classList.remove('panel-error');
+        renderIframe(domain);
+      };
+    }
+
+    /* ---- run scan ---- */
+    async function runScan(domain) {
+      previewDomain = domain;
+      previewMode   = 'screenshot';
+
+      // reset panels
+      ['dns','geo','headers','whois','preview'].forEach(id => {
+        const p = document.getElementById('panel-' + id);
+        if (p) p.classList.remove('panel-error');
+      });
+
+      setStatus('dns',     'loading', 'QUERYING');
+      setStatus('geo',     'loading', 'WAITING');
+      setStatus('headers', 'loading', 'QUERYING');
+      setStatus('whois',   'loading', 'QUERYING');
+      setStatus('preview', 'loading', 'LOADING');
+      setBody('dns',     '<div class="loading-line">Fetching A · AAAA · MX · NS · TXT <span class="blink">_</span></div>');
+      setBody('geo',     '<div class="loading-line">Awaiting IP from DNS <span class="blink">_</span></div>');
+      setBody('headers', '<div class="loading-line">Fetching headers <span class="blink">_</span></div>');
+      setBody('whois',   '<div class="loading-line">Fetching WHOIS <span class="blink">_</span></div>');
+      document.getElementById('body-preview').innerHTML =
+        '<div class="preview-loading"><div class="preview-loading__text">Rendering screenshot <span class="blink">_</span></div></div>';
+
+      /* Reset toggle buttons */
+      const tShot  = document.getElementById('toggle-screenshot');
+      const tFrame = document.getElementById('toggle-iframe');
+      if (tShot)  tShot.classList.add('active');
+      if (tFrame) tFrame.classList.remove('active');
+
+      resultsEl.style.display = 'block';
+      domainEl.textContent = domain;
+      tsEl.textContent = new Date().toUTCString();
+
+      /* DNS — all types in parallel */
+      const dnsPromises = DNS_TYPES.map(({ type, code }) => fetchDnsType(domain, code, type));
+      let resolvedIP = null;
+
+      Promise.all(dnsPromises)
+        .then(results => {
+          setStatus('dns', 'ok', 'OK');
+          setBody('dns', renderDns(results));
+
+          // extract first A record IP for geolocation
+          const aResult = results.find(r => r.type === 'A');
+          if (aResult && aResult.records.length) {
+            resolvedIP = (aResult.records[0].data || '').split(' ').pop().trim();
+          }
+
+          // kick off geo now that we have an IP
+          if (resolvedIP) {
+            setStatus('geo', 'loading', 'QUERYING');
+            setBody('geo', '<div class="loading-line">Querying ' + esc(resolvedIP) + ' <span class="blink">_</span></div>');
+            fetchJSON(`https://ipapi.co/${encodeURIComponent(resolvedIP)}/json/`)
+              .then(data => {
+                if (data.error) throw new Error(data.reason || 'Lookup failed');
+                setStatus('geo', 'ok', 'OK');
+                setBody('geo', renderGeo(data));
+              })
+              .catch(err => {
+                setStatus('geo', 'error', 'ERROR');
+                setPanelError('geo');
+                setBody('geo', `<span class="panel-err-msg">${esc(err.message)}</span>`);
+              });
+          } else {
+            setStatus('geo', 'error', 'NO IP');
+            setPanelError('geo');
+            setBody('geo', '<span class="panel-empty">No A record — cannot geolocate.</span>');
+          }
+        })
+        .catch(err => {
+          setStatus('dns', 'error', 'ERROR');
+          setPanelError('dns');
+          setBody('dns', `<span class="panel-err-msg">${esc(err.message)}</span>`);
+          setStatus('geo', 'error', 'SKIPPED');
+          setPanelError('geo');
+          setBody('geo', '<span class="panel-empty">DNS failed — cannot geolocate.</span>');
+        });
+
+      /* HTTP Headers */
+      hackertarget('httpheaders', 'https://' + domain)
+        .then(text => {
+          setStatus('headers', 'ok', 'OK');
+          setBody('headers', `<pre class="raw-output">${esc(text.trim())}</pre>`);
+        })
+        .catch(err => {
+          setStatus('headers', 'error', 'ERROR');
+          setPanelError('headers');
+          setBody('headers', `<span class="panel-err-msg">${esc(err.message)}</span>`);
+        });
+
+      /* WHOIS */
+      hackertarget('whois', domain)
+        .then(text => {
+          setStatus('whois', 'ok', 'OK');
+          setBody('whois', `<pre class="raw-output">${esc(text.trim())}</pre>`);
+        })
+        .catch(err => {
+          setStatus('whois', 'error', 'ERROR');
+          setPanelError('whois');
+          setBody('whois', `<span class="panel-err-msg">${esc(err.message)}</span>`);
+        });
+
+      /* Page Preview — screenshot by default, togglable to iframe */
+      renderScreenshot(domain);
+      /* Wire up toggle buttons after a tick so the DOM is settled */
+      setTimeout(() => initPreviewToggles(domain), 0);
+    }
+
+    /* ---- form handling ---- */
+    function submit() {
+      errorEl.style.display = 'none';
+      const domain = extractDomain(inputEl.value);
+      if (!domain || domain.length < 3 || !domain.includes('.')) {
+        errorEl.style.display = 'block';
+        errorEl.textContent = '// ERROR: enter a valid domain (e.g. example.com)';
+        return;
+      }
+      btnEl.disabled = true;
+      btnEl.textContent = 'SCANNING...';
+      runScan(domain).finally(() => {
+        btnEl.disabled = false;
+        btnEl.innerHTML = 'SCAN &#8594;';
+      });
+    }
+
+    btnEl.addEventListener('click', submit);
+    inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+
+    /* ticker pause */
+    const track = document.querySelector('.ticker-track');
+    if (track) {
+      track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+      track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+    }
+  })();
+  </script>
+</body>
+</html>

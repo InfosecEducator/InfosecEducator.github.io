@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CISA KEV — INFOSEC//EDUCATOR</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-400: #5ffec0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --text-secondary: #7a6a7a;
+      --text-muted: #4a3a4a;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red: 0 0 8px var(--red-500), 0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan: 0 0 8px var(--cyan-500), 0 0 20px rgba(43,228,234,0.3);
+      --glow-green: 0 0 8px var(--green-500), 0 0 20px rgba(43,254,160,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(13,51,54,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(60,24,26,0.4) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 2rem;
+    }
+
+    .site-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+
+    .main-nav { display: flex; align-items: center; gap: 0; }
+
+    .main-nav a {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red-300);
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .main-nav a.active { color: var(--cyan-500); }
+
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      border-radius: 2px;
+      padding: 0.3rem 0.6rem;
+      gap: 0.4rem;
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--red-300);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      width: 140px;
+    }
+
+    .search-box input::placeholder { color: var(--text-secondary); }
+    .search-icon { color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--cyan-900);
+      border-bottom: 1px solid rgba(43,228,234,0.25);
+      overflow: hidden;
+      height: 28px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-label {
+      background: var(--cyan-500);
+      color: #0d0a0d;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0 0.75rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker 35s linear infinite;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan-400);
+      gap: 3rem;
+      padding-left: 2rem;
+    }
+
+    .ticker-track span::before { content: "▶ "; color: var(--cyan-500); }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ===== PAGE ===== */
+    .page { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.5rem 0 0.6rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--cyan-500);
+      box-shadow: 0 2px 0 transparent, 0 3px 12px rgba(43,228,234,0.15);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      text-shadow: var(--glow-cyan);
+      margin: 0;
+    }
+
+    .section-title .overline {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--red-400);
+      text-shadow: none;
+      margin-bottom: -0.2rem;
+    }
+
+    /* ===== CATALOG META BAR ===== */
+    .catalog-meta {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      background: var(--bg-700);
+      border: 1px solid rgba(43,228,234,0.2);
+      border-top: 2px solid var(--cyan-500);
+      margin-bottom: 1.75rem;
+      overflow: hidden;
+    }
+
+    .catalog-meta__item {
+      flex: 1;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      border-right: 1px solid rgba(43,228,234,0.12);
+    }
+
+    .catalog-meta__item:last-child { border-right: none; }
+
+    .catalog-meta__label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      opacity: 0.7;
+    }
+
+    .catalog-meta__value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--cyan-400);
+      text-shadow: var(--glow-cyan);
+      line-height: 1;
+    }
+
+    .catalog-meta__value.count-value {
+      color: var(--green-500);
+      text-shadow: var(--glow-green);
+    }
+
+    /* ===== KEV VIEWER ===== */
+    .kev-viewer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      padding-bottom: 1rem;
+    }
+
+    .poster-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid var(--cyan-900);
+      color: var(--cyan-400);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      --notch: 0.5rem;
+      clip-path: var(--notch-path);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .nav-btn::after {
+      content: "";
+      position: absolute;
+      bottom: 3px; right: -4px;
+      width: 14.1px; height: 2px;
+      background: var(--cyan-900);
+      transform: rotate(-45deg);
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--cyan-500);
+      color: var(--cyan-400);
+      background: rgba(43,228,234,0.07);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .nav-btn:hover::after { background: var(--cyan-500); }
+
+    .nav-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .nav-btn:disabled:hover {
+      background: transparent;
+      border-color: var(--cyan-900);
+      color: var(--cyan-400);
+    }
+
+    .poster-counter {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--cyan-500);
+      text-shadow: var(--glow-cyan);
+      letter-spacing: 0.1em;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    /* ===== LOADING / ERROR ===== */
+    .state-msg {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      text-align: center;
+      padding: 4rem 0;
+    }
+
+    .state-msg.error { color: var(--red-500); text-shadow: var(--glow-red); }
+
+    .blink { animation: blink 1s step-start infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== KEV CARD ===== */
+    .kev-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--bg-600);
+      border: 1px solid rgba(43,228,234,0.25);
+      clip-path: var(--notch-path);
+      position: relative;
+    }
+
+    .kev-card::after {
+      content: "";
+      position: absolute;
+      bottom: 5px; right: -6px;
+      width: 22.6px; height: 3px;
+      background: rgba(43,228,234,0.25);
+      transform: rotate(-45deg);
+      pointer-events: none;
+    }
+
+    /* scan-line overlay */
+    .kev-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.06) 3px,
+        rgba(0,0,0,0.06) 4px
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ===== CARD BANNER ===== */
+    .card-banner {
+      background: rgba(13,51,54,0.6);
+      border-bottom: 1px solid rgba(43,228,234,0.2);
+      padding: 0.5rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .card-banner__source {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      opacity: 0.65;
+    }
+
+    .card-banner__badge {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15em 0.6em;
+      border: 1px solid var(--red-800);
+      color: var(--red-400);
+      background: rgba(232,97,90,0.08);
+    }
+
+    .card-banner__badge.ransomware-known {
+      border-color: var(--red-500);
+      color: var(--red-300);
+      background: rgba(232,97,90,0.15);
+      box-shadow: 0 0 6px rgba(232,97,90,0.2);
+    }
+
+    /* ===== CARD MAIN FIELDS ===== */
+    .card-primary {
+      padding: 1.1rem 1.25rem 0.9rem;
+      border-bottom: 1px solid rgba(43,228,234,0.1);
+    }
+
+    .cve-id {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      line-height: 1;
+      letter-spacing: 0.06em;
+      color: var(--cyan-400);
+      text-shadow: var(--glow-cyan);
+      margin: 0 0 0.6rem;
+    }
+
+    .vuln-name {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--red-300);
+      line-height: 1.4;
+      margin: 0 0 0.9rem;
+    }
+
+    .card-fields {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.2rem 1rem;
+    }
+
+    .field-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      opacity: 0.8;
+      padding-top: 0.1rem;
+      white-space: nowrap;
+    }
+
+    .field-value {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--red-400);
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .field-value.empty { color: var(--text-muted); font-style: italic; }
+
+    /* ===== MORE DETAILS BUTTON ===== */
+    .card-footer {
+      padding: 0.85rem 1.25rem;
+    }
+
+    .btn-details {
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(43,228,234,0.25);
+      color: var(--cyan-400);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      --notch: 0.6rem;
+      clip-path: var(--notch-path);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+      position: relative;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-details::after {
+      content: "";
+      position: absolute;
+      bottom: 3px; right: -4px;
+      width: 16.9px; height: 2px;
+      background: rgba(43,228,234,0.25);
+      transform: rotate(-45deg);
+      transition: background 0.2s;
+    }
+
+    .btn-details:hover {
+      border-color: var(--cyan-500);
+      color: var(--cyan-400);
+      background: rgba(43,228,234,0.06);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .btn-details:hover::after { background: var(--cyan-500); }
+
+    .btn-details__chevron {
+      margin-left: auto;
+      transition: transform 0.25s;
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .btn-details.expanded .btn-details__chevron { transform: rotate(180deg); }
+
+    /* ===== DETAILS PANEL ===== */
+    .details-panel {
+      display: none;
+      border-top: 1px solid rgba(43,228,234,0.12);
+      padding: 1rem 1.25rem 1.1rem;
+      background: rgba(13,51,54,0.2);
+    }
+
+    .details-panel.visible { display: block; }
+
+    .detail-row {
+      margin-bottom: 0.85rem;
+    }
+
+    .detail-row:last-child { margin-bottom: 0; }
+
+    .detail-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan-500);
+      opacity: 0.7;
+      margin-bottom: 0.2rem;
+    }
+
+    .detail-value {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--red-400);
+      word-break: break-word;
+    }
+
+    .detail-value p { margin: 0 0 0.35rem; }
+    .detail-value p:last-child { margin: 0; }
+
+    .detail-value.empty { color: var(--text-muted); font-style: italic; }
+
+    .detail-value.ransomware-known {
+      color: var(--red-300);
+      text-shadow: 0 0 6px rgba(232,97,90,0.3);
+    }
+
+    .detail-value.ransomware-unknown { color: var(--green-400); }
+
+    .cwe-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .cwe-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      padding: 0.18em 0.55em;
+      border: 1px solid rgba(43,228,234,0.3);
+      color: var(--cyan-400);
+      background: rgba(43,228,234,0.06);
+    }
+
+    .detail-divider {
+      border: none;
+      border-top: 1px solid rgba(43,228,234,0.08);
+      margin: 0.85rem 0;
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--bg-900);
+      border-top: 1px solid var(--red-900);
+      margin-top: 1rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--red-500);
+      text-shadow: var(--glow-red);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-logo span { color: var(--cyan-500); }
+
+    .footer-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social { display: flex; gap: 0.5rem; }
+
+    .social-btn {
+      background: var(--bg-700);
+      border: 1px solid var(--red-800);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.3em 0.6em;
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+
+    .footer-col__title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--red-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--red-900);
+    }
+
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+    .footer-links li { margin-bottom: 0.35rem; }
+
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red-400); }
+    .footer-links a::before { content: "// "; color: var(--text-muted); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--red-900);
+      padding: 1rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .footer-bottom span { color: var(--text-secondary); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-actions { display: none; }
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .catalog-meta { flex-direction: column; }
+      .catalog-meta__item { border-right: none; border-bottom: 1px solid rgba(43,228,234,0.1); }
+      .catalog-meta__item:last-child { border-bottom: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.4rem; }
+      .section-title { font-size: 1.5rem; }
+      .cve-id { font-size: 1.7rem; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../main.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="../main.html">_Home</a>
+        <a href="../resources/bio/userbio.html">_Bio</a>
+        <a href="../404.html">_Writeups</a>
+        <a href="../resources/learning/resources.html">_Resources</a>
+        <a href="../404.html">_Community</a>
+        <a href="../404.html">_About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// CISA</div>
+    <div class="ticker-track">
+      <span>CISA Known Exploited Vulnerabilities Catalog — Live feed</span>
+      <span>These vulnerabilities have been actively exploited in the wild</span>
+      <span>Federal agencies are required to patch KEV entries per BOD 22-01</span>
+      <span>Source: cisa.gov/known-exploited-vulnerabilities-catalog</span>
+      <span>CISA Known Exploited Vulnerabilities Catalog — Live feed</span>
+      <span>These vulnerabilities have been actively exploited in the wild</span>
+      <span>Federal agencies are required to patch KEV entries per BOD 22-01</span>
+      <span>Source: cisa.gov/known-exploited-vulnerabilities-catalog</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+
+    <div class="section-header" style="margin-top:2rem;">
+      <h2 class="section-title">
+        <span class="overline">// cisa.gov — live catalog</span>
+        Known Exploited Vulnerabilities
+      </h2>
+    </div>
+
+    <!-- Catalog metadata — filled by JS -->
+    <div class="catalog-meta" id="catalog-meta" style="display:none;">
+      <div class="catalog-meta__item">
+        <span class="catalog-meta__label">Catalog Version</span>
+        <span class="catalog-meta__value" id="meta-version">—</span>
+      </div>
+      <div class="catalog-meta__item">
+        <span class="catalog-meta__label">Date Released</span>
+        <span class="catalog-meta__value" id="meta-date">—</span>
+      </div>
+      <div class="catalog-meta__item">
+        <span class="catalog-meta__label">CVE Count</span>
+        <span class="catalog-meta__value count-value" id="meta-count">—</span>
+      </div>
+    </div>
+
+    <div class="kev-viewer">
+
+      <div class="poster-nav">
+        <button class="nav-btn" id="btn-prev" disabled>&#8592; PREV</button>
+        <span class="poster-counter" id="poster-counter">— / —</span>
+        <button class="nav-btn" id="btn-next" disabled>NEXT &#8594;</button>
+      </div>
+
+      <div id="kev-mount">
+        <div class="state-msg">
+          <span>// QUERYING CISA DATABASE</span> <span class="blink">_</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Content</h5>
+        <ul class="footer-links">
+          <li><a href="../resources/bio/userbio.html">Bio</a></li>
+          <li><a href="../404.html">Writeups</a></li>
+          <li><a href="../resources/learning/resources.html">Resources</a></li>
+          <li><a href="../404.html">Community</a></li>
+          <li><a href="../404.html">About</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 INFOSEC//EDUCATOR — All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const mount     = document.getElementById('kev-mount');
+      const counter   = document.getElementById('poster-counter');
+      const btnPrev   = document.getElementById('btn-prev');
+      const btnNext   = document.getElementById('btn-next');
+      const metaBar   = document.getElementById('catalog-meta');
+      const metaVer   = document.getElementById('meta-version');
+      const metaDate  = document.getElementById('meta-date');
+      const metaCount = document.getElementById('meta-count');
+
+      let vulns   = [];
+      let current = 0;
+
+      /* ---- helpers ---- */
+      function val(v) {
+        if (v === null || v === undefined) return null;
+        if (Array.isArray(v)) {
+          const f = v.filter(x => x !== null && x !== undefined && String(x).trim() !== '');
+          return f.length ? f : null;
+        }
+        const s = String(v).trim();
+        return s && s !== '' ? s : null;
+      }
+
+      function esc(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function fmtDate(iso) {
+        if (!iso) return null;
+        try {
+          const d = new Date(iso);
+          if (isNaN(d)) return iso;
+          return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch { return iso; }
+      }
+
+      function fieldRow(label, rawValue, opts) {
+        opts = opts || {};
+        const v = val(rawValue);
+        let display = '';
+        if (!v) {
+          display = '<span class="field-value empty">N/A</span>';
+        } else {
+          const text = Array.isArray(v) ? v.map(esc).join(', ') : esc(v);
+          const cls  = opts.valueClass ? ` ${opts.valueClass}` : '';
+          display = `<span class="field-value${cls}">${text}</span>`;
+        }
+        return `<span class="field-label">${esc(label)}</span>${display}`;
+      }
+
+      function detailRow(label, rawValue, opts) {
+        opts = opts || {};
+        const v = val(rawValue);
+        let inner = '';
+
+        if (opts.isCwes && Array.isArray(v) && v.length) {
+          inner = `<div class="cwe-tags">${v.map(c => `<span class="cwe-tag">${esc(c)}</span>`).join('')}</div>`;
+        } else if (!v) {
+          inner = '<div class="detail-value empty">N/A</div>';
+        } else {
+          const cls = opts.valueClass ? ` ${opts.valueClass}` : '';
+          const text = Array.isArray(v) ? v.map(esc).join(', ') : esc(v);
+          inner = `<div class="detail-value${cls}">${text}</div>`;
+        }
+
+        return `
+          <div class="detail-row">
+            <div class="detail-label">${esc(label)}</div>
+            ${inner}
+          </div>`;
+      }
+
+      /* ---- render ---- */
+      function renderCard(item) {
+        const isKnownRansomware = val(item.knownRansomwareCampaignUse) &&
+          String(item.knownRansomwareCampaignUse).toLowerCase() === 'known';
+
+        const ransomwareBadge = isKnownRansomware
+          ? `<span class="card-banner__badge ransomware-known">&#9888; Ransomware: Known</span>`
+          : `<span class="card-banner__badge">Ransomware: Unknown</span>`;
+
+        const cwes = val(item.cwes);
+        const cweIsArray = Array.isArray(cwes);
+
+        const ransomClass = isKnownRansomware ? 'ransomware-known' : 'ransomware-unknown';
+        const ransomDisplay = val(item.knownRansomwareCampaignUse) || 'Unknown';
+
+        return `
+          <div class="kev-card">
+            <div class="card-banner">
+              <span class="card-banner__source">CISA KEV CATALOG</span>
+              ${ransomwareBadge}
+            </div>
+
+            <div class="card-primary">
+              <div class="cve-id">${esc(item.cveID || 'UNKNOWN')}</div>
+              ${val(item.vulnerabilityName)
+                ? `<div class="vuln-name">${esc(item.vulnerabilityName)}</div>`
+                : ''}
+              <div class="card-fields">
+                ${fieldRow('Vendor / Project', item.vendorProject)}
+                ${fieldRow('Product',          item.product)}
+                ${fieldRow('Date Added',       fmtDate(item.dateAdded))}
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <button class="btn-details" id="btn-details">
+                <span>&#9660; MORE DETAILS</span>
+                <span class="btn-details__chevron">&#9660;</span>
+              </button>
+            </div>
+
+            <div class="details-panel" id="details-panel">
+              ${detailRow('Short Description', item.shortDescription)}
+              <hr class="detail-divider">
+              ${detailRow('Required Action', item.requiredAction)}
+              ${detailRow('Due Date',        fmtDate(item.dueDate))}
+              <hr class="detail-divider">
+              ${detailRow('Known Ransomware Use', item.knownRansomwareCampaignUse, { valueClass: ransomClass })}
+              ${detailRow('Notes',  item.notes)}
+              ${cweIsArray
+                ? detailRow('CWEs', cwes, { isCwes: true })
+                : detailRow('CWEs', item.cwes)}
+            </div>
+          </div>
+        `;
+      }
+
+      /* ---- show ---- */
+      function show(index) {
+        current = index;
+        const item = vulns[current];
+        mount.innerHTML = renderCard(item);
+        counter.textContent = `${current + 1} / ${vulns.length}`;
+        btnPrev.disabled = current === 0;
+        btnNext.disabled = current === vulns.length - 1;
+
+        const detBtn   = document.getElementById('btn-details');
+        const detPanel = document.getElementById('details-panel');
+        if (detBtn && detPanel) {
+          detBtn.addEventListener('click', () => {
+            const open = detPanel.classList.toggle('visible');
+            detBtn.classList.toggle('expanded', open);
+          });
+        }
+      }
+
+      /* ---- nav ---- */
+      btnPrev.addEventListener('click', () => { if (current > 0) show(current - 1); });
+      btnNext.addEventListener('click', () => { if (current < vulns.length - 1) show(current + 1); });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT') return;
+        if (e.key === 'ArrowLeft'  && current > 0)              show(current - 1);
+        if (e.key === 'ArrowRight' && current < vulns.length - 1) show(current + 1);
+      });
+
+      /* ---- ticker ---- */
+      const track = document.querySelector('.ticker-track');
+      if (track) {
+        track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+        track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+      }
+
+      /* ---- fetch ---- */
+      const KEV_URL   = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json';
+      const PROXY_URL = 'https://corsproxy.io/?url=' + encodeURIComponent(KEV_URL);
+
+      function tryFetch(url) {
+        return fetch(url).then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        });
+      }
+
+      tryFetch(KEV_URL)
+        .catch(() => tryFetch(PROXY_URL))
+        .then(data => {
+          vulns = (data.vulnerabilities || []).filter(Boolean);
+          if (!vulns.length) throw new Error('No vulnerabilities returned');
+
+          metaVer.textContent   = data.catalogVersion  || '—';
+          metaDate.textContent  = fmtDate(data.dateReleased) || data.dateReleased || '—';
+          metaCount.textContent = data.count !== undefined ? data.count : vulns.length;
+          metaBar.style.display = '';
+
+          btnPrev.disabled = false;
+          btnNext.disabled = false;
+          show(0);
+        })
+        .catch(err => {
+          mount.innerHTML = `<div class="state-msg error">// ERROR: ${esc(err.message || 'Failed to load CISA KEV data')}</div>`;
+          counter.textContent = '— / —';
+        });
+    })();
+  </script>
+</body>
+</html>

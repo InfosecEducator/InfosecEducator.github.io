@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Query — INFOSEC//EDUCATOR</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg-900: #0d0a0d;
+      --bg-800: #12101a;
+      --bg-700: #191a1e;
+      --bg-600: #1e181e;
+      --bg-500: #221e26;
+      --red-500: #e8615a;
+      --red-400: #ea6f69;
+      --red-300: #f4908b;
+      --red-700: #9c3230;
+      --red-800: #5e2122;
+      --red-900: #3c181a;
+      --cyan-500: #2be4ea;
+      --cyan-400: #5eeef3;
+      --cyan-900: #0d3336;
+      --green-500: #2bfea0;
+      --green-900: #0b2e1e;
+      --yellow-500: #fed33f;
+      --yellow-400: #ffe068;
+      --yellow-900: #2e2408;
+      --orange-500: #ff9a28;
+      --text-secondary: #7a6a7a;
+      --text-muted: #4a3a4a;
+      --font-display: "VT323", monospace;
+      --font-ui: "Rajdhani", sans-serif;
+      --font-mono: "Share Tech Mono", monospace;
+      --glow-red:    0 0 8px var(--red-500),    0 0 20px rgba(232,97,90,0.3);
+      --glow-cyan:   0 0 8px var(--cyan-500),   0 0 20px rgba(43,228,234,0.3);
+      --glow-yellow: 0 0 8px var(--yellow-500), 0 0 20px rgba(254,211,63,0.3);
+      --notch: 1rem;
+      --notch-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-800);
+      background-image:
+        radial-gradient(ellipse at 20% 0%,   rgba(46,36,8,0.5)   0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(60,24,26,0.3)  0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--red-400);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-900); }
+    ::-webkit-scrollbar-thumb { background: var(--red-800); }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background-color: rgba(13,10,13,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--red-800);
+      box-shadow: 0 1px 0 var(--red-900), 0 2px 20px rgba(232,97,90,0.15);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 2rem;
+    }
+    .site-logo {
+      font-family: var(--font-display); font-size: 1.8rem;
+      letter-spacing: 0.08em; color: var(--red-500);
+      text-shadow: var(--glow-red); white-space: nowrap; flex-shrink: 0;
+    }
+    .site-logo span { color: var(--cyan-500); text-shadow: var(--glow-cyan); }
+    .main-nav { display: flex; align-items: center; }
+    .main-nav a {
+      font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-300);
+      padding: 0.4rem 0.85rem; border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .main-nav a:hover { color: var(--cyan-500); background: rgba(43,228,234,0.06); }
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .search-box {
+      display: flex; align-items: center;
+      background: var(--bg-700); border: 1px solid var(--red-800);
+      border-radius: 2px; padding: 0.3rem 0.6rem; gap: 0.4rem;
+    }
+    .search-box input {
+      background: none; border: none; outline: none;
+      color: var(--red-300); font-family: var(--font-mono); font-size: 0.8rem; width: 140px;
+    }
+    .search-box input::placeholder { color: var(--text-secondary); }
+    .search-icon { color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--yellow-900); border-bottom: 1px solid rgba(254,211,63,0.2);
+      overflow: hidden; height: 28px; display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: var(--yellow-500); color: #0d0a0d;
+      font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.1em;
+      padding: 0 0.75rem; height: 100%; display: flex; align-items: center; flex-shrink: 0;
+    }
+    .ticker-track {
+      display: flex; align-items: center; white-space: nowrap;
+      animation: ticker 35s linear infinite;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--yellow-400); gap: 3rem; padding-left: 2rem;
+    }
+    .ticker-track span::before { content: "▶ "; color: var(--yellow-500); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== PAGE ===== */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    .section-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 0.5rem 0 0.6rem; margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--yellow-500);
+      box-shadow: 0 3px 12px rgba(254,211,63,0.12);
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: 1.8rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--yellow-500); text-shadow: var(--glow-yellow); margin: 0;
+    }
+    .section-title .overline {
+      display: block; font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.15em; color: var(--cyan-500);
+      text-shadow: none; margin-bottom: -0.2rem;
+    }
+
+    /* ===== QUERY FORM ===== */
+    .query-form {
+      background: var(--bg-700);
+      border: 1px solid rgba(254,211,63,0.2);
+      border-left: 3px solid var(--yellow-500);
+      padding: 1.25rem 1.5rem; margin-bottom: 2rem;
+    }
+    .query-form__label {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--yellow-500); opacity: 0.75; margin-bottom: 0.6rem; display: block;
+    }
+    .query-input-row { display: flex; gap: 0; align-items: stretch; }
+    .query-prefix {
+      background: var(--bg-900); border: 1px solid rgba(254,211,63,0.2); border-right: none;
+      padding: 0.6rem 0.85rem; font-family: var(--font-mono); font-size: 0.82rem;
+      color: var(--yellow-400); white-space: nowrap; display: flex; align-items: center;
+    }
+    #query-input {
+      flex: 1; background: var(--bg-900);
+      border: 1px solid rgba(254,211,63,0.2); border-right: none; outline: none;
+      padding: 0.6rem 0.85rem; font-family: var(--font-mono); font-size: 0.88rem;
+      color: var(--yellow-400); caret-color: var(--yellow-500); min-width: 0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #query-input:focus {
+      border-color: var(--yellow-500);
+      box-shadow: inset 0 0 0 1px rgba(254,211,63,0.12);
+    }
+    #query-input::placeholder { color: var(--text-muted); }
+    #query-btn {
+      background: transparent; border: 1px solid rgba(254,211,63,0.35);
+      color: var(--yellow-400); font-family: var(--font-mono); font-size: 0.82rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.6rem 1.4rem; cursor: pointer;
+      --notch: 0.5rem; clip-path: var(--notch-path); position: relative;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    #query-btn::after {
+      content: ""; position: absolute; bottom: 3px; right: -4px;
+      width: 14.1px; height: 2px; background: rgba(254,211,63,0.35);
+      transform: rotate(-45deg); transition: background 0.2s;
+    }
+    #query-btn:hover {
+      background: rgba(254,211,63,0.07); border-color: var(--yellow-500);
+      box-shadow: var(--glow-yellow);
+    }
+    #query-btn:hover::after { background: var(--yellow-500); }
+    #query-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+    .query-hint {
+      margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.06em; color: var(--text-muted);
+    }
+    #query-error {
+      display: none; font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--red-400); margin-top: 0.45rem; letter-spacing: 0.05em;
+    }
+
+    /* ===== RESULTS ===== */
+    #results { display: none; }
+
+    /* Meta bar */
+    .meta-bar {
+      background: var(--bg-700);
+      border: 1px solid rgba(254,211,63,0.15);
+      border-top: 2px solid var(--yellow-500);
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: 0; margin-bottom: 1rem; overflow: hidden;
+    }
+    .meta-item {
+      padding: 0.55rem 1.1rem;
+      border-right: 1px solid rgba(254,211,63,0.1);
+      display: flex; flex-direction: column; gap: 0.1rem;
+    }
+    .meta-item:last-child { border-right: none; }
+    .meta-label {
+      font-family: var(--font-mono); font-size: 0.55rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--yellow-500); opacity: 0.65;
+    }
+    .meta-value {
+      font-family: var(--font-display); font-size: 1.3rem;
+      color: var(--yellow-400); line-height: 1; letter-spacing: 0.04em;
+    }
+    .meta-value.ok    { color: var(--green-500); }
+    .meta-value.error { color: var(--red-400); }
+
+    .meta-actions {
+      margin-left: auto; display: flex; align-items: center;
+      gap: 0.5rem; padding: 0.5rem 0.85rem;
+    }
+    .action-btn {
+      background: transparent; border: 1px solid rgba(254,211,63,0.25);
+      color: var(--yellow-400); font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.3em 0.75em; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(254,211,63,0.07); border-color: var(--yellow-500);
+      box-shadow: var(--glow-yellow);
+    }
+    .action-btn.copied { color: var(--green-500); border-color: var(--green-500); }
+
+    /* Source pill */
+    .source-pill {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em;
+      padding: 0.15em 0.55em; border-radius: 2px;
+      background: rgba(43,228,234,0.08); border: 1px solid var(--cyan-900);
+      color: var(--cyan-400); white-space: nowrap;
+    }
+    .source-pill.proxy { background: rgba(254,211,63,0.08); border-color: rgba(254,211,63,0.2); color: var(--yellow-400); }
+
+    /* Loading state */
+    .fetch-loading {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 2.5rem 1rem;
+      font-family: var(--font-mono); font-size: 0.82rem;
+      color: var(--cyan-500); letter-spacing: 0.1em;
+    }
+    .blink { animation: blink 0.9s step-start infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .fetch-error {
+      padding: 1.5rem 1rem;
+      font-family: var(--font-mono); font-size: 0.8rem;
+      color: var(--red-400); line-height: 1.65; letter-spacing: 0.04em;
+    }
+
+    /* ===== JSON TREE ===== */
+    .tree-wrap {
+      background: var(--bg-900);
+      border: 1px solid rgba(254,211,63,0.12);
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+    }
+    .tree-wrap::-webkit-scrollbar { height: 4px; }
+    .tree-wrap::-webkit-scrollbar-track { background: var(--bg-900); }
+    .tree-wrap::-webkit-scrollbar-thumb { background: rgba(254,211,63,0.2); }
+
+    .j-root { font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7; }
+
+    /* Indentation */
+    .j-children { padding-left: 1.5em; border-left: 1px solid rgba(254,211,63,0.06); margin-left: 0.1em; }
+
+    /* Toggle button */
+    .j-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.1em; height: 1.1em; margin-right: 0.15em;
+      font-size: 0.65em; cursor: pointer; user-select: none;
+      color: var(--yellow-500); opacity: 0.7;
+      transition: opacity 0.15s, color 0.15s;
+      vertical-align: middle;
+    }
+    .j-toggle:hover { opacity: 1; color: var(--yellow-400); }
+
+    /* Summary (shown when collapsed) */
+    .j-summary {
+      color: var(--text-secondary); font-size: 0.72rem;
+      cursor: pointer; user-select: none;
+    }
+    .j-summary:hover { color: var(--yellow-400); }
+
+    /* Brackets */
+    .j-brace  { color: var(--yellow-400); }
+    .j-bracket { color: var(--cyan-400); }
+
+    /* Key */
+    .j-key { color: var(--red-300); }
+    .j-colon { color: var(--text-secondary); margin: 0 0.2em; }
+
+    /* Value types */
+    .j-str     { color: var(--green-500); word-break: break-all; }
+    .j-num     { color: var(--cyan-400); }
+    .j-bool    { color: var(--orange-500); }
+    .j-null    { color: var(--text-secondary); font-style: italic; }
+    .j-url     { color: var(--green-500); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+
+    /* Comma */
+    .j-comma { color: var(--text-muted); }
+
+    /* Long string toggle */
+    .j-str-toggle {
+      background: none; border: 1px solid rgba(43,254,160,0.2);
+      color: var(--green-500); font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.06em; padding: 0 0.4em; cursor: pointer; margin-left: 0.3em;
+      transition: background 0.15s;
+    }
+    .j-str-toggle:hover { background: rgba(43,254,160,0.08); }
+
+    /* Array truncation notice */
+    .j-truncated {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      color: var(--yellow-400); letter-spacing: 0.06em;
+      padding: 0.2rem 0; opacity: 0.7;
+    }
+    .j-show-more {
+      background: none; border: 1px solid rgba(254,211,63,0.2);
+      color: var(--yellow-400); font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.2em 0.65em; cursor: pointer; margin-left: 0.4em;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .j-show-more:hover { background: rgba(254,211,63,0.06); border-color: var(--yellow-500); }
+
+    /* Non-JSON text fallback */
+    .raw-text {
+      font-family: var(--font-mono); font-size: 0.76rem; line-height: 1.65;
+      color: var(--cyan-400); white-space: pre-wrap; word-break: break-all;
+      max-height: 600px; overflow-y: auto; margin: 0;
+    }
+    .raw-text::-webkit-scrollbar { width: 3px; }
+    .raw-text::-webkit-scrollbar-thumb { background: rgba(254,211,63,0.3); }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--bg-900); border-top: 1px solid var(--red-900); margin-top: 1rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem; }
+    .footer-logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--red-500); text-shadow: var(--glow-red); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .footer-logo span { color: var(--cyan-500); }
+    .footer-tagline { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+    .footer-social { display: flex; gap: 0.5rem; }
+    .social-btn { background: var(--bg-700); border: 1px solid var(--red-800); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; padding: 0.3em 0.6em; border-radius: 2px; transition: color 0.2s, border-color 0.2s; }
+    .social-btn:hover { color: var(--red-400); border-color: var(--red-700); }
+    .footer-col__title { font-family: var(--font-display); font-size: 1rem; color: var(--red-500); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--red-900); }
+    .footer-links { list-style: none; margin: 0; padding: 0; }
+    .footer-links li { margin-bottom: 0.35rem; }
+    .footer-links a { font-size: 0.82rem; color: var(--text-secondary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--red-400); }
+    .footer-links a::before { content: "// "; color: var(--text-muted); }
+    .footer-bottom { border-top: 1px solid var(--red-900); padding: 1rem 1.5rem; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); }
+    .footer-bottom span { color: var(--text-secondary); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-actions { display: none; }
+      .main-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .main-nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; white-space: nowrap; }
+      .meta-bar { flex-direction: column; align-items: stretch; }
+      .meta-actions { margin-left: 0; justify-content: flex-end; border-top: 1px solid rgba(254,211,63,0.1); }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .site-logo { font-size: 1.4rem; }
+      .query-prefix { display: none; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../main.html" class="site-logo">INFOSEC<span>//</span>EDUCATOR</a>
+      <nav class="main-nav">
+        <a href="../main.html">_Home</a>
+        <a href="../resources/bio/userbio.html">_Bio</a>
+        <a href="../404.html">_Writeups</a>
+        <a href="../resources/learning/resources.html">_Resources</a>
+        <a href="../404.html">_Community</a>
+        <a href="../404.html">_About</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="text" placeholder="search topics...">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">// DATA</div>
+    <div class="ticker-track">
+      <span>JSON endpoint explorer — fetch, inspect, and navigate any public API</span>
+      <span>Supports nested objects, arrays, and arbitrary response structures</span>
+      <span>CORS proxy fallback via corsproxy.io for endpoints without CORS headers</span>
+      <span>JSON endpoint explorer — fetch, inspect, and navigate any public API</span>
+      <span>Supports nested objects, arrays, and arbitrary response structures</span>
+      <span>CORS proxy fallback via corsproxy.io for endpoints without CORS headers</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+
+    <div class="section-header" style="margin-top:2rem;">
+      <h2 class="section-title">
+        <span class="overline">// json endpoint explorer</span>
+        Data Query
+      </h2>
+    </div>
+
+    <!-- Input -->
+    <div class="query-form">
+      <label class="query-form__label" for="query-input">// JSON Endpoint URL</label>
+      <div class="query-input-row">
+        <span class="query-prefix">GET://</span>
+        <input type="text" id="query-input"
+               placeholder="https://api.example.com/data.json"
+               autocomplete="off" spellcheck="false">
+        <button id="query-btn">FETCH &#8594;</button>
+      </div>
+      <div id="query-error"></div>
+      <div class="query-hint">Any publicly accessible JSON URL &mdash; direct CORS attempted first, proxy fallback applied automatically if needed.</div>
+    </div>
+
+    <!-- Results -->
+    <div id="results">
+
+      <!-- Meta bar -->
+      <div class="meta-bar" id="meta-bar">
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value" id="meta-status">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Response Time</span>
+          <span class="meta-value" id="meta-time">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Size</span>
+          <span class="meta-value" id="meta-size">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Type</span>
+          <span class="meta-value" id="meta-type" style="font-size:0.85rem;letter-spacing:0;">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Top-level</span>
+          <span class="meta-value" id="meta-toplevel">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Source</span>
+          <span class="meta-value" style="font-size:0.9rem;" id="meta-source">—</span>
+        </div>
+        <div class="meta-actions">
+          <button class="action-btn" id="btn-expand">EXPAND ALL</button>
+          <button class="action-btn" id="btn-collapse">COLLAPSE ALL</button>
+          <button class="action-btn" id="btn-copy">COPY JSON</button>
+        </div>
+      </div>
+
+      <!-- Tree / output -->
+      <div class="tree-wrap" id="tree-wrap">
+        <div class="fetch-loading">Fetching <span class="blink">_</span></div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">INFOSEC<span>//</span>EDUCATOR</div>
+        <p class="footer-tagline">Practitioner-first cybersecurity education.<br>Learn by breaking. Defend by understanding.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">Twitter</a>
+          <a href="#" class="social-btn">GitHub</a>
+          <a href="#" class="social-btn">Discord</a>
+          <a href="#" class="social-btn">RSS</a>
+        </div>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Content</h5>
+        <ul class="footer-links">
+          <li><a href="../resources/bio/userbio.html">Bio</a></li>
+          <li><a href="../404.html">Writeups</a></li>
+          <li><a href="../resources/learning/resources.html">Resources</a></li>
+          <li><a href="../404.html">Community</a></li>
+          <li><a href="../404.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Topics</h5>
+        <ul class="footer-links">
+          <li><a href="#">Offensive Security</a></li>
+          <li><a href="#">Blue Team / SOC</a></li>
+          <li><a href="#">Malware Analysis</a></li>
+          <li><a href="#">OSINT</a></li>
+          <li><a href="#">Cloud Security</a></li>
+          <li><a href="#">Bug Bounty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="footer-col__title">Community</h5>
+        <ul class="footer-links">
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">CTF Team</a></li>
+          <li><a href="#">Study Groups</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Submit a Writeup</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 INFOSEC//EDUCATOR — All content for educational purposes only.</span>
+      <span>Responsible disclosure: security@infosec-educator.io</span>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    const inputEl    = document.getElementById('query-input');
+    const btnEl      = document.getElementById('query-btn');
+    const errorEl    = document.getElementById('query-error');
+    const resultsEl  = document.getElementById('results');
+    const treeWrap   = document.getElementById('tree-wrap');
+    const btnCopy    = document.getElementById('btn-copy');
+    const btnExpand  = document.getElementById('btn-expand');
+    const btnCollapse= document.getElementById('btn-collapse');
+
+    const MAX_STRING_LEN  = 300;   // chars before truncating inline strings
+    const ARRAY_PAGE_SIZE = 100;   // items shown per "page" in large arrays
+
+    let rawJson = '';  // last fetched text for copy
+
+    /* ---- utilities ---- */
+    function esc(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function fmtBytes(n) {
+      if (n < 1024) return n + ' B';
+      if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+      return (n / 1048576).toFixed(2) + ' MB';
+    }
+
+    function isUrl(s) {
+      return typeof s === 'string' && /^https?:\/\/\S+/i.test(s.trim());
+    }
+
+    function topLevelDesc(data) {
+      if (Array.isArray(data)) return data.length + ' items';
+      if (data && typeof data === 'object') return Object.keys(data).length + ' keys';
+      return typeof data;
+    }
+
+    /* ---- node ID counter ---- */
+    let _nid = 0;
+    function nid() { return 'jn' + (++_nid); }
+
+    /* ---- JSON tree builder ---- */
+    function buildNode(value, depth, comma) {
+      const c = comma ? '<span class="j-comma">,</span>' : '';
+
+      if (value === null)
+        return `<div><span class="j-null">null</span>${c}</div>`;
+
+      if (typeof value === 'boolean')
+        return `<div><span class="j-bool">${value}</span>${c}</div>`;
+
+      if (typeof value === 'number')
+        return `<div><span class="j-num">${esc(String(value))}</span>${c}</div>`;
+
+      if (typeof value === 'string') {
+        const trimmed = value.trim();
+        if (isUrl(trimmed)) {
+          return `<div><span class="j-str j-url" title="${esc(trimmed)}">"${esc(trimmed)}"</span>${c}</div>`;
+        }
+        if (value.length > MAX_STRING_LEN) {
+          const id = nid();
+          return `<div>
+            <span class="j-str">"${esc(value.slice(0, MAX_STRING_LEN))}<span class="j-hidden-str" id="${id}" style="display:none">${esc(value.slice(MAX_STRING_LEN))}</span>"</span>
+            <button class="j-str-toggle" data-str="${id}">+${value.length - MAX_STRING_LEN} chars</button>${c}
+          </div>`;
+        }
+        return `<div><span class="j-str">"${esc(value)}"</span>${c}</div>`;
+      }
+
+      if (Array.isArray(value)) {
+        if (value.length === 0)
+          return `<div><span class="j-bracket">[]</span>${c}</div>`;
+        return buildCollapsible(value, depth, c, true);
+      }
+
+      if (typeof value === 'object') {
+        const keys = Object.keys(value);
+        if (keys.length === 0)
+          return `<div><span class="j-brace">{}</span>${c}</div>`;
+        return buildCollapsible(value, depth, c, false);
+      }
+
+      return `<div><span class="j-null">${esc(String(value))}</span>${c}</div>`;
+    }
+
+    function buildCollapsible(value, depth, comma, isArr) {
+      const id       = nid();
+      const isOpen   = depth < 2;
+      const open     = isArr ? '<span class="j-bracket">[</span>' : '<span class="j-brace">{</span>';
+      const close    = isArr ? '<span class="j-bracket">]</span>' : '<span class="j-brace">}</span>';
+      const count    = isArr ? value.length + ' items' : Object.keys(value).length + ' keys';
+      const items    = isArr ? value : Object.entries(value);
+      const total    = items.length;
+      const firstPage= items.slice(0, ARRAY_PAGE_SIZE);
+      const rest     = items.slice(ARRAY_PAGE_SIZE);
+
+      let childrenHtml = '';
+      firstPage.forEach((item, i) => {
+        const isLast = i === total - 1 && rest.length === 0;
+        if (isArr) {
+          childrenHtml += buildNode(item, depth + 1, !isLast);
+        } else {
+          const [k, v] = item;
+          const childComma = i < total - 1;
+          childrenHtml += buildKeyValue(k, v, depth + 1, childComma);
+        }
+      });
+
+      if (rest.length > 0) {
+        const moreId  = nid();
+        const restJson = JSON.stringify(rest);
+        childrenHtml += `
+          <div class="j-truncated">
+            ... ${rest.length} more ${isArr ? 'items' : 'entries'}
+            <button class="j-show-more" data-more="${moreId}" data-arr="${isArr}"
+                    data-depth="${depth + 1}" data-total="${total}" data-shown="${firstPage.length}">SHOW MORE</button>
+            <script type="application/json" id="${moreId}">${restJson.replace(/<\/script>/g, '<\\/script>')}<\/script>
+          </div>`;
+      }
+
+      return `
+        <div>
+          <span class="j-toggle" data-target="${id}">${isOpen ? '▼' : '▶'}</span>${open}
+          <span class="j-summary" data-target="${id}" style="${isOpen ? 'display:none' : ''}">&nbsp;${esc(count)}&nbsp;${close}${comma}</span>
+          <div class="j-children" id="${id}" style="${isOpen ? '' : 'display:none'}">
+            ${childrenHtml}
+          </div>
+          <span class="j-close-block" data-for="${id}" style="${isOpen ? '' : 'display:none'}">${close}${comma}</span>
+        </div>`;
+    }
+
+    function buildKeyValue(key, value, depth, comma) {
+      const id       = nid();
+      const isArr    = Array.isArray(value);
+      const isObj    = value !== null && typeof value === 'object';
+
+      if (!isArr && !isObj) {
+        const valHtml = buildNode(value, depth, false);
+        const inner   = valHtml.replace(/^<div>|<\/div>$/g, '');
+        const c       = comma ? '<span class="j-comma">,</span>' : '';
+        return `<div><span class="j-key">"${esc(key)}"</span><span class="j-colon">:</span>${inner}${c}</div>`;
+      }
+
+      /* Complex value — build collapsible with key prefix */
+      const open      = isArr ? '<span class="j-bracket">[</span>' : '<span class="j-brace">{</span>';
+      const close     = isArr ? '<span class="j-bracket">]</span>' : '<span class="j-brace">}</span>';
+      const items     = isArr ? value : Object.entries(value);
+      const total     = items.length;
+      const isOpen    = depth < 2;
+      const count     = isArr ? total + ' items' : Object.keys(value).length + ' keys';
+      const firstPage = items.slice(0, ARRAY_PAGE_SIZE);
+      const rest      = items.slice(ARRAY_PAGE_SIZE);
+      const c         = comma ? '<span class="j-comma">,</span>' : '';
+
+      if (total === 0) {
+        const empty = isArr ? '<span class="j-bracket">[]</span>' : '<span class="j-brace">{}</span>';
+        return `<div><span class="j-key">"${esc(key)}"</span><span class="j-colon">:</span>${empty}${c}</div>`;
+      }
+
+      let childrenHtml = '';
+      firstPage.forEach((item, i) => {
+        const isLast = i === total - 1 && rest.length === 0;
+        if (isArr) {
+          childrenHtml += buildNode(item, depth + 1, !isLast);
+        } else {
+          const [k, v] = item;
+          childrenHtml += buildKeyValue(k, v, depth + 1, i < total - 1);
+        }
+      });
+
+      if (rest.length > 0) {
+        const moreId  = nid();
+        const restJson = JSON.stringify(rest);
+        childrenHtml += `
+          <div class="j-truncated">
+            ... ${rest.length} more ${isArr ? 'items' : 'entries'}
+            <button class="j-show-more" data-more="${moreId}" data-arr="${isArr}"
+                    data-depth="${depth + 1}" data-total="${total}" data-shown="${firstPage.length}">SHOW MORE</button>
+            <script type="application/json" id="${moreId}">${restJson.replace(/<\/script>/g, '<\\/script>')}<\/script>
+          </div>`;
+      }
+
+      return `
+        <div>
+          <span class="j-key">"${esc(key)}"</span><span class="j-colon">:</span>
+          <span class="j-toggle" data-target="${id}">${isOpen ? '▼' : '▶'}</span>${open}
+          <span class="j-summary" data-target="${id}" style="${isOpen ? 'display:none' : ''}">&nbsp;${esc(count)}&nbsp;${close}${c}</span>
+          <div class="j-children" id="${id}" style="${isOpen ? '' : 'display:none'}">
+            ${childrenHtml}
+          </div>
+          <span class="j-close-block" data-for="${id}" style="${isOpen ? '' : 'display:none'}">${close}${c}</span>
+        </div>`;
+    }
+
+    function buildTree(data) {
+      _nid = 0;
+      const rootId  = nid();
+      const isArr   = Array.isArray(data);
+      const isObj   = data !== null && typeof data === 'object';
+
+      if (!isArr && !isObj) {
+        return `<div class="j-root">${buildNode(data, 0, false)}</div>`;
+      }
+
+      const open    = isArr ? '<span class="j-bracket">[</span>' : '<span class="j-brace">{</span>';
+      const close   = isArr ? '<span class="j-bracket">]</span>' : '<span class="j-brace">}</span>';
+      const items   = isArr ? data : Object.entries(data);
+      const total   = items.length;
+      const first   = items.slice(0, ARRAY_PAGE_SIZE);
+      const rest    = items.slice(ARRAY_PAGE_SIZE);
+
+      let childrenHtml = '';
+      first.forEach((item, i) => {
+        const isLast = i === total - 1 && rest.length === 0;
+        if (isArr) {
+          childrenHtml += buildNode(item, 1, !isLast);
+        } else {
+          const [k, v] = item;
+          childrenHtml += buildKeyValue(k, v, 1, i < total - 1);
+        }
+      });
+
+      if (rest.length > 0) {
+        const moreId  = nid();
+        const restJson = JSON.stringify(rest);
+        childrenHtml += `
+          <div class="j-truncated">
+            ... ${rest.length} more ${isArr ? 'items' : 'entries'}
+            <button class="j-show-more" data-more="${moreId}" data-arr="${isArr}"
+                    data-depth="1" data-total="${total}" data-shown="${first.length}">SHOW MORE</button>
+            <script type="application/json" id="${moreId}">${restJson.replace(/<\/script>/g, '<\\/script>')}<\/script>
+          </div>`;
+      }
+
+      return `<div class="j-root">
+        <span class="j-toggle open" data-target="${rootId}">▼</span>${open}
+        <span class="j-summary" data-target="${rootId}" style="display:none">&nbsp;${esc(topLevelDesc(data))}&nbsp;${close}</span>
+        <div class="j-children" id="${rootId}">
+          ${childrenHtml}
+        </div>
+        <span class="j-close-block" data-for="${rootId}">${close}</span>
+      </div>`;
+    }
+
+    /* ---- tree event delegation ---- */
+    treeWrap.addEventListener('click', function (e) {
+      /* Toggle collapse */
+      const toggler = e.target.closest('.j-toggle, .j-summary');
+      if (toggler) {
+        const targetId = toggler.dataset.target;
+        if (!targetId) return;
+        const children  = document.getElementById(targetId);
+        const closeBlock= treeWrap.querySelector(`[data-for="${targetId}"]`);
+        const allToggles= treeWrap.querySelectorAll(`[data-target="${targetId}"]`);
+        if (!children) return;
+        const opening = children.style.display === 'none';
+        children.style.display   = opening ? '' : 'none';
+        if (closeBlock) closeBlock.style.display = opening ? '' : 'none';
+        allToggles.forEach(t => {
+          if (t.classList.contains('j-toggle')) t.textContent = opening ? '▼' : '▶';
+          if (t.classList.contains('j-summary')) t.style.display = opening ? 'none' : '';
+        });
+        return;
+      }
+
+      /* Expand long string */
+      const strToggle = e.target.closest('.j-str-toggle');
+      if (strToggle) {
+        const strId = strToggle.dataset.str;
+        const hidden = document.getElementById(strId);
+        if (!hidden) return;
+        const isHidden = hidden.style.display === 'none';
+        hidden.style.display = isHidden ? 'inline' : 'none';
+        strToggle.textContent = isHidden ? 'collapse' : '+' + hidden.textContent.length + ' chars';
+        return;
+      }
+
+      /* Show more items */
+      const showMore = e.target.closest('.j-show-more');
+      if (showMore) {
+        const moreId  = showMore.dataset.more;
+        const isArr   = showMore.dataset.arr === 'true';
+        const depth   = parseInt(showMore.dataset.depth, 10);
+        const total   = parseInt(showMore.dataset.total, 10);
+        const shown   = parseInt(showMore.dataset.shown, 10);
+        const script  = document.getElementById(moreId);
+        if (!script) return;
+        let remaining;
+        try { remaining = JSON.parse(script.textContent); } catch { return; }
+
+        const nextPage  = remaining.slice(0, ARRAY_PAGE_SIZE);
+        const stillRest = remaining.slice(ARRAY_PAGE_SIZE);
+        const container = showMore.closest('.j-truncated');
+        let html = '';
+        nextPage.forEach((item, i) => {
+          const newShown  = shown + i;
+          const isLast    = newShown === total - 1 && stillRest.length === 0;
+          html += isArr
+            ? buildNode(item, depth, !isLast)
+            : buildKeyValue(item[0], item[1], depth, newShown < total - 1);
+        });
+
+        if (stillRest.length > 0) {
+          const newMoreId  = nid();
+          const restJson   = JSON.stringify(stillRest);
+          html += `
+            <div class="j-truncated">
+              ... ${stillRest.length} more ${isArr ? 'items' : 'entries'}
+              <button class="j-show-more" data-more="${newMoreId}" data-arr="${isArr}"
+                      data-depth="${depth}" data-total="${total}" data-shown="${shown + nextPage.length}">SHOW MORE</button>
+              <script type="application/json" id="${newMoreId}">${restJson.replace(/<\/script>/g, '<\\/script>')}<\/script>
+            </div>`;
+        }
+
+        container.insertAdjacentHTML('beforebegin', html);
+        container.remove();
+        return;
+      }
+
+      /* URL link in string */
+      if (e.target.classList.contains('j-url')) {
+        const url = e.target.title || e.target.textContent.replace(/^"|"$/g, '');
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    });
+
+    /* ---- expand / collapse all ---- */
+    function setAllNodes(open) {
+      treeWrap.querySelectorAll('.j-children').forEach(ch => {
+        const id         = ch.id;
+        const closeBlock = treeWrap.querySelector(`[data-for="${id}"]`);
+        const allToggles = treeWrap.querySelectorAll(`[data-target="${id}"]`);
+        ch.style.display = open ? '' : 'none';
+        if (closeBlock) closeBlock.style.display = open ? '' : 'none';
+        allToggles.forEach(t => {
+          if (t.classList.contains('j-toggle'))  t.textContent  = open ? '▼' : '▶';
+          if (t.classList.contains('j-summary')) t.style.display = open ? 'none' : '';
+        });
+      });
+    }
+
+    btnExpand.addEventListener('click',  () => setAllNodes(true));
+    btnCollapse.addEventListener('click',() => setAllNodes(false));
+
+    /* ---- copy ---- */
+    btnCopy.addEventListener('click', () => {
+      if (!rawJson) return;
+      navigator.clipboard.writeText(rawJson).then(() => {
+        btnCopy.textContent = 'COPIED ✓';
+        btnCopy.classList.add('copied');
+        setTimeout(() => { btnCopy.textContent = 'COPY JSON'; btnCopy.classList.remove('copied'); }, 2000);
+      }).catch(() => {
+        btnCopy.textContent = 'FAILED';
+        setTimeout(() => { btnCopy.textContent = 'COPY JSON'; }, 2000);
+      });
+    });
+
+    /* ---- fetch ---- */
+    function tryFetch(url) {
+      return fetch(url).then(r => {
+        if (!r.ok) throw Object.assign(new Error('HTTP ' + r.status), { status: r.status, contentType: r.headers.get('content-type') || '' });
+        return r;
+      });
+    }
+
+    async function runFetch(rawUrl) {
+      rawUrl = rawUrl.trim();
+      if (!/^https?:\/\//i.test(rawUrl)) rawUrl = 'https://' + rawUrl;
+
+      resultsEl.style.display = 'block';
+      treeWrap.innerHTML = '<div class="fetch-loading">Fetching <span class="blink">_</span></div>';
+
+      document.getElementById('meta-status').textContent   = '—';
+      document.getElementById('meta-time').textContent     = '—';
+      document.getElementById('meta-size').textContent     = '—';
+      document.getElementById('meta-type').textContent     = '—';
+      document.getElementById('meta-toplevel').textContent = '—';
+      document.getElementById('meta-source').innerHTML     = '—';
+
+      const PROXY = 'https://corsproxy.io/?url=' + encodeURIComponent(rawUrl);
+      const t0    = performance.now();
+      let response, usedProxy = false;
+
+      try {
+        response = await tryFetch(rawUrl);
+      } catch (directErr) {
+        treeWrap.innerHTML = '<div class="fetch-loading">Direct fetch failed, trying proxy <span class="blink">_</span></div>';
+        try {
+          response = await tryFetch(PROXY);
+          usedProxy = true;
+        } catch (proxyErr) {
+          const elapsed = (performance.now() - t0).toFixed(0) + ' ms';
+          document.getElementById('meta-time').textContent = elapsed;
+          treeWrap.innerHTML = `<div class="fetch-error">// FETCH FAILED<br><br>Direct: ${esc(directErr.message)}<br>Proxy:  ${esc(proxyErr.message)}<br><br>The endpoint may be offline or require authentication.</div>`;
+          return;
+        }
+      }
+
+      const elapsed     = (performance.now() - t0).toFixed(0) + ' ms';
+      const contentType = response.headers.get('content-type') || 'unknown';
+      const statusCode  = response.status;
+      const text        = await response.text();
+      const byteSize    = new TextEncoder().encode(text).length;
+
+      rawJson = text;
+
+      document.getElementById('meta-status').textContent   = statusCode;
+      document.getElementById('meta-status').className     = 'meta-value ' + (statusCode < 400 ? 'ok' : 'error');
+      document.getElementById('meta-time').textContent     = elapsed;
+      document.getElementById('meta-size').textContent     = fmtBytes(byteSize);
+      document.getElementById('meta-type').textContent     = contentType.split(';')[0].trim();
+      document.getElementById('meta-source').innerHTML     = usedProxy
+        ? '<span class="source-pill proxy">via proxy</span>'
+        : '<span class="source-pill">direct</span>';
+
+      /* Try JSON parse */
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (parseErr) {
+        document.getElementById('meta-toplevel').textContent = 'non-JSON';
+        treeWrap.innerHTML = `
+          <div style="margin-bottom:0.5rem;font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.12em;color:var(--yellow-400);opacity:0.7;">
+            // Response is not valid JSON — showing raw text
+          </div>
+          <pre class="raw-text">${esc(text)}</pre>`;
+        return;
+      }
+
+      document.getElementById('meta-toplevel').textContent = topLevelDesc(data);
+      treeWrap.innerHTML = buildTree(data);
+    }
+
+    /* ---- form handling ---- */
+    function submit() {
+      errorEl.style.display = 'none';
+      const val = inputEl.value.trim();
+      if (!val) {
+        errorEl.style.display = 'block';
+        errorEl.textContent   = '// ERROR: enter a URL to fetch';
+        return;
+      }
+      btnEl.disabled = true;
+      btnEl.textContent = 'FETCHING...';
+      runFetch(val).finally(() => {
+        btnEl.disabled = false;
+        btnEl.innerHTML = 'FETCH &#8594;';
+      });
+    }
+
+    btnEl.addEventListener('click', submit);
+    inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+
+    /* ticker pause */
+    const track = document.querySelector('.ticker-track');
+    if (track) {
+      track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+      track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+    }
+  })();
+  </script>
+</body>
+</html>
